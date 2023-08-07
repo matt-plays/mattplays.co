@@ -37,12 +37,12 @@
 .CaseStudy__Hero-TextSection {min-height: calc(200vh-7rem);}
 .hero-casestudy {overflow: clip;}
 
-.CaseStudy__Hero-TextSection .CaseStudy__Hero-H1 {
-  font-size: var(--text-7xl);
+h1 .CaseStudy__Hero-TextSection-Grid .CaseStudy__Hero-H1 {
+  font-size: var(--text-7xl) !important;
 }
 @media (min-width: 1280px) {
-  .CaseStudy__Hero-TextSection .CaseStudy__Hero-H1 {
-    font-size: var(--text-8xl);
+  h1 .CaseStudy__Hero-TextSection-Grid .CaseStudy__Hero-H1 { {
+    font-size: var(--text-8xl) !important;
   }
 }
 
