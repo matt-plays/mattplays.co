@@ -41,7 +41,7 @@ h1 .CaseStudy__Hero-TextSection-Grid .CaseStudy__Hero-H1 {
   font-size: var(--text-7xl) !important;
 }
 @media (min-width: 1280px) {
-  h1 .CaseStudy__Hero-TextSection-Grid .CaseStudy__Hero-H1 { {
+  h1 .CaseStudy__Hero-TextSection-Grid .CaseStudy__Hero-H1 {
     font-size: var(--text-8xl) !important;
   }
 }
