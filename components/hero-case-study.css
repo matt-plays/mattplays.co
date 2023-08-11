@@ -1,0 +1,13 @@
+/* Hero-CaseStudy */
+.CaseStudy__Hero-Visual {min-height: calc(100vh-7rem);}
+.CaseStudy__Hero-TextSection {min-height: calc(200vh-7rem);}
+.hero-casestudy {overflow: clip;}
+
+h1 .CaseStudy__Hero-TextSection-Grid .CaseStudy__Hero-H1 {
+  font-size: var(--text-7xl) !important;
+}
+@media (min-width: 1280px) {
+  h1 .CaseStudy__Hero-TextSection-Grid .CaseStudy__Hero-H1 {
+    font-size: var(--text-8xl) !important;
+  }
+}
