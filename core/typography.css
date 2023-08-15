@@ -1,81 +1,89 @@
 :root {
-    /* font-family */
-      --font-headline: "Sharp Grotesk Semibold 23";
-      --font-subheadline: "Sharp Grotesk Book 20";
-      --font-text: "Söhne Regular";
-      --font-detail: "Söhne Mono";
-      
-    /* line-height */
-      --leading-none: 1;
-      --leading-tight: 1.25;
-      --leading-snug: 1.375;
-      --leading-relaxed: 1.625;
-      
-    /* letter-spacing */
-      --tracking-tight: -0.02em;
-      --tracking-normal: 0em;
-      --tracking-widest: .12em;
-      
-    /* font-weight */
-      --font-thin: 100;
-      --font-extralight: 200;
-      --font-light: 300;
-      --font-normal: 400;
-      --font-medium: 500;
-      --font-semibold: 600;
-      --font-bold: 700;
-      --font-extrabold: 800;
-      --font-black: 900;
-    
-    /* font-size */
-      --text-xs: clamp(10px, calc(10px + (12 - 10) * ((100vw - 375px) / (1600 - 375))), 12px);
-      --text-sm: clamp(12px, calc(12px + (14 - 12) * ((100vw - 375px) / (1600 - 375))), 14px);
-      --text-base: clamp(14px, calc(14px + (16 - 14) * ((100vw - 375px) / (1600 - 375))), 16px);
-      --text-lg: clamp(16px, calc(16px + (18 - 16) * ((100vw - 375px) / (1600 - 375))), 18px);
-      --text-xl: clamp(18px, calc(18px + (20 - 18) * ((100vw - 375px) / (1600 - 375))), 20px);
-      --text-2xl: clamp(20px, calc(20px + (24 - 20) * ((100vw - 375px) / (1600 - 375))), 24px);
-      --text-3xl: clamp(24px, calc(24px + (30 - 24) * ((100vw - 375px) / (1600 - 375))), 30px);
-      --text-4xl: clamp(28px, calc(28px + (44 - 28) * ((100vw - 375px) / (1600 - 375))), 44px);
-      --text-5xl: clamp(32px, calc(32px + (48 - 32) * ((100vw - 375px) / (1600 - 375))), 48px);
-      --text-6xl: clamp(36px, calc(36px + (60 - 36) * ((100vw - 375px) / (1600 - 375))), 60px);
-      --text-7xl: clamp(40px, calc(40px + (72 - 40) * ((100vw - 375px) / (1600 - 375))), 72px);
-      --text-8xl: clamp(44px, calc(44px + (96 - 44) * ((100vw - 375px) / (1600 - 375))), 96px);
-      --text-9xl: clamp(48px, calc(48px + (128 - 48) * ((100vw - 375px) / (1600 - 375))), 128px);
-      --text-10xl: clamp(54px, calc(54px + (160 - 54) * ((100vw - 375px) / (1600 - 375))), 160px);
-      
-    /* fluid-spacer */
-      --space-xs: clamp(12px, calc(12px + (16 - 12) * ((100vw - 375px) / (1600 - 375))), 16px);
-      --space-s: clamp(20px, calc(20px + (32 - 20) * ((100vw - 375px) / (1600 - 375))), 32px);
-      --space-m: clamp(30px, calc(30px + (48 - 30) * ((100vw - 375px) / (1600 - 375))), 48px);
-      --space-l: clamp(50px, calc(50px + (80 - 50) * ((100vw - 375px) / (1600 - 375))), 80px);
-      --space-xl: clamp(80px, calc(80px + (128 - 80) * ((100vw - 375px) / (1600 - 375))), 128px);
-      --space-2xl: clamp(130px, calc(130px + (208 - 130) * ((100vw - 375px) / (1600 - 375))), 208px);  
-    
-      /* color */  
-        --color-clay-50: #FCFBF9;
-      --color-clay-100: #FAF8F6;
-      --color-clay-200: #F6F3F1;
-      --color-clay-300: #F0EDEB;
-      --color-clay-400: #E6E3E1;
-      --color-clay-500: #D9D7D5;
-      --color-clay-600: #C8C6C4;
-      --color-clay-700: #B3B1AE;
-      --color-clay-800: #9A9795;
-      --color-clay-900: #807E7B;
-    
-      --color-slate-50: #696E70;
-      --color-slate-100: #64696C;
-      --color-slate-200: #626769;
-      --color-slate-300: #5C6265;
-      --color-slate-400: #535A5E;
-      --color-slate-500: #4A5256;
-      --color-slate-600: #3F464A;
-      --color-slate-700: #30383C;
-      --color-slate-800: #1E292E;
-      --color-slate-900: #132026;
-      
-    }
-    
+/* font-family */
+  --font-headline: "Sharp Grotesk Semibold 23";
+  --font-subheadline: "Sharp Grotesk Book 20";
+  --font-text: "Söhne Regular";
+  --font-detail: "Söhne Mono";
+  
+/* line-height */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-relaxed: 1.625;
+  
+/* letter-spacing */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0em;
+  --tracking-widest: .12em;
+  
+/* font-weight */
+  --font-thin: 100;
+  --font-extralight: 200;
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --font-black: 900;
+
+/* font-size */
+  --text-xs: clamp(10px, calc(10px + (12 - 10) * ((100vw - 375px) / (1600 - 375))), 12px);
+  --text-sm: clamp(12px, calc(12px + (14 - 12) * ((100vw - 375px) / (1600 - 375))), 14px);
+  --text-base: clamp(14px, calc(14px + (16 - 14) * ((100vw - 375px) / (1600 - 375))), 16px);
+  --text-lg: clamp(16px, calc(16px + (18 - 16) * ((100vw - 375px) / (1600 - 375))), 18px);
+  --text-xl: clamp(18px, calc(18px + (20 - 18) * ((100vw - 375px) / (1600 - 375))), 20px);
+  --text-2xl: clamp(20px, calc(20px + (24 - 20) * ((100vw - 375px) / (1600 - 375))), 24px);
+  --text-3xl: clamp(24px, calc(24px + (30 - 24) * ((100vw - 375px) / (1600 - 375))), 30px);
+  --text-4xl: clamp(28px, calc(28px + (44 - 28) * ((100vw - 375px) / (1600 - 375))), 44px);
+  --text-5xl: clamp(32px, calc(32px + (48 - 32) * ((100vw - 375px) / (1600 - 375))), 48px);
+  --text-6xl: clamp(36px, calc(36px + (60 - 36) * ((100vw - 375px) / (1600 - 375))), 60px);
+  --text-7xl: clamp(40px, calc(40px + (72 - 40) * ((100vw - 375px) / (1600 - 375))), 72px);
+  --text-8xl: clamp(44px, calc(44px + (96 - 44) * ((100vw - 375px) / (1600 - 375))), 96px);
+  --text-9xl: clamp(48px, calc(48px + (128 - 48) * ((100vw - 375px) / (1600 - 375))), 128px);
+  --text-10xl: clamp(54px, calc(54px + (160 - 54) * ((100vw - 375px) / (1600 - 375))), 160px);
+  
+/* fluid-spacer */
+  --space-xs: clamp(12px, calc(12px + (16 - 12) * ((100vw - 375px) / (1600 - 375))), 16px);
+  --space-s: clamp(20px, calc(20px + (32 - 20) * ((100vw - 375px) / (1600 - 375))), 32px);
+  --space-m: clamp(30px, calc(30px + (48 - 30) * ((100vw - 375px) / (1600 - 375))), 48px);
+  --space-l: clamp(50px, calc(50px + (80 - 50) * ((100vw - 375px) / (1600 - 375))), 80px);
+  --space-xl: clamp(80px, calc(80px + (128 - 80) * ((100vw - 375px) / (1600 - 375))), 128px);
+  --space-2xl: clamp(130px, calc(130px + (208 - 130) * ((100vw - 375px) / (1600 - 375))), 208px);  
+
+/* color */  
+  --color-clay-50: #FCFBF9;
+  --color-clay-100: #FAF8F6;
+  --color-clay-200: #F6F3F1;
+  --color-clay-300: #F0EDEB;
+  --color-clay-400: #E6E3E1;
+  --color-clay-500: #D9D7D5;
+  --color-clay-600: #C8C6C4;
+  --color-clay-700: #B3B1AE;
+  --color-clay-800: #9A9795;
+  --color-clay-900: #807E7B;
+
+  --color-slate-50: #696E70;
+  --color-slate-100: #64696C;
+  --color-slate-200: #626769;
+  --color-slate-300: #5C6265;
+  --color-slate-400: #535A5E;
+  --color-slate-500: #4A5256;
+  --color-slate-600: #3F464A;
+  --color-slate-700: #30383C;
+  --color-slate-800: #1E292E;
+  --color-slate-900: #132026;
+
+/*
+================
+Grid
+================
+*/
+  --gridGutter:var(--space-m);
+  --gridMargin:var(--space-m); 
+  --container-width: min(calc(100vw - var(--gridMargin) * 2), 1280px);  
+}
+
 html{font-size: var(--text-base);} 
 
 ::selection {background: #FFDDCF; color: #292f33;}
@@ -86,6 +94,13 @@ font-variant-numeric: lining-nums proportional-nums;
 font-size: var(--text-base);
 }
 
+/* Grid */
+.container-width {
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+/* Typography */
 .size-9xl {font-size: var(--text-9xl);}
 .size-8xl {font-size: var(--text-8xl);}
 .size-7xl {font-size: var(--text-7xl);}
@@ -147,6 +162,10 @@ font-size: var(--text-base);
 /* XL Type & Spacing */
 @media (min-width: 1600px) {
 :root {
+
+/* grid */
+--container-width: min(calc(1280px + (2400 - 1600) * (100vw - 1600px) / (2400 - 1600)), 1600px); 
+
 
 /* font-size */
 --text-xs: clamp(12px, calc(12px + (15 - 12) * ((100vw - 1600px) / (2000 - 1600))), 15px);
