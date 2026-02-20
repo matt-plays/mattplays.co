@@ -56,7 +56,7 @@ export interface PageContent {
 const content: PageContent = {
   "hero": {
     "label": "Project",
-    "title": "Hey baby, love you.",
+    "title": "Rock Dove",
     "description": "A system of modular website sections created for a start-from-scratch redesign of Burton.com",
     "role": "Art Direction, Design",
     "heroImage": "https://www.figma.com/api/mcp/asset/a751bd10-43d8-4d14-8372-990ce82379c8",
