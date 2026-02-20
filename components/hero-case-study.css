@@ -1,13 +1,61 @@
-/* Hero-CaseStudy */
-.CaseStudy__Hero-Visual {min-height: calc(100vh-7rem);}
-.CaseStudy__Hero-TextSection {min-height: calc(200vh-7rem);}
-.hero-casestudy {overflow: clip;}
+/* ================================
+   Hero — Case Study
+   ================================ */
 
-h1 .CaseStudy__Hero-TextSection-Grid .CaseStudy__Hero-H1 {
-  font-size: var(--text-7xl) !important;
+/* Outer wrapper: clips the hero image to the rounded section corners */
+.hero-casestudy {
+  overflow: clip;
 }
+
+/* Accent-colored section behind the nav + hero image.
+   Bottom corners are rounded per design (80px at desktop, scales down). */
+.CaseStudy__Hero-Section {
+  border-bottom-left-radius: clamp(40px, calc(40px + (80 - 40) * ((100vw - 375px) / (1600 - 375))), 80px);
+  border-bottom-right-radius: clamp(40px, calc(40px + (80 - 40) * ((100vw - 375px) / (1600 - 375))), 80px);
+  overflow: clip;
+}
+
+/* Full-viewport hero image container */
+.Hero-CaseStudy-Image {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.Hero-CaseStudy-Image img,
+.hero-casestudy-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Legacy class names kept for backward compatibility */
+.case-study__hero-image {height: calc(100vh - 16em);}
+.CaseStudy-Hero-TextSection {height: calc(200vh - 16em);}
+.CaseStudy__Hero-Visual {min-height: calc(100vh - 7rem);}
+.CaseStudy__Hero-TextSection {min-height: calc(200vh - 7rem);}
+
+/* Text section that overlays the bottom of the hero image */
+.CaseStudy__Hero-TypeSection {
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-xl);
+}
+
+/* Main headline sizing */
+.CaseStudy__Hero-H1 {
+  font-size: var(--text-7xl);
+}
+
 @media (min-width: 1280px) {
-  h1 .CaseStudy__Hero-TextSection-Grid .CaseStudy__Hero-H1 {
-    font-size: var(--text-8xl) !important;
+  .CaseStudy__Hero-H1 {
+    font-size: var(--text-8xl);
   }
+}
+
+/* HR divider line in the hero text block */
+.CaseStudy__Hero-HR {
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.2;
 }
