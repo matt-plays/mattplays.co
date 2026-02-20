@@ -1,0 +1,104 @@
+/* ============================================================
+   DESIGN TOKENS
+============================================================ */
+:root {
+  /* Colors */
+  --color-page-bg:       #f6f3f1;
+  --color-footer-bg:     #f0edeb;
+  --color-hero-bg:       #ffcec2;
+  --color-dark:          #132026;
+  --color-muted:         #696e70;
+  --color-muted-dark:    #525e66;
+  --color-credit-label:  #292f33;
+  --color-clay-300:      #ede8e6;
+  --color-clay-border:   #d9d7d5;
+  --color-site-comp-bg:  #beb0bf;
+  --color-project-border:#f0edeb;
+  --color-btn-bg:        #b8d1d9;
+  --color-arrow-border:  #64696c;
+  --color-input-bg:      #f6f3f1;
+
+  /* Spacing */
+  --space-xs:  16px;
+  --space-s:   32px;
+  --space-m:   48px;
+  --space-l:   80px;
+  --space-xl:  128px;
+  --space-2xl: 208px;
+
+  /* Border radius */
+  --radius-m:    7.5px;
+  --radius-hero: 80px;
+
+  /* Layout */
+  --page-width:    1600px;
+  --content-width: 1280px;
+  --page-padding:  160px;
+}
+
+/* ============================================================
+   RESET & BASE
+============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--color-page-bg);
+  color: var(--color-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+p, h1, h2, h3 {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* ============================================================
+   FONT UTILITY CLASSES
+   Used on elements that need specific font stacks from Figma.
+   Sharp Grotesk & Söhne are commercial; system fallbacks shown.
+============================================================ */
+.fontGrotesk {
+  font-family: 'Sharp Grotesk Semibold', 'Sharp Grotesk', 'Inter', 'Helvetica Neue', sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-feature-settings: "'ss02' 1, 'lnum' 1, 'pnum' 1";
+}
+
+.fontMono {
+  font-family: 'Söhne Mono', 'IBM Plex Mono', 'Courier New', monospace;
+  font-weight: 400;
+  font-style: normal;
+  font-feature-settings: "'ss02' 1";
+}
+
+.fontSohne {
+  font-family: 'Söhne', 'Inter', 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}

@@ -1,0 +1,120 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.itemInner {
+  border-bottom: 1px solid var(--color-project-border);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: var(--content-width);
+  max-width: 100%;
+  position: relative;
+}
+
+/* Hover highlight card */
+.itemInner::before {
+  content: '';
+  position: absolute;
+  top: calc(50% + 0.5px);
+  left: -20px;
+  right: -20px;
+  transform: translateY(-50%);
+  height: 112px;
+  background-color: transparent;
+  border-radius: 8px;
+  transition: background-color 0.15s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.itemInner:hover::before {
+  background-color: var(--color-footer-bg);
+}
+
+.rowSpacer {
+  height: 32px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.details {
+  display: flex;
+  gap: var(--space-m);
+  align-items: center;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.arrow {
+  height: 22px;
+  width: 63px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.arrow img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.title {
+  font-family: 'Sharp Grotesk Semibold', 'Sharp Grotesk', 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+  color: var(--color-dark);
+  width: 616px;
+  flex-shrink: 0;
+  font-feature-settings: "'ss02' 1, 'lnum' 1, 'pnum' 1";
+}
+
+.role {
+  flex: 1 0 0;
+  font-family: 'Söhne Mono', 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--color-muted);
+  font-feature-settings: "'ss02' 1";
+}
+
+.btn {
+  border: 1px solid var(--color-arrow-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 3px;
+  padding-left: 2px;
+  border-radius: 100px;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.btnIcon {
+  font-family: 'Söhne', 'Inter', sans-serif;
+  font-size: 20px;
+  line-height: 1.625;
+  color: var(--color-muted);
+}
+
+.spacerXl {
+  height: var(--space-xl);
+  width: 100%;
+}

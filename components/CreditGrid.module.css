@@ -1,0 +1,55 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.grid {
+  display: flex;
+  gap: var(--space-m);
+  align-items: flex-start;
+  width: var(--content-width);
+  max-width: 100%;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 395px;
+  flex-shrink: 0;
+}
+
+.label {
+  font-family: 'Sharp Grotesk Semibold', 'Sharp Grotesk', 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--color-credit-label);
+  font-feature-settings: "'ss02' 1";
+}
+
+.spacer {
+  height: 32px;
+  width: 100%;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: 'Söhne Mono', 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--color-muted-dark);
+  font-feature-settings: "'ss02' 1";
+}
+
+.spacerXl {
+  height: var(--space-xl);
+  width: 100%;
+}
