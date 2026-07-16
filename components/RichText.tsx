@@ -68,7 +68,25 @@ const components: PortableTextComponents = {
   },
 };
 
-export default function RichText({ value }: { value: PortableTextBlock[] }) {
+/**
+ * Webflow parity: case-study text sections are plain Webflow text elements
+ * (no <p> wrapper — line breaks are <br> nodes), so the global `p` rule must
+ * not apply. `plain` renders blocks unwrapped, exactly like the export.
+ */
+const plainComponents: PortableTextComponents = {
+  ...components,
+  block: {
+    normal: ({ children }) => <>{children}</>,
+  },
+};
+
+export default function RichText({
+  value,
+  plain = false,
+}: {
+  value: PortableTextBlock[];
+  plain?: boolean;
+}) {
   if (!value?.length) return null;
-  return <PortableText value={value} components={components} />;
+  return <PortableText value={value} components={plain ? plainComponents : components} />;
 }

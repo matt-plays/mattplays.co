@@ -61,7 +61,7 @@ export default function CreditGrid({ block }: { block: CreditGridBlock }) {
                 ></div>
                 {block.intro ? (
                   <div className="text size-lg">
-                    <RichText value={block.intro} />
+                    <RichText value={block.intro} plain />
                   </div>
                 ) : null}
               </div>

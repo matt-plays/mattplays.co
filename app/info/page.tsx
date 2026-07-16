@@ -143,7 +143,8 @@ export default function InfoPage() {
                     Help Scout
                   </a>
                   .<br />
-                  <span className="info-bio-linebreak">From</span> dialing-in components to setting
+                  <span className="info-bio-linebreak">From</span>{" "}
+                  dialing-in components to setting
                   the tone with a new direction doc, my goal is to craft brands that look the part
                   and live up to their missions. It helps that I&rsquo;ve linked up with{" "}
                   <a href="#experience">

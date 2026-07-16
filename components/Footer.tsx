@@ -60,7 +60,13 @@ function TextLink({ link }: { link: NavLinkItem }) {
 
 export default function Footer({ footerLinks, socials }: FooterProps) {
   const navLinks = footerLinks?.length ? footerLinks : FALLBACK_NAV;
-  const followLinks = socials?.length ? socials : FALLBACK_SOCIALS;
+  // Webflow parity: the FOLLOW column omits networks already listed under
+  // CONNECT (LinkedIn), even though the Sanity socials list includes them.
+  const connectLabels = new Set(CONNECT_LINKS.map((l) => (l.label ?? "").toLowerCase()));
+  const allSocials = socials?.length ? socials : FALLBACK_SOCIALS;
+  const followLinks = allSocials.filter(
+    (s) => !connectLabels.has((s.label ?? "").toLowerCase()),
+  );
 
   return (
     <div className="section-padding footer">

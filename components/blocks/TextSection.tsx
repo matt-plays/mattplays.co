@@ -23,7 +23,7 @@ export default function TextSection({ block }: { block: TextSectionBlock }) {
                 className="spacer-xs"
               ></div>
               <div className="text size-lg">
-                {block.body ? <RichText value={block.body} /> : null}
+                {block.body ? <RichText value={block.body} plain /> : null}
               </div>
             </div>
           </div>
