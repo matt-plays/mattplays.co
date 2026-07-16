@@ -1,3 +1,7 @@
-.vercel
+.DS_Store
 node_modules/
 .next/
+.env*.local
+.vercel
+scripts/migrate/.assets/
+scripts/migrate/manifest.json
