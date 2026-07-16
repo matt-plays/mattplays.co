@@ -34,9 +34,17 @@ export const mediaGrid = defineType({
           fields: [
             { name: "alt", type: "string", title: "Alt text" },
             { name: "rounded", type: "boolean", title: "Rounded corners", initialValue: true },
+            {
+              name: "width",
+              type: "string",
+              title: "Width",
+              options: { list: ["full", "half"] },
+              initialValue: "full",
+            },
           ],
         }),
         defineArrayMember({ type: "videoEmbed" }),
+        defineArrayMember({ type: "videoLoop" }),
       ],
     },
   ],

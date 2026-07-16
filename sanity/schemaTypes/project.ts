@@ -59,6 +59,7 @@ export const project = defineType({
         defineArrayMember({ type: "creditGrid" }),
         defineArrayMember({ type: "quote" }),
         defineArrayMember({ type: "videoEmbed" }),
+        defineArrayMember({ type: "videoLoop" }),
       ],
     }),
   ],
