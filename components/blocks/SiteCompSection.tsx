@@ -85,6 +85,13 @@ function CompImage({
 }) {
   if (!image?.asset) return null;
   const cls = ["image-wrapper", "img-border-radius", mask].filter(Boolean).join(" ");
+  // The tablet+mobile pair relies on the images' INTRINSIC widths: the site
+  // CSS sets `img { width: 100% }` (overriding the width attribute) and
+  // `.sitecompsection-tabletmobile` is a flex row, so the two wrappers are
+  // sized by the images' natural widths. Requesting both at w=2000 collapses
+  // the composition into a ~50/50 split; requesting at 2x the layout width
+  // (1392/628) preserves the live 696:314 proportions.
+  const intrinsicWidth = width ? width * 2 : 2000;
   return (
     <div className={cls}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -92,7 +99,7 @@ function CompImage({
         loading="lazy"
         width={width ?? 1058}
         alt={image.alt ?? ""}
-        src={urlFor(image.asset).width(2000).auto("format").url()}
+        src={urlFor(image.asset).width(intrinsicWidth).auto("format").url()}
       />
     </div>
   );

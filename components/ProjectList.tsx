@@ -5,18 +5,28 @@ import type { ProjectCard } from "@/components/blocks/types";
 /**
  * The ordered project list that closes every case study (Webflow's
  * `.collectionlist.is-list`). The live site renders all projects, current one
- * included. Hover reveals (accent rule, triangle, colored hovercard with the
- * project thumb) were Webflow IX2 interactions; replicated with scoped CSS.
- * `w-node` ids are preserved for the ported grid-placement CSS.
+ * included. Hover reveals were Webflow IX2 interactions ("Project List
+ * Hover", a-12/a-13) replicated with scoped CSS:
+ *   - the project-colored triangle at the left is ALWAYS visible (IX2 never
+ *     touches its opacity),
+ *   - the accent rule expands 0 → 91px,
+ *   - the hovercard fades in,
+ *   - the description text darkens and the arrow button inverts.
+ * All at 250ms ease-out, matching the IX2 durations. `w-node` ids are
+ * preserved for the ported grid-placement CSS.
  */
 
 const HOVER_CSS = `
-.projectlist-item .projectlist-hovercard.elevation-m { opacity: 0; transition: opacity .35s ease; pointer-events: none; }
-.link-block:hover .projectlist-hovercard.elevation-m { opacity: 1; }
-.projectlist-accent .projectlist-triangle { opacity: 0; transform: translateX(-0.75rem); transition: opacity .3s ease, transform .3s ease; }
-.link-block:hover .projectlist-triangle { opacity: 1; transform: translateX(0); }
-.projectlist-accent .projectlist-hoverrule { transform: scaleX(0); transform-origin: 0 50%; transition: transform .3s ease; }
-.link-block:hover .projectlist-hoverrule { transform: scaleX(1); }
+.collectionlist.is-list .projectlist-hovercard.elevation-m { opacity: 0; transition: opacity .25s ease-out; }
+.collectionlist.is-list .link-block:hover .projectlist-hovercard.elevation-m { opacity: 1; }
+.collectionlist.is-list .projectlist-hoverrule { width: 0; transition: width .25s ease-out; }
+.collectionlist.is-list .link-block:hover .projectlist-hoverrule { width: 91px; }
+.collectionlist.is-list .projectgrid-item-description { color: rgb(106, 111, 113); transition: color .25s ease-out; }
+.collectionlist.is-list .link-block:hover .projectgrid-item-description { color: rgb(19, 31, 37); }
+.collectionlist.is-list .projectlist-item-button { border-color: rgb(106, 111, 113); background-color: transparent; transition: background-color .25s ease-out, border-color .25s ease-out; }
+.collectionlist.is-list .link-block:hover .projectlist-item-button { border-color: transparent; background-color: rgb(19, 31, 37); }
+.collectionlist.is-list .projectlist-item-buttonarrow { color: rgb(106, 111, 113); transition: color .25s ease-out; }
+.collectionlist.is-list .link-block:hover .projectlist-item-buttonarrow { color: rgb(245, 242, 239); }
 `;
 
 function Triangle() {

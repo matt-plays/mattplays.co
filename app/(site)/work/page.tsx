@@ -16,11 +16,27 @@ export const metadata: Metadata = {
  * the two-column project grid. Each card stacks a primary and secondary
  * thumbnail in the same grid cell (`w-node` ids drive placement in the
  * ported CSS); the secondary crossfades in on hover, which was a Webflow
- * IX2 interaction and is replicated with scoped CSS below.
+ * IX2 interaction ("Project Grid Hover", a-8/a-9) replicated with scoped
+ * CSS below.
+ *
+ * The base `transform: scale3d(1,1,1)` on `.is-secondary` is load-bearing:
+ * `.masked-image` inside it is `position: absolute; inset: 0` and the
+ * wrapper is `position: static` in the ported CSS, so without a transform
+ * the image's containing block is the viewport and it paints over the whole
+ * page. On live, Webflow IX2 sets an inline transform on this node, which
+ * creates the containing block; the scoped CSS reproduces that.
+ * Hover-in: opacity 500ms outQuad, scale to 1.05 over 3s outQuad, arrow
+ * button inverts instantly. Hover-out is instant (IX2 uses duration 0).
  */
 const HOVER_CSS = `
-.projectgrid-item .image-wrapper.img-border-radius.projectgrid-image.is-secondary { transition: opacity .3s ease; }
-.projectgrid-item:hover .image-wrapper.img-border-radius.projectgrid-image.is-secondary { opacity: 1; }
+.projectgrid-item .image-wrapper.img-border-radius.projectgrid-image.is-secondary { transform: scale3d(1, 1, 1); }
+.projectgrid-item:hover .image-wrapper.img-border-radius.projectgrid-image.is-secondary {
+  opacity: 1;
+  transform: scale3d(1.05, 1.05, 1);
+  transition: opacity .5s cubic-bezier(.25, .46, .45, .94), transform 3s cubic-bezier(.25, .46, .45, .94);
+}
+.projectgrid-item .projectlist-item-button { color: rgb(106, 111, 113); border-color: rgb(106, 111, 113); background-color: transparent; }
+.projectgrid-item:hover .projectlist-item-button { color: rgb(245, 242, 239); border-color: transparent; background-color: rgb(19, 31, 37); }
 `;
 
 export default async function WorkPage() {

@@ -59,7 +59,17 @@ function TextLink({ link }: { link: NavLinkItem }) {
 }
 
 export default function Footer({ footerLinks, socials }: FooterProps) {
-  const navLinks = footerLinks?.length ? footerLinks : FALLBACK_NAV;
+  // Webflow parity: the live footer marks Changelog `.disabled` (hidden on
+  // mobile). If the Sanity nav items don't carry the comingSoon flag, inherit
+  // it from the fallback entry with the same label.
+  const fallbackComingSoon = new Map(
+    FALLBACK_NAV.map((l) => [(l.label ?? "").toLowerCase(), l.comingSoon]),
+  );
+  const navLinks = (footerLinks?.length ? footerLinks : FALLBACK_NAV).map((link) => ({
+    ...link,
+    comingSoon:
+      link.comingSoon ?? fallbackComingSoon.get((link.label ?? "").toLowerCase()),
+  }));
   // Webflow parity: the FOLLOW column omits networks already listed under
   // CONNECT (LinkedIn), even though the Sanity socials list includes them.
   const connectLabels = new Set(CONNECT_LINKS.map((l) => (l.label ?? "").toLowerCase()));
