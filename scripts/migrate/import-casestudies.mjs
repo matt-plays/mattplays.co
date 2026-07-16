@@ -75,7 +75,7 @@ async function imageItem(img, { width = "full" } = {}) {
   };
 }
 
-async function videoLoopItem(videoEl, { width = "full" } = {}) {
+async function videoLoopItem(videoEl, { width = "full", posterSource = null } = {}) {
   const sources = [...videoEl.querySelectorAll("source")]
     .map((s) => s.getAttribute("src"))
     .filter(Boolean);
@@ -92,7 +92,11 @@ async function videoLoopItem(videoEl, { width = "full" } = {}) {
     video: { _type: "file", asset: { _type: "reference", _ref: assetId } },
     width,
   };
-  const posterUrl = videoEl.getAttribute("data-poster-url") || videoEl.getAttribute("poster");
+  // Webflow keeps the poster URL on the .w-background-video wrapper div, not the <video>.
+  const posterUrl =
+    posterSource?.getAttribute?.("data-poster-url") ||
+    videoEl.getAttribute("data-poster-url") ||
+    videoEl.getAttribute("poster");
   if (posterUrl) {
     const posterKey = posterUrl.startsWith("http")
       ? normalizeCdnUrl(posterUrl)
@@ -109,8 +113,16 @@ async function videoLoopItem(videoEl, { width = "full" } = {}) {
 async function mediaItems(section) {
   const items = [];
   const seen = new Set();
-  const nodes = section.querySelectorAll("img, video, [data-video-urls]");
+  const nodes = section.querySelectorAll("img, video, [data-video-urls], iframe");
   for (const node of nodes) {
+    if (node.tagName === "IFRAME") {
+      // YouTube/Vimeo embeds (w-embed-youtubevideo / embedly) → videoEmbed
+      let url = node.getAttribute("src") ?? "";
+      const embedly = url.match(/[?&]src=([^&]+)/);
+      if (url.includes("embedly") && embedly) url = decodeURIComponent(embedly[1]);
+      if (url) items.push({ _type: "videoEmbed", _key: key(), url, aspectRatio: "16:9" });
+      continue;
+    }
     if (node.tagName === "IMG") {
       // skip <img> that are poster fallbacks inside background-video wrappers
       if (node.closest("[data-video-urls]") || node.closest("video")) continue;
@@ -126,7 +138,7 @@ async function mediaItems(section) {
       const width = node.closest(".image-grid-2-upgrid") ? "half" : "full";
       let item = null;
       if (videoEl.tagName === "VIDEO") {
-        item = await videoLoopItem(videoEl, { width });
+        item = await videoLoopItem(videoEl, { width, posterSource: node });
       } else {
         // div[data-video-urls] form
         const urls = (node.getAttribute("data-video-urls") ?? "").split(",");
@@ -160,7 +172,8 @@ async function mediaItems(section) {
   const unique = [];
   const refs = new Set();
   for (const it of items) {
-    const ref = it._type === "videoLoop" ? it.video.asset._ref : it.asset._ref;
+    const ref =
+      it._type === "videoLoop" ? it.video.asset._ref : it._type === "videoEmbed" ? it.url : it.asset._ref;
     if (it._type === "videoLoop" && refs.has(ref)) continue;
     refs.add(ref);
     unique.push(it);
@@ -208,7 +221,13 @@ async function parsePage(file) {
         for (const item of creditItems) {
           const label = item.querySelector(".overline")?.textContent.trim();
           const valueEl = item.querySelector(".creditgrid-list");
-          const value = valueEl?.textContent.trim();
+          let value;
+          if (valueEl) {
+            // keep <br>-separated names as newlines (renderer emits <br>)
+            const clone = valueEl.cloneNode(true);
+            clone.querySelectorAll("br").forEach((br) => br.replaceWith("\n"));
+            value = clone.textContent.trim();
+          }
           const url = valueEl?.querySelector("a")?.getAttribute("href") ?? undefined;
           if (label || value) credits.push({ _type: "credit", _key: key(), label, value, url });
         }
@@ -236,7 +255,7 @@ async function parsePage(file) {
 
     if (first === "video-wrapperwidth" || el.querySelector?.(":scope > .video-wrapperwidth")) {
       const items = await mediaItems(el);
-      blocks.push(...items.filter((i) => i._type === "videoLoop"));
+      blocks.push(...items.filter((i) => i._type === "videoLoop" || i._type === "videoEmbed"));
       continue;
     }
 

@@ -17,7 +17,24 @@ export const projectBySlugQuery = defineQuery(`
     heroVisual, primaryThumbnail, secondaryThumbnail,
     body[] {
       ...,
-      _type == "mediaGrid" => { items[] { ..., asset-> } },
+      _type == "mediaGrid" => {
+        items[] {
+          ...,
+          _type == "image" => { asset-> },
+          _type == "videoLoop" => {
+            "videoUrl": video.asset->url,
+            "videoFile": video.asset->originalFilename,
+            "posterUrl": poster.asset->url,
+            "posterAspect": poster.asset->metadata.dimensions.aspectRatio
+          }
+        }
+      },
+      _type == "videoLoop" => {
+        "videoUrl": video.asset->url,
+        "videoFile": video.asset->originalFilename,
+        "posterUrl": poster.asset->url,
+        "posterAspect": poster.asset->metadata.dimensions.aspectRatio
+      },
       _type == "siteCompSection" => { media[] { ..., asset-> } }
     }
   }
