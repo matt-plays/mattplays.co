@@ -5,3 +5,4 @@ node_modules/
 .vercel
 scripts/migrate/.assets/
 scripts/migrate/manifest.json
+scripts/visual-diff/out/
