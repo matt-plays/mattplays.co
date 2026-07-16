@@ -6,7 +6,19 @@
 
 **Architecture:** Single Next.js App Router app with embedded Sanity Studio. Static generation + tag-based revalidation via Sanity webhook. One-time migration scripts convert Webflow CSV/HTML exports into Sanity documents and re-host every asset on Sanity's CDN.
 
-**Tech Stack:** Next.js 15, React 19, TypeScript, Tailwind, `sanity` + `next-sanity`, Vercel Analytics, Vercel hosting.
+**Tech Stack:** Next.js 16 (bumped from 15 — current `next-sanity` requires it), React 19, TypeScript, Tailwind, `sanity` + `next-sanity`, Vercel Analytics, Vercel hosting.
+
+> **Status (2026-07-15):** Phases 0–4 complete and Phase 5 parity pass done — all
+> routes verified against the live site, fixes committed. Sanity project
+> `nexjv4lx` holds all content (12 changelog, 60 blog, 13 projects incl. case
+> study bodies, 159 images + video file assets); revalidation webhook created.
+> Branch pushed; Vercel deploy currently **blocked at platform level** — needs
+> Matt to unblock in the Vercel dashboard and add env vars
+> (`NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`,
+> `SANITY_REVALIDATE_SECRET` — values in `.env.local`). Phase 6 (cutover)
+> remains Matt-gated. Deviations from plan: Next 16; `videoLoop` block type
+> added for self-hosted looping videos; blocks parsed by script + agent QA
+> instead of pure manual pass.
 
 **Source materials:**
 - CSVs: `~/Downloads/Portfolio - {Changelog Updates,Blog Posts,Projects} - *.csv`
