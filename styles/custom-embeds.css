@@ -91,3 +91,23 @@ border-radius: 0px 10px 10px 0px;
 .overline {
   text-decoration-line: none;
 }
+
+/* Case study hero entrance — replicates Webflow's GSAP "Case Study Hero Fade"
+   (opacity 0→1 with power3.in, scale 0.9→1 with circ.out, 0.5s, on load).
+   CSS-only: two parallel animations give per-property easing; the element
+   remounts on each client navigation so it replays per case study. */
+@media (prefers-reduced-motion: no-preference) {
+  .casestudy__hero-visual {
+    animation:
+      casestudy-hero-fade 0.5s cubic-bezier(0.895, 0.03, 0.685, 0.22) both,
+      casestudy-hero-scale 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) both;
+  }
+}
+@keyframes casestudy-hero-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes casestudy-hero-scale {
+  from { transform: scale(0.9); }
+  to { transform: scale(1); }
+}
