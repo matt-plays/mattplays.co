@@ -52,6 +52,38 @@ border-radius: 0px 10px 10px 0px;
   max-width: 720px;
 }
 
+/* Info page photo row — scroll-driven horizontal slide (same pattern as the
+   sarah-and-matt timeline gallery). The section declares a view timeline; the
+   strip pans by the overflow measured into --strip-overflow by
+   components/InfoPhotoStrip.tsx. Because the strip is centered, it overflows
+   half on each side, so we slide from +overflow/2 to -overflow/2.
+   Gated behind @supports so browsers without scroll-driven animations (and
+   reduced-motion users) keep the original static centered strip. */
+@supports (animation-timeline: --infostrip) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Specificity must beat `.section-padding.isphotorow { overflow: hidden }`
+       in the ported Webflow CSS. `clip` clips the translated strip without
+       creating a scroll container (overflow: hidden boxes are programmatically
+       scrollable, which would fight the transform). */
+    .section-padding.isphotorow.infostrip-section {
+      overflow: clip;
+      view-timeline-name: --infostrip;
+      view-timeline-axis: block;
+    }
+    .infostrip-strip {
+      will-change: transform;
+      animation: infostrip-slide linear both;
+      animation-timeline: --infostrip;
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+@keyframes infostrip-slide {
+  from { transform: translateX(calc(var(--strip-overflow, 0px) / 2)); }
+  to   { transform: translateX(calc(-1 * var(--strip-overflow, 0px) / 2)); }
+}
+
 /* Webflow's .overline is an eyebrow-text style (uppercase mono headings in
    the footer, credit grids, text sections). Tailwind ships an `overline`
    utility (text-decoration-line: overline) with the same name, which drew a

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import InfoPhotoStrip from "@/components/InfoPhotoStrip";
 
 export const metadata: Metadata = {
   title: "Info",
@@ -179,18 +180,7 @@ export default function InfoPage() {
           </div>
         </div>
       </div>
-      <div className="section-padding isphotorow">
-        <div className="container-width w-container">
-          <div className="image-photorow-grid">
-            <img src="/images/Info-PhotoRow-01.webp" loading="lazy" alt="" className="image-photorow-image" />
-            <img src="/images/Info-PhotoRow-02.webp" loading="lazy" alt="" className="image-photorow-image" />
-            <img src="/images/Info-PhotoRow-03.webp" loading="lazy" alt="" className="image-photorow-image" />
-            <img src="/images/Info-PhotoRow-04.webp" loading="lazy" alt="" className="image-photorow-image" />
-            <img src="/images/Info-PhotoRow-05.webp" loading="lazy" alt="" className="image-photorow-image" />
-          </div>
-          <div className="spacer-xl"></div>
-        </div>
-      </div>
+      <InfoPhotoStrip />
       <div className="hs-section">
         <div className="section-padding">
           <div className="container-width w-container">

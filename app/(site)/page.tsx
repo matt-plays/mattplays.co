@@ -325,10 +325,18 @@ export default async function Home() {
               id="w-node-_8c70fbbe-689d-24a8-dc52-b3d4866d601b-119d1161"
               className="div-block-27"
             >
+              {/* Both width AND height are required here: the Webflow export
+                  shipped only `width`, so the browser couldn't derive an
+                  aspect ratio and the unloaded img collapsed to 0px tall —
+                  and a zero-height `loading="lazy"` image never intersects
+                  the viewport, so it never loaded at all (the pre-existing
+                  "sometimes broken, sometimes invisible" bug). The intrinsic
+                  ratio (2116x2400) reserves space and lets lazy-load fire. */}
               <img
                 src="/images/newenglandbrew-6pack.png"
                 loading="lazy"
                 width={1058}
+                height={1200}
                 alt=""
                 className="image-ne-brew"
               />
