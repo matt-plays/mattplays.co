@@ -74,8 +74,11 @@ export default async function ChangelogPage() {
                             <img
                               alt={entry.image.alt ?? ""}
                               loading="lazy"
+                              decoding="async"
                               width="1280"
                               src={urlFor(entry.image).width(1280).auto("format").url()}
+                              srcSet={`${urlFor(entry.image).width(640).auto("format").url()} 640w, ${urlFor(entry.image).width(1280).auto("format").url()} 1280w`}
+                              sizes="(max-width: 767px) 100vw, 60vw"
                               className="changelog-image img-border-radius"
                             />
                           </div>

@@ -37,6 +37,8 @@ export function BackgroundVideo({ loop, inGrid = false }: { loop: VideoLoopValue
         loop
         muted
         playsInline
+        preload="metadata"
+        poster={loop.posterUrl ?? undefined}
         data-wf-ignore="true"
         data-object-fit="cover"
         style={loop.posterUrl ? { backgroundImage: `url("${loop.posterUrl}")` } : undefined}

@@ -63,12 +63,19 @@ export default async function CaseStudyPage({
   if (!project) notFound();
 
   const color = safeColor(project.color);
+  // The hero paints as a CSS background capped at 1920px wide (56.25% tall),
+  // so 2000px covers it; the old 3200px request shipped ~2x the bytes.
   const heroImage = project.heroVisual
-    ? urlFor(project.heroVisual).width(3200).auto("format").url()
+    ? urlFor(project.heroVisual).width(2000).auto("format").url()
     : undefined;
 
   return (
     <main>
+      {/* Background images aren't discovered until CSSOM builds; preload the
+          above-fold hero so it starts alongside the document. */}
+      {heroImage ? (
+        <link rel="preload" as="image" href={heroImage} fetchPriority="high" />
+      ) : null}
       {/* On the live site the nav sits inside a project-colored
           .hero-casestudy--nav-background wrapper; here the nav is global
           chrome, so this route-scoped style paints it instead. */}

@@ -41,7 +41,10 @@ export default async function Home() {
               <div className="itw-mountaincontainer">
                 <img
                   src="/images/itw-tuckermancollage.webp"
+                  srcSet="/images/itw-tuckermancollage-800.webp 800w, /images/itw-tuckermancollage.webp 1728w"
+                  sizes="(max-width: 767px) 100vw, 774px"
                   loading="lazy"
+                  decoding="async"
                   width={774}
                   alt="Mountain collage graphic"
                   className="itw-tuckermancollage"
@@ -72,7 +75,14 @@ export default async function Home() {
                 href={workHref("rock-dove")}
                 className="homepage-linkitem hide-underline w-inline-block"
               ></Link>
-              <img src="/images/RockDove-CaseStudy-01.jpg" loading="lazy" alt="" />
+              <img
+                src="/images/RockDove-CaseStudy-01.webp"
+                srcSet="/images/RockDove-CaseStudy-01-800.webp 800w, /images/RockDove-CaseStudy-01.webp 2560w"
+                sizes="(max-width: 767px) 100vw, 1280px"
+                loading="lazy"
+                decoding="async"
+                alt=""
+              />
             </div>
           </div>
           <div className="spacer-xl"></div>
@@ -88,8 +98,11 @@ export default async function Home() {
             >
               <div className="div-block-32">
                 <img
-                  src="/images/7hw-jersey.png"
+                  src="/images/7hw-jersey.webp"
+                  srcSet="/images/7hw-jersey-800.webp 800w, /images/7hw-jersey.webp 1886w"
+                  sizes="(max-width: 767px) 100vw, 848px"
                   loading="lazy"
+                  decoding="async"
                   width={848}
                   alt="Seven Hills Wheelmen Cycling Jersey"
                   className="image-7hw-jersey"
@@ -103,7 +116,10 @@ export default async function Home() {
             >
               <img
                 src="/images/burton-17ss-cover.webp"
+                srcSet="/images/burton-17ss-cover-800.webp 800w, /images/burton-17ss-cover.webp 1666w"
+                sizes="(max-width: 767px) 100vw, 833px"
                 loading="lazy"
+                decoding="async"
                 alt="Burton Snowboards Spring Summer Catalog cover"
                 className="img-border-radius image-lil-dropshadow"
               />
@@ -116,6 +132,7 @@ export default async function Home() {
               <img
                 src="/images/7hw-logodiagram.png"
                 loading="lazy"
+                decoding="async"
                 alt=""
                 className="image-21"
               />
@@ -128,6 +145,7 @@ export default async function Home() {
               <img
                 src="/images/icon-wherevertagline.gif"
                 loading="lazy"
+                decoding="async"
                 alt=""
                 className="icon-wherever-gif"
               />
@@ -144,6 +162,7 @@ export default async function Home() {
                 <img
                   src="/images/burton-passalong-badge-02.png"
                   loading="lazy"
+                  decoding="async"
                   alt=""
                   className="image-burton-passalong-2"
                 />
@@ -154,8 +173,9 @@ export default async function Home() {
                 className="hide-underline w-inline-block"
               >
                 <img
-                  src="/images/burton-passalong-peace.png"
+                  src="/images/burton-passalong-peace.webp"
                   loading="lazy"
+                  decoding="async"
                   alt=""
                   className="image-burton-passalong-peace"
                 />
@@ -168,6 +188,7 @@ export default async function Home() {
                 <img
                   src="/images/burton-passalong-badge-01.png"
                   loading="lazy"
+                  decoding="async"
                   alt=""
                   className="image-burton-passalong-yellow"
                 />
@@ -187,8 +208,9 @@ export default async function Home() {
             >
               <div className="image-wrapper img-border-radius islobster">
                 <img
-                  src="/images/HelpScout-DelightLabs-Lobster.png"
+                  src="/images/HelpScout-DelightLabs-Lobster.webp"
                   loading="lazy"
+                  decoding="async"
                   alt=""
                   className="image-22"
                 />
@@ -201,8 +223,9 @@ export default async function Home() {
             >
               <div className="image-wrapper img-border-radius">
                 <img
-                  src="/images/HelpScout-PrimaryVisual.jpg"
+                  src="/images/HelpScout-PrimaryVisual.webp"
                   loading="lazy"
+                  decoding="async"
                   width={833}
                   alt=""
                   className="hs-evolution img-border-radius"
@@ -223,6 +246,7 @@ export default async function Home() {
               <img
                 src="/images/hs-atg-brandboard.webp"
                 loading="lazy"
+                decoding="async"
                 alt=""
                 className="image-atg-brandboard img-border-radius left-bleed"
               />
@@ -235,6 +259,7 @@ export default async function Home() {
               <img
                 src="/images/epicurrence-breckenridge.webp"
                 loading="lazy"
+                decoding="async"
                 alt=""
                 className="image-epicurrence-badge"
               />
@@ -254,6 +279,7 @@ export default async function Home() {
               <img
                 src="/images/burton-dealerbooks.webp"
                 loading="lazy"
+                decoding="async"
                 alt=""
                 className="image-burton-dealer img-border-radius"
               />
@@ -280,7 +306,14 @@ export default async function Home() {
         <div className="container-width w-container">
           <div className="image-wrapper-width img-border-radius">
             <Link href={workHref("in-the-works")} className="hide-underline w-inline-block">
-              <img src="/images/ITW-Intro-07.jpg" loading="lazy" alt="" />
+              <img
+                src="/images/ITW-Intro-07.webp"
+                srcSet="/images/ITW-Intro-07-800.webp 800w, /images/ITW-Intro-07.webp 2560w"
+                sizes="(max-width: 767px) 100vw, 1280px"
+                loading="lazy"
+                decoding="async"
+                alt=""
+              />
             </Link>
           </div>
           <div className="spacer-xl"></div>
@@ -297,6 +330,7 @@ export default async function Home() {
               <img
                 src="/images/Personal-85for85-BearsEars-OursDribbbleGIF-Portfolio.gif"
                 loading="lazy"
+                decoding="async"
                 width={384}
                 alt=""
                 className="image-85for85-ours"
@@ -310,6 +344,7 @@ export default async function Home() {
               <img
                 src="/images/itw-category-illo-growth.webp"
                 loading="lazy"
+                decoding="async"
                 alt=""
                 className="image-itw-category-illo"
               />
@@ -333,8 +368,11 @@ export default async function Home() {
                   "sometimes broken, sometimes invisible" bug). The intrinsic
                   ratio (2116x2400) reserves space and lets lazy-load fire. */}
               <img
-                src="/images/newenglandbrew-6pack.png"
+                src="/images/newenglandbrew-6pack.webp"
+                srcSet="/images/newenglandbrew-6pack-800.webp 800w, /images/newenglandbrew-6pack.webp 2000w"
+                sizes="(max-width: 767px) 100vw, 1058px"
                 loading="lazy"
+                decoding="async"
                 width={1058}
                 height={1200}
                 alt=""
@@ -360,6 +398,7 @@ export default async function Home() {
                 <img
                   src="/images/typehike-acadia.webp"
                   loading="lazy"
+                  decoding="async"
                   width={993}
                   alt="Acadia poster for Type Hike"
                   className="image-typehike-acadia img-border-radius"

@@ -170,6 +170,7 @@ export default function InfoPage() {
                 <img
                   src="/images/About-Bio.webp"
                   loading="lazy"
+                  decoding="async"
                   width="261"
                   alt=""
                   className="image-14"
@@ -220,6 +221,7 @@ export default function InfoPage() {
               <img
                 src="/images/Info-PhotoGrid-01.webp"
                 loading="lazy"
+                decoding="async"
                 alt=""
                 className="image-photogrid-image"
               />
@@ -231,6 +233,7 @@ export default function InfoPage() {
               <img
                 src="/images/Info-PhotoGrid-02.webp"
                 loading="lazy"
+                decoding="async"
                 id="w-node-_3c777035-a7a3-69b3-55e1-49caf9366f2f-f9366f29"
                 alt=""
                 className="image-photogrid-image"
@@ -238,6 +241,7 @@ export default function InfoPage() {
               <img
                 src="/images/Info-PhotoGrid-03.webp"
                 loading="lazy"
+                decoding="async"
                 id="w-node-_3c777035-a7a3-69b3-55e1-49caf9366f30-f9366f29"
                 alt=""
                 className="image-photogrid-image"
@@ -309,7 +313,7 @@ export default function InfoPage() {
         <div className="section-padding">
           <div className="container-width w-container">
             <div className="image-wrapper img-border-radius">
-              <img src="/images/Personal-WoodStreet-Office-5505.jpg" loading="lazy" alt="" />
+              <img src="/images/Personal-WoodStreet-Office-5505.webp" loading="lazy" decoding="async" alt="" />
             </div>
           </div>
         </div>
@@ -387,8 +391,9 @@ export default function InfoPage() {
       <div className="image-fullviewport">
         <div className="image-fullviewport-container">
           <img
-            src="/images/Personal-WoodStreet-Office-5442.jpg"
+            src="/images/Personal-WoodStreet-Office-5442.webp"
             loading="lazy"
+            decoding="async"
             alt=""
             className="image-fullviewport-image"
           />
@@ -453,7 +458,7 @@ export default function InfoPage() {
         <div className="section-padding">
           <div className="container-width w-container">
             <div className="image-wrapper img-border-radius">
-              <img src="/images/Info-Photo-03.webp" loading="lazy" alt="" />
+              <img src="/images/Info-Photo-03.webp" loading="lazy" decoding="async" alt="" />
             </div>
           </div>
         </div>

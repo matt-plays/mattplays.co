@@ -1094,7 +1094,7 @@ figure {
 
 .icon-lp-body {
   background-color: #f8f1e1;
-  background-image: url('/images/icon-photo-collage.png');
+  background-image: url('/images/icon-photo-collage.webp');
   background-position: 100% -1px;
   background-repeat: no-repeat;
   background-size: 36vw;
@@ -1841,7 +1841,7 @@ figure {
 .casestudy__hero-visual {
   z-index: 99;
   background-color: #0000;
-  background-image: url('/images/itw-issue-collage.jpg');
+  background-image: url('/images/itw-issue-collage.webp');
   background-position: 50% 0;
   background-size: cover;
   border-radius: .5rem;

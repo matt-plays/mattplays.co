@@ -7,15 +7,15 @@ export const metadata: Metadata = {
 };
 
 const postArtImages = [
-  "/images/ITW-PostArt-01.jpg",
-  "/images/ITW-PostArt-02.jpg",
-  "/images/ITW-PostArt-03.jpg",
-  "/images/ITW-PostArt-04.jpg",
-  "/images/ITW-PostArt-05.jpg",
-  "/images/ITW-PostArt-06.jpg",
-  "/images/ITW-PostArt-07.jpg",
-  "/images/ITW-PostArt-08.jpg",
-  "/images/ITW-PostArt-09.jpg",
+  "/images/ITW-PostArt-01.webp",
+  "/images/ITW-PostArt-02.webp",
+  "/images/ITW-PostArt-03.webp",
+  "/images/ITW-PostArt-04.webp",
+  "/images/ITW-PostArt-05.webp",
+  "/images/ITW-PostArt-06.webp",
+  "/images/ITW-PostArt-07.webp",
+  "/images/ITW-PostArt-08.webp",
+  "/images/ITW-PostArt-09.webp",
 ];
 
 export default function HeroSketchPage() {
@@ -58,12 +58,12 @@ export default function HeroSketchPage() {
               id="w-node-_63ec59ab-40b9-90e5-1d67-a17718a92370-119d1170"
               className="hs-hero-image"
             >
-              <img src="/images/platform-hero-visual.png" loading="lazy" alt="" className="hs-image" />
+              <img src="/images/platform-hero-visual.webp" loading="lazy" decoding="async" alt="" className="hs-image" />
             </div>
           </div>
         </div>
         <div className="hs-hero-background">
-          <img src="/images/platform-hero-background.png" loading="lazy" alt="" className="image-20" />
+          <img src="/images/platform-hero-background.webp" loading="lazy" decoding="async" alt="" className="image-20" />
         </div>
       </div>
       <div className="image-grid-3x3">
@@ -72,7 +72,7 @@ export default function HeroSketchPage() {
             <div className="grid-3x3">
               {postArtImages.map((src) => (
                 <div key={src} className="image-wrapper img-border-radius projectgrid-image-33">
-                  <img loading="lazy" alt="" src={src} />
+                  <img loading="lazy" decoding="async" alt="" src={src} />
                 </div>
               ))}
             </div>
@@ -139,6 +139,7 @@ export default function HeroSketchPage() {
           <img
             src="/images/Info-Photo-02.webp"
             loading="lazy"
+            decoding="async"
             alt=""
             className="image-fullviewport-image"
           />

@@ -22,6 +22,8 @@ export default function BackgroundVideo({ className, poster, mp4, webm }: Backgr
         muted
         loop
         playsInline
+        preload="metadata"
+        poster={poster}
         style={{ backgroundImage: `url("${poster}")` }}
         data-object-fit="cover"
       >

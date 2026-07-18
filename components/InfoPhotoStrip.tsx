@@ -51,7 +51,7 @@ export default function InfoPhotoStrip() {
       <div className="container-width w-container">
         <div ref={stripRef} className="image-photorow-grid infostrip-strip">
           {PHOTOS.map((src) => (
-            <img key={src} src={src} loading="lazy" alt="" className="image-photorow-image" />
+            <img key={src} src={src} loading="lazy" decoding="async" alt="" className="image-photorow-image" />
           ))}
         </div>
         <div className="spacer-xl"></div>

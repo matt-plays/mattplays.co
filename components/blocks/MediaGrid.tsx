@@ -16,14 +16,24 @@ import type { MediaGridBlock, MediaGridItem, SanityImageValue } from "./types";
  * grids and full-viewport sections end with .spacer-xl.
  */
 
+/** Build a 2-step srcset (half width for small screens, full for desktop). */
+function gridSrcSet(asset: NonNullable<SanityImageValue["asset"]>, width: number) {
+  const half = Math.round(width / 2);
+  return [half, width]
+    .map((w) => `${urlFor(asset).width(w).auto("format").url()} ${w}w`)
+    .join(", ");
+}
+
 function GridImage({
   item,
   cellClass,
   width = 2000,
+  sizes = "(max-width: 767px) 100vw, 1280px",
 }: {
   item: SanityImageValue;
   cellClass?: string;
   width?: number;
+  sizes?: string;
 }) {
   if (!item.asset) return null;
   const rounded = item.rounded !== false;
@@ -35,15 +45,25 @@ function GridImage({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={urlFor(item.asset).width(width).auto("format").url()}
+        srcSet={gridSrcSet(item.asset, width)}
+        sizes={sizes}
         loading="lazy"
+        decoding="async"
         alt={item.alt ?? ""}
       />
     </div>
   );
 }
 
-function GridCell({ item }: { item: MediaGridItem }) {
-  if (item._type === "image") return <GridImage item={item} />;
+function GridCell({ item, half = false }: { item: MediaGridItem; half?: boolean }) {
+  if (item._type === "image")
+    return (
+      <GridImage
+        item={item}
+        width={half ? 1400 : 2000}
+        sizes={half ? "(max-width: 767px) 100vw, 50vw" : undefined}
+      />
+    );
   if (item._type === "videoLoop") {
     return (
       <div className="image-wrapper img-border-radius">
@@ -100,8 +120,13 @@ export default function MediaGrid({
             <div key={item._key} className="image-fullviewport-container">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={urlFor(item.asset).width(3200).auto("format").url()}
+                src={urlFor(item.asset).width(2560).auto("format").url()}
+                srcSet={[800, 1600, 2560]
+                  .map((w) => `${urlFor(item.asset!).width(w).auto("format").url()} ${w}w`)
+                  .join(", ")}
+                sizes="100vw"
                 loading="lazy"
+                decoding="async"
                 alt={item.alt ?? ""}
                 className="image-fullviewport-image"
               />
@@ -131,6 +156,7 @@ export default function MediaGrid({
                     item={item}
                     cellClass="projectgrid-image-33"
                     width={1200}
+                    sizes="(max-width: 767px) 100vw, 50vw"
                   />
                 ) : null
               )}
@@ -151,7 +177,7 @@ export default function MediaGrid({
             row.pair ? (
               <div key={row.items[0]._key} className="image-grid-2-upgrid">
                 {row.items.map((item) => (
-                  <GridCell key={item._key} item={item} />
+                  <GridCell key={item._key} item={item} half />
                 ))}
               </div>
             ) : (

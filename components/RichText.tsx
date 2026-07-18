@@ -30,8 +30,11 @@ const components: PortableTextComponents = {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={urlFor(value).width(1600).auto("format").url()}
+            srcSet={`${urlFor(value).width(800).auto("format").url()} 800w, ${urlFor(value).width(1600).auto("format").url()} 1600w`}
+            sizes="(max-width: 767px) 100vw, 800px"
             alt={value.alt ?? ""}
             loading="lazy"
+            decoding="async"
           />
           {value.caption ? <figcaption>{value.caption}</figcaption> : null}
         </figure>

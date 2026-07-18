@@ -86,7 +86,7 @@ export default function Footer({ footerLinks, socials }: FooterProps) {
           <Link href="/" className="footer-logo-link w-inline-block">
             {/* Webflow parity: animated gif logo, plain img */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/Portfolio-Logo.gif" loading="lazy" alt="Matt Plays home" />
+            <img src="/images/Portfolio-Logo.gif" loading="lazy" decoding="async" alt="Matt Plays home" />
           </Link>
         </div>
         <div className="spacer-l"></div>
@@ -195,6 +195,7 @@ export default function Footer({ footerLinks, socials }: FooterProps) {
             <img
               src="/images/portfolio-footer-arrow.svg"
               loading="lazy"
+              decoding="async"
               alt=""
               className="footer--tagline--arrow"
             />
@@ -206,8 +207,9 @@ export default function Footer({ footerLinks, socials }: FooterProps) {
             </h6>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/portfolio-footer-logo-new-eng.png"
+              src="/images/portfolio-footer-logo-new-eng.webp"
               loading="lazy"
+              decoding="async"
               alt=""
               className="footer--tagline--new-eng"
             />

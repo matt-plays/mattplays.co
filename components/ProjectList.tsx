@@ -108,8 +108,11 @@ export default function ProjectList({
                         {project.primaryThumbnail ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
-                            src={urlFor(project.primaryThumbnail).width(1200).auto("format").url()}
+                            // Hovercard thumb renders at max-width 25% of the
+                            // card, so 800px covers retina comfortably.
+                            src={urlFor(project.primaryThumbnail).width(800).auto("format").url()}
                             loading="lazy"
+                            decoding="async"
                             alt=""
                             className="projectlist-thumb"
                           />

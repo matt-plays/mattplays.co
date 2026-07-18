@@ -76,8 +76,11 @@ export default async function WorkPage() {
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
                             loading="lazy"
+                            decoding="async"
                             alt={project.title ?? ""}
                             src={urlFor(project.primaryThumbnail).width(1600).auto("format").url()}
+                            srcSet={`${urlFor(project.primaryThumbnail).width(800).auto("format").url()} 800w, ${urlFor(project.primaryThumbnail).width(1600).auto("format").url()} 1600w`}
+                            sizes="(max-width: 767px) 100vw, 50vw"
                             className="masked-image"
                           />
                         ) : null}
@@ -90,11 +93,14 @@ export default async function WorkPage() {
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
                             loading="lazy"
+                            decoding="async"
                             alt=""
                             src={urlFor(project.secondaryThumbnail)
                               .width(1600)
                               .auto("format")
                               .url()}
+                            srcSet={`${urlFor(project.secondaryThumbnail).width(800).auto("format").url()} 800w, ${urlFor(project.secondaryThumbnail).width(1600).auto("format").url()} 1600w`}
+                            sizes="(max-width: 767px) 100vw, 50vw"
                             className="masked-image"
                           />
                         ) : null}

@@ -43,8 +43,9 @@ export default function HomeHero() {
             <div className="homepagehero-brandsvisual">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/hero-brands-fpo.png"
-                loading="lazy"
+                src="/images/hero-brands-fpo.webp"
+                loading="eager"
+                fetchPriority="high"
                 width={105}
                 style={visualStyle(12, 100, hovered)}
                 alt=""
@@ -58,7 +59,8 @@ export default function HomeHero() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/hero-ad-fpo.webp"
-                loading="lazy"
+                loading="eager"
+                fetchPriority="high"
                 width={105}
                 style={visualStyle(-8, 0, hovered)}
                 alt="Colorful dealer books for Burton Snowboards"

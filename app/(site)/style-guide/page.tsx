@@ -112,6 +112,7 @@ export default function StyleGuidePage() {
                 <img
                   src="/images/hs-atg-brandboard.webp"
                   loading="lazy"
+                  decoding="async"
                   alt=""
                   className="animation-image-zoom"
                 />
@@ -120,13 +121,13 @@ export default function StyleGuidePage() {
                 id="w-node-_23f84df3-f1c6-6b0d-38d4-8e4ca97496d4-119d1176"
                 className="image-wrapper img-border-radius animation-viewport-fade"
               >
-                <img src="/images/hs-atg-brandboard.webp" loading="lazy" alt="" />
+                <img src="/images/hs-atg-brandboard.webp" loading="lazy" decoding="async" alt="" />
               </div>
               <div
                 id="w-node-_3fe1a0f2-9079-9998-3cfe-67cd854e25d2-119d1176"
                 className="img-border-radius"
               >
-                <img src="/images/hs-atg-brandboard.webp" loading="lazy" alt="" />
+                <img src="/images/hs-atg-brandboard.webp" loading="lazy" decoding="async" alt="" />
               </div>
             </div>
           </div>

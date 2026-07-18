@@ -97,6 +97,7 @@ function CompImage({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         loading="lazy"
+        decoding="async"
         width={width ?? 1058}
         alt={image.alt ?? ""}
         src={urlFor(image.asset).width(intrinsicWidth).auto("format").url()}

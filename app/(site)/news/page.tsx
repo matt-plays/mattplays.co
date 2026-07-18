@@ -13,7 +13,7 @@ export default function NewsPage() {
       <BodyClass className="icon-lp-body" />
       <div className="icon-lp">
         <div className="container-width icon-lp-overrides w-container">
-          <img src="/images/icon-logo.svg" loading="lazy" width="200" alt="" className="icon-lp-logo" />
+          <img src="/images/icon-logo.svg" loading="lazy" decoding="async" width="200" alt="" className="icon-lp-logo" />
           <div className="icon-lp-text text-style-text-small">
             We started Icon Snowskates in 2008—just over a decade ago. Back then, most snowskates
             were manufactured in China, undercutting the needs and expectations of everyone pushing

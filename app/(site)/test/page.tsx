@@ -19,7 +19,7 @@ export default function TestPage() {
         <div className="spacer-l"></div>
         <div className="div-block-17">
           <a href="/" className="footer-logo-link w-inline-block">
-            <img src="/images/Portfolio-Logo.gif" loading="lazy" alt="" />
+            <img src="/images/Portfolio-Logo.gif" loading="lazy" decoding="async" alt="" />
           </a>
         </div>
         <div className="spacer-l"></div>
@@ -149,6 +149,7 @@ export default function TestPage() {
             <img
               src="/images/portfolio-footer-arrow.svg"
               loading="lazy"
+              decoding="async"
               alt=""
               className="footer--tagline--arrow"
             />
@@ -159,8 +160,9 @@ export default function TestPage() {
               made remotely in new england
             </h6>
             <img
-              src="/images/portfolio-footer-logo-new-eng.png"
+              src="/images/portfolio-footer-logo-new-eng.webp"
               loading="lazy"
+              decoding="async"
               alt=""
               className="footer--tagline--new-eng"
             />
