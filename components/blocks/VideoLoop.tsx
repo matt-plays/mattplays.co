@@ -4,16 +4,10 @@ import type { VideoLoopValue } from "./types";
  * Webflow wraps background videos in an aspect-ratio class:
  *   .video-sixteennine (56.25%) | .video-fourthreereal (75%) | .video-fourthree (133.33%)
  * The class isn't stored in Sanity, so derive it from the poster's aspect
- * ratio, with a filename override for the two portrait-cropped loops whose
- * posters are landscape (Burton web design / Icon Snowskates brand film).
+ * ratio. (.video-fourthree is the portrait box — Webflow's final export kept
+ * some landscape loops on that class by mistake, so don't mirror its markup.)
  */
-const PORTRAIT_CROPPED = ["BurtonWebDesign-SSVideo", "wherever-brand-narrative"];
-
 export function loopAspectClass(loop: VideoLoopValue, inGrid = false): string {
-  const file = loop.videoFile ?? "";
-  if (PORTRAIT_CROPPED.some((f) => file.includes(f))) {
-    return "video-fourthree";
-  }
   const aspect = loop.posterAspect ?? 16 / 9;
   if (aspect < 1) return "video-fourthree";
   if (inGrid) return "video-fourthreereal"; // 2-up cells render 4:3
