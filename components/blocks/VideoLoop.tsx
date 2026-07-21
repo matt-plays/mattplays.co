@@ -1,17 +1,16 @@
 import type { VideoLoopValue } from "./types";
 
 /**
- * Webflow wraps background videos in an aspect-ratio class:
- *   .video-sixteennine (56.25%) | .video-fourthreereal (75%) | .video-fourthree (133.33%)
- * The class isn't stored in Sanity, so derive it from the poster's aspect
- * ratio. (.video-fourthree is the portrait box — Webflow's final export kept
- * some landscape loops on that class by mistake, so don't mirror its markup.)
+ * Background videos sit in an aspect-ratio wrapper class:
+ *   .video-sixteennine (56.25%, 16:9) | .video-fourthree (75%, 4:3) |
+ *   .video-threefour (133.33%, 3:4 portrait)
+ * The class isn't stored in Sanity, so derive it from the poster's aspect ratio.
  */
 export function loopAspectClass(loop: VideoLoopValue, inGrid = false): string {
   const aspect = loop.posterAspect ?? 16 / 9;
-  if (aspect < 1) return "video-fourthree";
-  if (inGrid) return "video-fourthreereal"; // 2-up cells render 4:3
-  return aspect >= 1.6 ? "video-sixteennine" : "video-fourthreereal";
+  if (aspect < 1) return "video-threefour";
+  if (inGrid) return "video-fourthree"; // 2-up cells render 4:3
+  return aspect >= 1.6 ? "video-sixteennine" : "video-fourthree";
 }
 
 /** The `.w-background-video` atom: autoplaying, muted, looping cover video. */
