@@ -2310,7 +2310,7 @@ figure {
   overflow: hidden;
 }
 
-.video-fourthree {
+.video-threefour {
   width: 100%;
   max-width: 100%;
   height: auto;
@@ -2924,7 +2924,7 @@ figure {
     margin-bottom: 8rem;
   }
 
-  .video-fourthreereal {
+  .video-fourthree {
     padding-top: 75%;
   }
 }
@@ -3001,7 +3001,7 @@ figure {
     font-size: 13px;
   }
 
-  .video-fourthree {
+  .video-threefour {
     width: 100%;
     height: auto;
   }
