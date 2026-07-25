@@ -2,7 +2,7 @@
 
 The personal site and portfolio of Matt Plays, live at [mattplays.co](https://mattplays.co).
 
-This project began as a migration off Webflow — a faithful port of the original design onto a modern stack. That phase is done and the site is live. From here it evolves into a fully bespoke portfolio: custom-designed, custom-built, no longer bound to what the Webflow version looked like.
+This project began as a migration off Webflow—a faithful port of the original design onto a modern stack. That phase is done, and the site is live. From here it evolves into a fully bespoke portfolio.
 
 ## Stack
 
@@ -13,7 +13,7 @@ This project began as a migration off Webflow — a faithful port of the origina
 
 ## Design tokens & MPDS
 
-Design tokens (type, color, spacing, radii) currently live in [`styles/tokens.css`](styles/tokens.css), ported from the original Webflow design. The plan is for this site to consume its tokens from [MPDS](https://github.com/matt-plays/mpds) — the design system library for Matt Plays projects — so that mattplays.co and sibling projects share one source of truth. Until that wiring lands, `tokens.css` is the local stand-in.
+Design tokens (type, color, spacing, radii) currently live in [`styles/tokens.css`](styles/tokens.css), ported from the original Webflow design. The plan is for this site to consume its tokens from [MPDS](https://github.com/matt-plays/mpds) — the design system library for Matt Plays projects—so that mattplays.co and sibling projects share one source of truth. Until that wiring lands, `tokens.css` is the local stand-in.
 
 ## Project structure
 
