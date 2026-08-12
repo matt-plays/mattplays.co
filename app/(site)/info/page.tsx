@@ -139,9 +139,9 @@ export default function InfoPage() {
                   className="spacer-s"
                 ></div>
                 <div className="text size-lg about-bio">
-                  I&rsquo;m Matt Plays, a reasonably chill designer and creative director at{" "}
-                  <a href="http://helpscout.com" target="_blank">
-                    Help Scout
+                  I&rsquo;m Matt Plays, a creative director and designer, currently working at{" "}
+                  <a href="https://watershed.com" target="_blank">
+                    Watershed
                   </a>
                   .<br />
                   <span className="info-bio-linebreak">From</span>{" "}
