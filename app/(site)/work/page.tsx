@@ -35,8 +35,8 @@ const HOVER_CSS = `
   transform: scale3d(1.05, 1.05, 1);
   transition: opacity .5s cubic-bezier(.25, .46, .45, .94), transform 3s cubic-bezier(.25, .46, .45, .94);
 }
-.projectgrid-item .projectlist-item-button { color: rgb(106, 111, 113); border-color: rgb(106, 111, 113); background-color: transparent; }
-.projectgrid-item:hover .projectlist-item-button { color: rgb(245, 242, 239); border-color: transparent; background-color: rgb(19, 31, 37); }
+.projectgrid-item .projectlist-item-button { color: var(--content-muted); border-color: var(--content-muted); background-color: transparent; }
+.projectgrid-item:hover .projectlist-item-button { color: var(--button-solid-fg); border-color: transparent; background-color: var(--button-solid-bg); }
 `;
 
 export default async function WorkPage() {

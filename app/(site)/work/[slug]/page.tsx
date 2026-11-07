@@ -6,6 +6,7 @@ import ProjectList from "@/components/ProjectList";
 import { client } from "@/sanity/lib/client";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { urlFor } from "@/sanity/lib/image";
+import { inkOnBrandSurface } from "@/lib/brandSurface";
 import { allProjectsQuery, projectBySlugQuery, projectSlugsQuery } from "@/sanity/lib/queries";
 
 export async function generateStaticParams() {
@@ -63,6 +64,8 @@ export default async function CaseStudyPage({
   if (!project) notFound();
 
   const color = safeColor(project.color);
+  // The hero surface does not flip with the mode, so neither can its ink.
+  const brandInk = inkOnBrandSurface(color);
   // The hero paints as a CSS background capped at 1920px wide (56.25% tall),
   // so 2000px covers it; the old 3200px request shipped ~2x the bytes.
   const heroImage = project.heroVisual
@@ -82,7 +85,8 @@ export default async function CaseStudyPage({
       {color ? (
         <style
           dangerouslySetInnerHTML={{
-            __html: `.navigation.hero-casestudy--nav { background-color: ${color}; }`,
+            __html:
+              `.navigation.hero-casestudy--nav {\n                 background-color: ${color};\n                 --ink-on-brand: ${brandInk};\n                 color: var(--ink-on-brand);\n               }\n               .navigation.hero-casestudy--nav .nav-link,\n               .navigation.hero-casestudy--nav .mono,\n               .navigation.hero-casestudy--nav .text {\n                 color: var(--ink-on-brand);\n               }`,
           }}
         />
       ) : null}
@@ -92,7 +96,15 @@ export default async function CaseStudyPage({
             <div role="listitem" className="w-dyn-item">
               <div
                 className="hero-casestudy"
-                style={color ? { backgroundColor: color } : undefined}
+                data-brand-surface={color ? "" : undefined}
+                style={
+                  color
+                    ? ({
+                        backgroundColor: color,
+                        "--ink-on-brand": brandInk,
+                      } as React.CSSProperties)
+                    : undefined
+                }
               >
                 <div
                   className="casestudy__hero-visual"

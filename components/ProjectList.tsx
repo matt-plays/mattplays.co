@@ -21,12 +21,12 @@ const HOVER_CSS = `
 .collectionlist.is-list .link-block:hover .projectlist-hovercard.elevation-m { opacity: 1; }
 .collectionlist.is-list .projectlist-hoverrule { width: 0; transition: width .25s ease-out; }
 .collectionlist.is-list .link-block:hover .projectlist-hoverrule { width: 91px; }
-.collectionlist.is-list .projectgrid-item-description { color: rgb(106, 111, 113); transition: color .25s ease-out; }
-.collectionlist.is-list .link-block:hover .projectgrid-item-description { color: rgb(19, 31, 37); }
-.collectionlist.is-list .projectlist-item-button { border-color: rgb(106, 111, 113); background-color: transparent; transition: background-color .25s ease-out, border-color .25s ease-out; }
-.collectionlist.is-list .link-block:hover .projectlist-item-button { border-color: transparent; background-color: rgb(19, 31, 37); }
-.collectionlist.is-list .projectlist-item-buttonarrow { color: rgb(106, 111, 113); transition: color .25s ease-out; }
-.collectionlist.is-list .link-block:hover .projectlist-item-buttonarrow { color: rgb(245, 242, 239); }
+.collectionlist.is-list .projectgrid-item-description { color: var(--content-muted); transition: color .25s ease-out; }
+.collectionlist.is-list .link-block:hover .projectgrid-item-description { color: var(--content-primary); }
+.collectionlist.is-list .projectlist-item-button { border-color: var(--content-muted); background-color: transparent; transition: background-color .25s ease-out, border-color .25s ease-out; }
+.collectionlist.is-list .link-block:hover .projectlist-item-button { border-color: transparent; background-color: var(--button-solid-bg); }
+.collectionlist.is-list .projectlist-item-buttonarrow { color: var(--content-muted); transition: color .25s ease-out; }
+.collectionlist.is-list .link-block:hover .projectlist-item-buttonarrow { color: var(--button-solid-fg); }
 `;
 
 function Triangle() {
