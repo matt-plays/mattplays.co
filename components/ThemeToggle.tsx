@@ -32,6 +32,18 @@ export default function ThemeToggle({ className }: { className?: string }) {
   useEffect(() => {
     setTheme(resolved());
     document.documentElement.setAttribute("data-theme-ready", "");
+
+    /*
+     * With no stored choice, theme.css follows prefers-color-scheme — which can
+     * change while the page is open (macOS switching to dark at sunset). The
+     * colours flip on their own; without this the label would not, and would
+     * then offer the mode already showing. A stored choice wins, so re-resolve
+     * rather than taking the event's own value.
+     */
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const sync = () => setTheme(resolved());
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
   }, []);
 
   function toggle() {

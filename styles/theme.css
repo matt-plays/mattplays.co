@@ -265,6 +265,17 @@ Only animate the theme flip, and only for users who want motion. Without the
 ) {
   --ink-on-brand: var(--color-slate-900);
   color: var(--ink-on-brand);
+
+  /*
+   * An outline button's fill on hover and press has to come from this
+   * surface's own ink: --surface-sunken / --surface-inset flip with the mode,
+   * so in dark mode they would paint a dark tint onto a light fixed surface.
+   * The ink and border are handled by the fallback conditional in
+   * components.css; a tint cannot be expressed that way, so it is re-pointed
+   * here instead.
+   */
+  --button-outline-bg-hover: color-mix(in srgb, var(--ink-on-brand) 10%, transparent);
+  --button-outline-bg-active: color-mix(in srgb, var(--ink-on-brand) 16%, transparent);
 }
 
 /* The brand heroes override --ink-on-brand inline with their computed value. */
@@ -326,9 +337,40 @@ Only animate the theme flip, and only for users who want motion. Without the
  */
 .footer,
 .promo-bar {
-  --ink-on-brand: var(--content-primary);
+  /*
+   * `initial` on a custom property is the guaranteed-invalid value, which
+   * makes every var(--ink-on-brand, <semantic token>) reader fall back — the
+   * text rules below and the button conditional in components.css alike. That
+   * is what "not on a fixed surface" means, so say it once here rather than
+   * naming a replacement colour the readers would have to agree on.
+   */
+  --ink-on-brand: initial;
+  /* The two tints are plain re-points, not fallback readers, so they need
+     putting back by hand. */
+  --button-outline-bg-hover: var(--surface-sunken);
+  --button-outline-bg-active: var(--surface-inset);
   /* color inherits as a computed value, so re-pointing the variable alone
      would leave unclassed descendants holding the fixed ink they inherited
      from the surface above. */
   color: var(--content-primary);
+}
+
+/*
+ * The collapsed nav menu is a third piece of chrome with a surface of its own.
+ *
+ * Below 992px Webflow turns .nav-menu into an absolutely positioned panel and
+ * paints it --clay--200-body, which flips with the mode. That makes it the
+ * footer's case twice over: on the Icon page the panel inherits the fixed ink
+ * from <body>, and on a case study it inherits the brand ink from the nav —
+ * either way dark ink on a dark panel (1.11:1 measured). Above 992px the panel
+ * has no background and the nav's own ink is the right one, so this escape is
+ * scoped to the width where the surface actually exists.
+ */
+@media screen and (max-width: 991px) {
+  .nav-menu {
+    --ink-on-brand: initial;
+    --button-outline-bg-hover: var(--surface-sunken);
+    --button-outline-bg-active: var(--surface-inset);
+    color: var(--content-primary);
+  }
 }

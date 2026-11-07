@@ -81,12 +81,24 @@ export default async function CaseStudyPage({
       ) : null}
       {/* On the live site the nav sits inside a project-colored
           .hero-casestudy--nav-background wrapper; here the nav is global
-          chrome, so this route-scoped style paints it instead. */}
+          chrome, so this route-scoped style paints it instead.
+
+          Setting --ink-on-brand here is what carries the nav's contents,
+          including the theme toggle, onto the brand colour: the readers in
+          components.css pick it up on their own. Only the two hover/press
+          tints have to be repeated, because theme.css can re-point them for
+          the fixed surfaces it knows by class, and the nav is not one of them
+          — .hero-casestudy--nav is on the nav site-wide and only painted on
+          this route.
+
+          The fallback on the descendant rule is not decoration: below 992px
+          the collapsed nav panel paints its own flipping surface and clears
+          --ink-on-brand, and these links sit inside it. */}
       {color ? (
         <style
           dangerouslySetInnerHTML={{
             __html:
-              `.navigation.hero-casestudy--nav {\n                 background-color: ${color};\n                 --ink-on-brand: ${brandInk};\n                 color: var(--ink-on-brand);\n               }\n               .navigation.hero-casestudy--nav .nav-link,\n               .navigation.hero-casestudy--nav .mono,\n               .navigation.hero-casestudy--nav .text {\n                 color: var(--ink-on-brand);\n               }`,
+              `.navigation.hero-casestudy--nav {\n                 background-color: ${color};\n                 --ink-on-brand: ${brandInk};\n                 --button-outline-bg-hover: color-mix(in srgb, ${brandInk} 10%, transparent);\n                 --button-outline-bg-active: color-mix(in srgb, ${brandInk} 16%, transparent);\n                 color: var(--ink-on-brand);\n               }\n               .navigation.hero-casestudy--nav .nav-link,\n               .navigation.hero-casestudy--nav .mono,\n               .navigation.hero-casestudy--nav .text {\n                 color: var(--ink-on-brand, var(--content-primary));\n               }`,
           }}
         />
       ) : null}

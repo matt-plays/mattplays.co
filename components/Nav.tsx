@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import HoverTag from "@/components/HoverTag";
+import ThemeToggle from "@/components/ThemeToggle";
 import type { NavLinkItem } from "@/sanity/lib/types";
 
 export interface NavProps {
@@ -96,6 +97,10 @@ export default function Nav({ navLinks }: NavProps) {
                   </Link>
                 );
               })}
+              {/* Last item in the menu, so it collapses into the mobile panel
+                  with the links rather than crowding the bar beside the
+                  hamburger. */}
+              <ThemeToggle className="nav-theme-toggle" />
             </nav>
             <button
               type="button"

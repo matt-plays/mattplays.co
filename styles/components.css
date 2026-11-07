@@ -47,7 +47,9 @@ worth tuning by eye.
 }
 
 .button:focus-visible {
-  outline: 2px solid var(--focus-ring);
+  /* Same conditional as the outline variant below: the ring has to be visible
+     against a fixed surface too, and --focus-ring flips with the mode. */
+  outline: 2px solid var(--ink-on-brand, var(--focus-ring));
   outline-offset: 2px;
 }
 
@@ -79,14 +81,25 @@ Variants
   border-color: var(--button-solid-bg-active);
 }
 
+/*
+ * An outline button is drawn only in ink and border, so it is the one variant
+ * that has to survive a surface which does not flip with the mode — the theme
+ * toggle now rides in the nav, and the nav sits on the brand-coloured case
+ * study heroes and on the fixed cream of the Icon page.
+ *
+ * --ink-on-brand is set only on those fixed surfaces (styles/theme.css), so
+ * reading it with the semantic token as the fallback is a conditional: on a
+ * fixed surface the button takes that surface's locked ink, and anywhere else
+ * the variable is unset and these resolve exactly as they did before.
+ */
 .button--outline {
   background-color: transparent;
-  color: var(--button-outline-fg);
-  border-color: var(--button-outline-border);
+  color: var(--ink-on-brand, var(--button-outline-fg));
+  border-color: var(--ink-on-brand, var(--button-outline-border));
 }
 .button--outline:hover {
   background-color: var(--button-outline-bg-hover);
-  border-color: var(--button-outline-border-hover);
+  border-color: var(--ink-on-brand, var(--button-outline-border-hover));
 }
 .button--outline:active {
   background-color: var(--button-outline-bg-active);
@@ -144,4 +157,23 @@ so it is decoration only.
 @media (prefers-reduced-motion: reduce) {
   .button__icon,
   .button:hover .button__icon { transition: none; transform: none; }
+}
+
+/*
+================
+Nav theme toggle
+================
+The mode switch is the last item inside .nav-menu, so on desktop it picks up
+that row's 3rem column gap and vertical centring for free.
+
+Below 992px Webflow collapses .nav-menu into an absolutely positioned panel
+(display:block, text-align:center) and gives .nav-link.size-sm its own 2rem
+block padding. The button is inline-flex, so the panel's text-align centres
+it; all it needs is matching breathing room.
+*/
+@media screen and (max-width: 991px) {
+  .nav-theme-toggle {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
 }

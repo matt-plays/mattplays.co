@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Button from "@/components/Button";
-import ThemeToggle from "@/components/ThemeToggle";
 
 export const metadata: Metadata = {
   title: "Style Guide",
@@ -76,18 +75,9 @@ export default function StyleGuidePage() {
       <div className="style-guide-typography">
         <div className="container-width w-container">
           <div className="spacer-l"></div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: "var(--space-xs)",
-              flexWrap: "wrap",
-            }}
-          >
-            <div className="overline size-sm">Portfolio Core 2026</div>
-            <ThemeToggle />
-          </div>
+          {/* The mode switch used to live here; it is in the nav now, and two
+              copies would disagree — neither watches the other's clicks. */}
+          <div className="overline size-sm">Portfolio Core 2026</div>
           <div className="spacer-xs"></div>
           <p className="text size-lg" style={{ maxWidth: "60ch" }}>
             Four roles, one shared size ramp. Every value here is ported from the Figma library;
@@ -181,7 +171,8 @@ export default function StyleGuidePage() {
             <div className="spacer-xs"></div>
             <p className="text size-lg" style={{ maxWidth: "60ch" }}>
               What each colour is <em>for</em>, not what it looks like. Every swatch below is
-              reading its live value, so flipping the mode above repaints this whole section.
+              reading its live value, so flipping the mode in the nav repaints this whole
+              section.
             </p>
             <div className="spacer-s"></div>
 
