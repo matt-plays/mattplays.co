@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Button from "@/components/Button";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export const metadata: Metadata = {
   title: "Style Guide",
@@ -52,13 +54,40 @@ const TYPE_ROLES = [
   },
 ] as const;
 
+const BUTTON_SIZES = ["sm", "md", "lg", "xl", "2xl"] as const;
+
+/* The semantic tokens from theme.css, grouped as they are defined. */
+const COLOR_GROUPS = [
+  {
+    name: "Surface",
+    tokens: ["--surface-page", "--surface-raised", "--surface-sunken", "--surface-inset", "--surface-inverse"],
+  },
+  {
+    name: "Content",
+    tokens: ["--content-primary", "--content-secondary", "--content-muted", "--content-inverse"],
+  },
+  { name: "Border", tokens: ["--border-subtle", "--border-strong"] },
+  { name: "Accent", tokens: ["--accent", "--accent-hover", "--surface-accent", "--highlight"] },
+] as const;
+
 export default function StyleGuidePage() {
   return (
     <>
       <div className="style-guide-typography">
         <div className="container-width w-container">
           <div className="spacer-l"></div>
-          <div className="overline size-sm">Type system &mdash; Portfolio Core 2026</div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "var(--space-xs)",
+              flexWrap: "wrap",
+            }}
+          >
+            <div className="overline size-sm">Portfolio Core 2026</div>
+            <ThemeToggle />
+          </div>
           <div className="spacer-xs"></div>
           <p className="text size-lg" style={{ maxWidth: "60ch" }}>
             Four roles, one shared size ramp. Every value here is ported from the Figma library;
@@ -69,7 +98,7 @@ export default function StyleGuidePage() {
 
           {TYPE_ROLES.map((role) => (
             <section key={role.name} style={{ marginBottom: "var(--space-xl)" }}>
-              <div className="mono size-xs slate-400">
+              <div className="mono size-xs" style={{ color: "var(--content-muted)" }}>
                 {role.name} &middot; {role.spec}
               </div>
               <div className="spacer-xs"></div>
@@ -85,12 +114,107 @@ export default function StyleGuidePage() {
                     borderTop: "1px solid var(--color-clay-400)",
                   }}
                 >
-                  <div className="mono size-2xs slate-400">{size}</div>
+                  <div className="mono size-2xs" style={{ color: "var(--content-muted)" }}>{size}</div>
                   <div className={`${role.className} size-${size}`}>{role.sample}</div>
                 </div>
               ))}
             </section>
           ))}
+
+          {/* ---------------- Buttons ---------------- */}
+          <section style={{ marginBottom: "var(--space-xl)" }}>
+            <div className="overline size-sm">Buttons</div>
+            <div className="spacer-xs"></div>
+            <p className="text size-lg" style={{ maxWidth: "60ch" }}>
+              Pill-shaped, in a solid and an outline variant. Geometry is set in{" "}
+              <code>em</code>, so the size classes resize the whole control. A solid button is
+              the inverse of the page it sits on, which is what keeps both variants correct in
+              either mode.
+            </p>
+            <div className="spacer-s"></div>
+
+            {([
+              ["Solid", "solid"],
+              ["Outline", "outline"],
+            ] as const).map(([label, variant]) => (
+              <div key={variant} style={{ marginBottom: "var(--space-m)" }}>
+                <div className="mono size-xs" style={{ color: "var(--content-muted)" }}>{label}</div>
+                <div className="spacer-xs"></div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "var(--space-xs)",
+                    alignItems: "center",
+                  }}
+                >
+                  {BUTTON_SIZES.map((size) => (
+                    <Button key={size} variant={variant} size={size} arrow>
+                      See what&rsquo;s new
+                    </Button>
+                  ))}
+                </div>
+                <div className="spacer-xs"></div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "var(--space-xs)",
+                    alignItems: "center",
+                  }}
+                >
+                  <Button variant={variant}>No arrow</Button>
+                  <Button variant={variant} arrow href="#buttons">
+                    As a link
+                  </Button>
+                  <Button variant={variant} disabled>
+                    Disabled
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </section>
+
+          {/* ---------------- Semantic colour ---------------- */}
+          <section style={{ marginBottom: "var(--space-xl)" }}>
+            <div className="overline size-sm">Semantic colour</div>
+            <div className="spacer-xs"></div>
+            <p className="text size-lg" style={{ maxWidth: "60ch" }}>
+              What each colour is <em>for</em>, not what it looks like. Every swatch below is
+              reading its live value, so flipping the mode above repaints this whole section.
+            </p>
+            <div className="spacer-s"></div>
+
+            {COLOR_GROUPS.map((group) => (
+              <div key={group.name} style={{ marginBottom: "var(--space-m)" }}>
+                <div className="mono size-xs" style={{ color: "var(--content-muted)" }}>{group.name}</div>
+                <div className="spacer-xs"></div>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(11rem, 1fr))",
+                    gap: "var(--space-xs)",
+                  }}
+                >
+                  {group.tokens.map((token) => (
+                    <div key={token}>
+                      <div
+                        style={{
+                          height: "4rem",
+                          borderRadius: "0.5rem",
+                          background: `var(${token})`,
+                          border: "1px solid var(--border-subtle)",
+                        }}
+                      />
+                      <div className="mono size-2xs" style={{ marginTop: "0.5rem" }}>
+                        {token}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </section>
         </div>
       </div>
       <div className="section-padding">

@@ -16,6 +16,10 @@ applied anywhere:
 
   .quote      Tiempos Text Regular       · 112.5% leading · -3% tracking
 
+and the Button role, which lives with the button component in components.css:
+
+  .button     Universal Sans Display 540 · 125% leading · 0% tracking
+
 Sizes come from the Figma "metrics" variable collection, which defines each step
 in three modes — Mobile / Tablet / Desktop. Figma's Tablet value sits almost
 exactly on the straight line between Mobile and Desktop, so a single clamp()
@@ -82,6 +86,7 @@ Families
   --font-text: "Universal Sans Display", system-ui, sans-serif;
   --font-mono: "FK Grotesk Mono", ui-monospace, monospace;
   --font-overline: "Spezia Extended", system-ui, sans-serif;
+  --font-button: "Universal Sans Display", system-ui, sans-serif;
   --font-quote: "Tiempostextweb", Georgia, serif;
 
 /*
@@ -120,6 +125,10 @@ set so one can be retuned without disturbing the others.
   /* Overline */
   --overline-leading: 1.125;          /* 112.5% */
   --overline-tracking: 0.12em;        /* 12%    */
+
+  /* Button */
+  --button-leading: 1.25;             /* 125% */
+  --button-tracking: 0em;             /* 0%    */
 
   /*
   Quote — defined in full but not yet applied anywhere. The Quote block still
@@ -194,7 +203,7 @@ Roles
   font-weight: var(--weight-regular);
   line-height: var(--headline-leading);
   letter-spacing: var(--headline-tracking);
-  color: var(--color-slate-900);
+  color: var(--content-primary);
   text-wrap: balance;
 }
 /* Headline tracking steps down as the type grows, matching the Figma styles. */
@@ -221,7 +230,7 @@ Roles
   font-weight: var(--weight-regular);
   line-height: var(--mono-leading);
   letter-spacing: var(--mono-tracking);
-  color: var(--color-slate-900);
+  color: var(--content-primary);
 }
 
 .overline {
@@ -230,7 +239,7 @@ Roles
   line-height: var(--overline-leading);
   letter-spacing: var(--overline-tracking);
   text-transform: uppercase;
-  color: var(--color-slate-900);
+  color: var(--content-primary);
 }
 
 /*

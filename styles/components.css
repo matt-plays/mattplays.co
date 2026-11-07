@@ -1,0 +1,147 @@
+/*
+================================================================================
+Components
+================================================================================
+Built entirely on the semantic tokens in theme.css, so every component here
+works in both modes without a mode-specific rule of its own.
+================================================================================
+*/
+
+/*
+================
+Button
+================
+Pill-shaped, in a solid and an outline variant.
+
+Geometry is expressed in `em` so one set of rules covers every size — change
+the font-size (via a .button--* size class or the Button type scale) and the
+padding, gap, icon and radius all follow. The two knobs below are the ones
+worth tuning by eye.
+*/
+.button {
+  --button-padding-y: 0.75em;
+  --button-padding-x: 1.75em;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625em;
+
+  font-family: var(--font-button);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-md);
+  line-height: var(--button-leading);
+  letter-spacing: var(--button-tracking);
+
+  padding: var(--button-padding-y) var(--button-padding-x);
+  border: 1px solid transparent;
+  border-radius: 999px;            /* pill: any radius past half the height */
+
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: background-color 150ms ease, border-color 150ms ease,
+              color 150ms ease, transform 150ms ease;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button { transition: none; }
+  .button:active { transform: none; }
+}
+
+/*
+----------------
+Variants
+----------------
+*/
+.button--solid {
+  background-color: var(--button-solid-bg);
+  color: var(--button-solid-fg);
+  border-color: var(--button-solid-bg);
+}
+.button--solid:hover {
+  background-color: var(--button-solid-bg-hover);
+  border-color: var(--button-solid-bg-hover);
+}
+.button--solid:active {
+  background-color: var(--button-solid-bg-active);
+  border-color: var(--button-solid-bg-active);
+}
+
+.button--outline {
+  background-color: transparent;
+  color: var(--button-outline-fg);
+  border-color: var(--button-outline-border);
+}
+.button--outline:hover {
+  background-color: var(--button-outline-bg-hover);
+  border-color: var(--button-outline-border-hover);
+}
+.button--outline:active {
+  background-color: var(--button-outline-bg-active);
+}
+
+/*
+----------------
+Sizes
+----------------
+Mapped to the Button steps in the Figma library. Everything else is in `em`,
+so setting the font-size resizes the whole control.
+*/
+.button--sm  {font-size: var(--text-sm);}
+.button--md  {font-size: var(--text-md);}
+.button--lg  {font-size: var(--text-lg);}
+.button--xl  {font-size: var(--text-xl);}
+.button--2xl {font-size: var(--text-2xl);}
+
+/*
+----------------
+Disabled
+----------------
+*/
+.button:disabled,
+.button[aria-disabled="true"] {
+  background-color: var(--button-disabled-bg);
+  border-color: var(--button-disabled-bg);
+  color: var(--button-disabled-fg);
+  cursor: not-allowed;
+  transform: none;
+}
+.button--outline:disabled,
+.button--outline[aria-disabled="true"] {
+  background-color: transparent;
+  border-color: var(--border-subtle);
+}
+
+/*
+----------------
+Trailing icon
+----------------
+The arrow nudges forward on hover. It is marked aria-hidden in the component,
+so it is decoration only.
+*/
+.button__icon {
+  display: inline-flex;
+  flex: none;
+  width: 1em;
+  height: 1em;
+  transition: transform 150ms ease;
+}
+.button:hover .button__icon {
+  transform: translateX(0.175em);
+}
+@media (prefers-reduced-motion: reduce) {
+  .button__icon,
+  .button:hover .button__icon { transition: none; transform: none; }
+}

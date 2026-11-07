@@ -1,8 +1,13 @@
 /*
  * Global styles.
  *
- * The visual system is ported from the Webflow export and loaded as plain
- * global CSS (normalize → webflow base → site styles → fluid tokens).
+ * The visual system loads as plain global CSS, in dependency order:
+ *   normalize → webflow base → webflow site styles → palette tokens →
+ *   typography → theme (semantic colour + light/dark) → components.
+ *
+ * theme.css must come after the Webflow styles: it redefines that export's
+ * own --clay--* / --slate--* variables in terms of the semantic layer, which
+ * is what carries the legacy stylesheet into dark mode.
  * Tailwind is loaded WITHOUT preflight so its reset can't fight the ported
  * normalize; use its utilities freely in new components.
  */
@@ -15,4 +20,6 @@
 @import "../styles/webflow/mattplays.webflow.css";
 @import "../styles/tokens.css";
 @import "../styles/typography.css";
+@import "../styles/theme.css";
+@import "../styles/components.css";
 @import "../styles/custom-embeds.css";
