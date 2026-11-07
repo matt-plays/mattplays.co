@@ -122,7 +122,7 @@ export default async function CaseStudyPage({
                     >
                       <p
                         id="w-node-_6951c566-3ce0-8811-6609-a8743abc53ea-b2d8fe30"
-                        className="subheadline size-2xl"
+                        className="text size-2xl"
                       >
                         {project.description}
                       </p>

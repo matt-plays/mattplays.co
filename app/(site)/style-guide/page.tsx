@@ -44,8 +44,8 @@ const TYPE_ROLES = [
     sizes: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl"],
   },
   {
-    name: "Blockquote",
-    className: "blockquote",
+    name: "Quote (defined, not yet in use)",
+    className: "quote",
     spec: "Tiempos Text Regular \u00b7 112.5% \u00b7 -3% tracking",
     sample: "\u201cThe best interface is the one you never notice.\u201d",
     sizes: ["2xl", "3xl", "4xl", "5xl", "6xl", "7xl", "8xl"],

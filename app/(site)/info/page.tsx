@@ -130,7 +130,7 @@ export default function InfoPage() {
                 id="w-node-_827d661d-0368-2515-372c-610aa29f8980-119d1173"
                 className="textsection-container"
               >
-                <div className="subheadline size-3xl info-introtext">
+                <div className="text size-3xl info-introtext">
                   New England-based designer with a thing for skateboarding, rock climbing, and
                   chicken parm&rsquo;
                 </div>

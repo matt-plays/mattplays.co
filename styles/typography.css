@@ -11,18 +11,16 @@ Four roles are defined in Figma; each is the same ramp of sizes:
   .mono       FK Grotesk Mono Regular    · 162.5% leading · 0% tracking
   .overline   Spezia Extended Bold       · 112.5% leading · 12% tracking · UPPER
 
-Plus one role carried over from the existing system:
+Plus one role carried over from the existing system, defined but not yet
+applied anywhere:
 
-  .blockquote Tiempos Text Regular       · 112.5% leading · -3% tracking
+  .quote      Tiempos Text Regular       · 112.5% leading · -3% tracking
 
 Sizes come from the Figma "metrics" variable collection, which defines each step
 in three modes — Mobile / Tablet / Desktop. Figma's Tablet value sits almost
 exactly on the straight line between Mobile and Desktop, so a single clamp()
 interpolating 375px → 1600px reproduces all three modes (e.g. 11xl resolves to
 90px at 1024px wide, against Figma's 88px Tablet value).
-
-Figma expresses leading and tracking as a percentage of font size, which maps
-directly onto CSS unitless line-height and `em` letter-spacing.
 ================================================================================
 */
 
@@ -84,7 +82,7 @@ Families
   --font-text: "Universal Sans Display", system-ui, sans-serif;
   --font-mono: "FK Grotesk Mono", ui-monospace, monospace;
   --font-overline: "Spezia Extended", system-ui, sans-serif;
-  --font-blockquote: "Tiempostextweb", Georgia, serif;
+  --font-quote: "Tiempostextweb", Georgia, serif;
 
 /*
 ================
@@ -99,24 +97,38 @@ weights. Spezia Extended is supplied as a single Bold.
 
 /*
 ================
-Leading  (Figma %, as unitless line-height)
+Role metrics
 ================
+Figma expresses leading and tracking as a percentage of font size, which maps
+onto CSS unitless line-height and `em` letter-spacing. Each role owns its full
+set so one can be retuned without disturbing the others.
 */
-  --leading-headline: 1.125;   /* 112.5% — headline, overline, blockquote */
-  --leading-text: 1.625;       /* 162.5% — text, mono */
-  --leading-button: 1.25;      /* 125%   — reserved for the Button role */
-  --leading-none: 1;
+  /* Headline — 112.5% leading, tracking tightens as the type grows */
+  --headline-leading: 1.125;
+  --headline-tracking: 0.02em;        /* 2% — 3xl and below   */
+  --headline-tracking-large: 0.01em;  /* 1% — 4xl through 6xl */
+  --headline-tracking-display: 0em;   /* 0% — 7xl and up      */
 
-/*
-================
-Tracking  (Figma %, as em)
-================
-*/
-  --tracking-blockquote: -0.03em;  /*  -3% */
-  --tracking-none: 0em;            /*   0% — headline 7xl and up, mono */
-  --tracking-tight: 0.01em;        /*   1% — headline 4xl–6xl */
-  --tracking-normal: 0.02em;       /*   2% — headline 3xl and down, text */
-  --tracking-widest: 0.12em;       /*  12% — overline */
+  /* Text */
+  --text-leading: 1.625;              /* 162.5% */
+  --text-tracking: 0.02em;            /* 2%     */
+
+  /* Mono */
+  --mono-leading: 1.625;              /* 162.5% */
+  --mono-tracking: 0em;               /* 0%     */
+
+  /* Overline */
+  --overline-leading: 1.125;          /* 112.5% */
+  --overline-tracking: 0.12em;        /* 12%    */
+
+  /*
+  Quote — defined in full but not yet applied anywhere. The Quote block still
+  renders with the text role; switch it to `.quote` when the design calls for
+  it and these are the values it will pick up.
+  */
+  --quote-leading: 1.125;             /* 112.5% */
+  --quote-tracking: -0.03em;          /* -3%    */
+  --quote-hanging: first last;
 
 /*
 ================
@@ -180,80 +192,58 @@ Roles
 .headline {
   font-family: var(--font-headline);
   font-weight: var(--weight-regular);
-  line-height: var(--leading-headline);
-  letter-spacing: var(--tracking-normal);
+  line-height: var(--headline-leading);
+  letter-spacing: var(--headline-tracking);
   color: var(--color-slate-900);
   text-wrap: balance;
 }
-/*
-Headline tracking tightens as the type grows, matching the Figma styles:
-2% up to 3xl, 1% across 4xl–6xl, 0% from 7xl up.
-*/
+/* Headline tracking steps down as the type grows, matching the Figma styles. */
 .headline.size-4xl,
 .headline.size-5xl,
-.headline.size-6xl {letter-spacing: var(--tracking-tight);}
+.headline.size-6xl {letter-spacing: var(--headline-tracking-large);}
 
 .headline.size-7xl,
 .headline.size-8xl,
 .headline.size-9xl,
 .headline.size-10xl,
 .headline.size-11xl,
-.headline.size-12xl {letter-spacing: var(--tracking-none);}
+.headline.size-12xl {letter-spacing: var(--headline-tracking-display);}
 
 .text {
   font-family: var(--font-text);
   font-weight: var(--weight-regular);
-  line-height: var(--leading-text);
-  letter-spacing: var(--tracking-normal);
+  line-height: var(--text-leading);
+  letter-spacing: var(--text-tracking);
 }
 
 .mono {
   font-family: var(--font-mono);
   font-weight: var(--weight-regular);
-  line-height: var(--leading-text);
-  letter-spacing: var(--tracking-none);
+  line-height: var(--mono-leading);
+  letter-spacing: var(--mono-tracking);
   color: var(--color-slate-900);
 }
 
 .overline {
   font-family: var(--font-overline);
   font-weight: var(--weight-bold);
-  line-height: var(--leading-headline);
-  letter-spacing: var(--tracking-widest);
+  line-height: var(--overline-leading);
+  letter-spacing: var(--overline-tracking);
   text-transform: uppercase;
   color: var(--color-slate-900);
 }
 
-.blockquote {
-  font-family: var(--font-blockquote);
-  font-weight: var(--weight-regular);
-  line-height: var(--leading-headline);
-  letter-spacing: var(--tracking-blockquote);
-  hanging-punctuation: first last;
-  text-wrap: balance;
-}
-
 /*
-================
-Legacy aliases
-================
-The 2026 system drops `subheadline` and renames `detail` to `mono`. These keep
-pages that still use the old class names rendering correctly; remove them once
-the markup has been migrated.
+Quote. Nothing uses this yet — the Quote block renders with the text role —
+but the role is complete, so adopting it is a one-class change.
 */
-.subheadline {
-  font-family: var(--font-headline);
+.quote {
+  font-family: var(--font-quote);
   font-weight: var(--weight-regular);
-  line-height: var(--leading-headline);
-  letter-spacing: var(--tracking-normal);
+  line-height: var(--quote-leading);
+  letter-spacing: var(--quote-tracking);
+  hanging-punctuation: var(--quote-hanging);
   text-wrap: balance;
-}
-.detail {
-  font-family: var(--font-mono);
-  font-weight: var(--weight-regular);
-  line-height: var(--leading-text);
-  letter-spacing: var(--tracking-none);
-  color: var(--color-slate-900);
 }
 
 /*
