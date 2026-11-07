@@ -83,7 +83,26 @@ both modes without a second set of values.
   --button-solid-fg: var(--content-inverse);
 
   --button-outline-fg: var(--content-primary);
-  --button-outline-border: var(--border-strong);
+  /*
+   * An outline button's border IS the control's boundary, so WCAG 1.4.11 asks
+   * for 3:1 against what it sits on. --border-strong is tuned for rules and
+   * dividers and does not get there: it measured 1.54:1 in light and 2.31:1
+   * in dark, so the token is deliberately no longer shared with them.
+   *
+   * clay-900 is the one step on either ramp that clears 3:1 against every
+   * surface in BOTH modes — 3.66 on the light page, 4.56 on the dark one,
+   * 3.17 at worst — which is why this one does not flip. It is not an
+   * oversight and it does not want a dark override: a mode-specific value
+   * would have to be lighter in dark and darker in light, and would land
+   * back on this same grey. The only surface it misses is --surface-inset in
+   * dark (2.95), which is the disabled background, and 1.4.11 exempts
+   * inactive controls.
+   *
+   * On a fixed surface the border comes from --ink-on-brand instead (see
+   * components.css), which is far clearer still: 9.69 on the darkest brand
+   * colour in the CMS today.
+   */
+  --button-outline-border: var(--color-clay-900);
   --button-outline-border-hover: var(--content-primary);
   --button-outline-bg-hover: var(--surface-sunken);
   --button-outline-bg-active: var(--surface-inset);
