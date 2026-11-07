@@ -102,7 +102,7 @@ export default async function CaseStudyPage({
                   <div className="w-layout-grid casestudy__hero-textsection-grid">
                     <p
                       id="w-node-_6951c566-3ce0-8811-6609-a8743abc53e5-b2d8fe30"
-                      className="detail size-base"
+                      className="mono size-base"
                     >
                       Project
                     </p>
@@ -128,7 +128,7 @@ export default async function CaseStudyPage({
                       </p>
                       <p
                         id="w-node-_6951c566-3ce0-8811-6609-a8743abc53eb-b2d8fe30"
-                        className="detail size-xs align-right"
+                        className="mono size-xs align-right"
                       >
                         {project.roles}
                       </p>

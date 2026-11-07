@@ -110,7 +110,7 @@ export default async function WorkPage() {
                     <div className="projectlist-item-details">
                       <div className="projectlist-item-description">
                         <div className="headline size-2xl textcolor-headline">{project.title}</div>
-                        <div className="detail size-xs">{project.roles}</div>
+                        <div className="mono size-xs">{project.roles}</div>
                       </div>
                       <div className="projectlist-item-button">
                         <div className="text size-xl">↗</div>

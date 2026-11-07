@@ -24,7 +24,7 @@ export default function Quote({ block }: { block: QuoteBlock }) {
                     id="w-node-_0970d66a-2dd6-eb11-632b-6477e8ded169-e8ded162"
                     className="spacer-xs"
                   ></div>
-                  <div className="detail size-xs">
+                  <div className="mono size-xs">
                     {[block.attribution, block.role].filter(Boolean).join(", ")}
                   </div>
                 </>

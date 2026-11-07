@@ -10,10 +10,12 @@ export const metadata: Metadata = {
     "The design portfolio of Matt Plays — brand design, art direction, and web design.",
 };
 
+// The faces behind headline/text, mono, and overline — the three roles that
+// show up above the fold on every page.
 const preloadFonts = [
-  "/fonts/SharpGroteskSmBold23.woff2",
-  "/fonts/soehne-buch.woff2",
-  "/fonts/soehne-mono-buch.woff2",
+  "/fonts/Universal-Sans-Display-400.woff2",
+  "/fonts/FKGroteskMono-Regular.woff2",
+  "/fonts/SpeziaExtendedWeb-Bold.woff2",
 ];
 
 export default function RootLayout({

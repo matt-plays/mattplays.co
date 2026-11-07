@@ -90,7 +90,7 @@ export default function ProjectList({
                           >
                             {project.title}
                           </div>
-                          <div className="detail size-xs">{project.roles}</div>
+                          <div className="mono size-xs">{project.roles}</div>
                         </div>
                       </div>
                       <div

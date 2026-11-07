@@ -6,77 +6,91 @@ export const metadata: Metadata = {
   twitter: { title: "Style Guide" },
 };
 
+/*
+ * The four roles defined in Figma, plus blockquote, each across the sizes the
+ * library actually publishes for that role.
+ */
+const TYPE_ROLES = [
+  {
+    name: "Headline",
+    className: "headline",
+    spec: "Universal Sans Display 400 \u00b7 112.5% \u00b7 optical tracking",
+    sample: "Design that earns its keep",
+    sizes: [
+      "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl",
+      "4xl", "5xl", "6xl", "7xl", "8xl", "9xl", "10xl", "11xl",
+    ],
+  },
+  {
+    name: "Text",
+    className: "text",
+    spec: "Universal Sans Display 400 \u00b7 162.5% \u00b7 2% tracking",
+    sample:
+      "Body copy sits at a generous 162.5% leading so long passages stay readable at any step on the ramp.",
+    sizes: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"],
+  },
+  {
+    name: "Mono",
+    className: "mono",
+    spec: "FK Grotesk Mono Regular \u00b7 162.5% \u00b7 0% tracking",
+    sample: "Credits, metadata, and captions \u2014 2026",
+    sizes: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl"],
+  },
+  {
+    name: "Overline",
+    className: "overline",
+    spec: "Spezia Extended Bold \u00b7 112.5% \u00b7 12% tracking \u00b7 uppercase",
+    sample: "Selected work",
+    sizes: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl"],
+  },
+  {
+    name: "Blockquote",
+    className: "blockquote",
+    spec: "Tiempos Text Regular \u00b7 112.5% \u00b7 -3% tracking",
+    sample: "\u201cThe best interface is the one you never notice.\u201d",
+    sizes: ["2xl", "3xl", "4xl", "5xl", "6xl", "7xl", "8xl"],
+  },
+] as const;
+
 export default function StyleGuidePage() {
   return (
     <>
       <div className="style-guide-typography">
         <div className="container-width w-container">
-          <div className="w-layout-grid grid">
-            <h1>Heading 1</h1>
-            <h2 className="heading-6">Heading 2</h2>
-            <h3 className="heading-7">Heading 3</h3>
-            <h4 className="heading-8">Heading 4</h4>
-            <div id="w-node-_13495e25-789d-f35a-fad2-fcfea00e19c5-119d1176" className="overline">
-              This is some text inside of a div block.
-            </div>
-            <p
-              id="w-node-dccb815f-0a16-68ca-e023-a5a70f5b2016-119d1176"
-              className="paragraph size-xl"
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in
-              eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum
-              nulla, ut commodo diam libero vitae erat. <a href="#">Aenean</a> faucibus nibh et
-              justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.
-            </p>
-            <ul
-              id="w-node-fca9daff-01a5-2798-821d-3fbe74f7e516-119d1176"
-              role="list"
-              className="list"
-            >
-              <li className="list-item">
-                <p className="text-style-text-small size-lg">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim
-                  in{" "}
-                </p>
-              </li>
-              <li>
-                <p className="text-style-text-small size-lg">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim
-                  in{" "}
-                </p>
-              </li>
-              <li>
-                <p className="text-style-text-small size-lg">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim
-                  in{" "}
-                </p>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="changelog-rte w-richtext">
-          <h2>What&rsquo;s a Rich Text element?</h2>
-          <p>
-            The rich text element allows you to create and format headings, paragraphs,
-            blockquotes, images, and video all in one place instead of having to add and format
-            them individually. Just double-click and easily create content.
+          <div className="spacer-l"></div>
+          <div className="overline size-sm">Type system &mdash; Portfolio Core 2026</div>
+          <div className="spacer-xs"></div>
+          <p className="text size-lg" style={{ maxWidth: "60ch" }}>
+            Four roles, one shared size ramp. Every value here is ported from the Figma library;
+            sizes interpolate between the Mobile and Desktop modes of the <code>metrics</code>{" "}
+            collection, so resize the window to see each step move.
           </p>
-          <ul role="list">
-            <li>Testing</li>
-          </ul>
-          <h4>Static and dynamic content editing</h4>
-          <p>
-            A rich text element can be used with static or dynamic content. For static content,
-            just drop it into any page and begin editing. For dynamic content, add a rich text
-            field to any collection and then connect a rich text element to that field in the
-            settings panel. Voila!
-          </p>
-          <h4>How to customize formatting for each rich text</h4>
-          <p>
-            Headings, paragraphs, blockquotes, figures, images, and figure captions can all be
-            styled after a class is added to the rich text element using the &quot;When inside
-            of&quot; nested selector system.
-          </p>
+          <div className="spacer-l"></div>
+
+          {TYPE_ROLES.map((role) => (
+            <section key={role.name} style={{ marginBottom: "var(--space-xl)" }}>
+              <div className="mono size-xs slate-400">
+                {role.name} &middot; {role.spec}
+              </div>
+              <div className="spacer-xs"></div>
+              {role.sizes.map((size) => (
+                <div
+                  key={size}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "5rem 1fr",
+                    gap: "var(--space-xs)",
+                    alignItems: "baseline",
+                    padding: "var(--space-xs) 0",
+                    borderTop: "1px solid var(--color-clay-400)",
+                  }}
+                >
+                  <div className="mono size-2xs slate-400">{size}</div>
+                  <div className={`${role.className} size-${size}`}>{role.sample}</div>
+                </div>
+              ))}
+            </section>
+          ))}
         </div>
       </div>
       <div className="section-padding">

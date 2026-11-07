@@ -1,0 +1,284 @@
+/*
+================================================================================
+Typography — Portfolio Core 2026
+================================================================================
+Ported 1:1 from the Figma library "Portfolio Core 2026".
+
+Four roles are defined in Figma; each is the same ramp of sizes:
+
+  .headline   Universal Sans Display 400 · 112.5% leading · optical tracking
+  .text       Universal Sans Display 400 · 162.5% leading · 2% tracking
+  .mono       FK Grotesk Mono Regular    · 162.5% leading · 0% tracking
+  .overline   Spezia Extended Bold       · 112.5% leading · 12% tracking · UPPER
+
+Plus one role carried over from the existing system:
+
+  .blockquote Tiempos Text Regular       · 112.5% leading · -3% tracking
+
+Sizes come from the Figma "metrics" variable collection, which defines each step
+in three modes — Mobile / Tablet / Desktop. Figma's Tablet value sits almost
+exactly on the straight line between Mobile and Desktop, so a single clamp()
+interpolating 375px → 1600px reproduces all three modes (e.g. 11xl resolves to
+90px at 1024px wide, against Figma's 88px Tablet value).
+
+Figma expresses leading and tracking as a percentage of font size, which maps
+directly onto CSS unitless line-height and `em` letter-spacing.
+================================================================================
+*/
+
+/*
+================
+Faces
+================
+*/
+@font-face {
+  font-family: "Universal Sans Display";
+  src: url('/fonts/Universal-Sans-Display-400.woff2') format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Universal Sans Display";
+  src: url('/fonts/Universal-Sans-Display-400Italic.woff2') format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Universal Sans Display";
+  src: url('/fonts/Universal-Sans-Display-540.woff2') format("woff2");
+  font-weight: 540;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Universal Sans Display";
+  src: url('/fonts/Universal-Sans-Display-540Italic.woff2') format("woff2");
+  font-weight: 540;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "FK Grotesk Mono";
+  src: url('/fonts/FKGroteskMono-Regular.woff2') format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Spezia Extended";
+  src: url('/fonts/SpeziaExtendedWeb-Bold.woff2') format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+/*
+================
+Families
+================
+*/
+  --font-headline: "Universal Sans Display", system-ui, sans-serif;
+  --font-text: "Universal Sans Display", system-ui, sans-serif;
+  --font-mono: "FK Grotesk Mono", ui-monospace, monospace;
+  --font-overline: "Spezia Extended", system-ui, sans-serif;
+  --font-blockquote: "Tiempostextweb", Georgia, serif;
+
+/*
+================
+Weights
+================
+Universal Sans Display ships as two named cuts, 400 and 540; the names are the
+weights. Spezia Extended is supplied as a single Bold.
+*/
+  --weight-regular: 400;
+  --weight-medium: 540;
+  --weight-bold: 700;
+
+/*
+================
+Leading  (Figma %, as unitless line-height)
+================
+*/
+  --leading-headline: 1.125;   /* 112.5% — headline, overline, blockquote */
+  --leading-text: 1.625;       /* 162.5% — text, mono */
+  --leading-button: 1.25;      /* 125%   — reserved for the Button role */
+  --leading-none: 1;
+
+/*
+================
+Tracking  (Figma %, as em)
+================
+*/
+  --tracking-blockquote: -0.03em;  /*  -3% */
+  --tracking-none: 0em;            /*   0% — headline 7xl and up, mono */
+  --tracking-tight: 0.01em;        /*   1% — headline 4xl–6xl */
+  --tracking-normal: 0.02em;       /*   2% — headline 3xl and down, text */
+  --tracking-widest: 0.12em;       /*  12% — overline */
+
+/*
+================
+Size ramp  (Figma "metrics" collection · Mobile → Desktop, fluid 375px → 1600px)
+================
+Figma modes per step:            Mobile / Tablet / Desktop
+*/
+  --text-2xs:  clamp(8px,  calc(8px  + (10 - 8)    * ((100vw - 375px) / (1600 - 375))), 10px);   /*  8 /   9 /  10 */
+  --text-xs:   clamp(10px, calc(10px + (12 - 10)   * ((100vw - 375px) / (1600 - 375))), 12px);   /* 10 /  11 /  12 */
+  --text-sm:   clamp(12px, calc(12px + (14 - 12)   * ((100vw - 375px) / (1600 - 375))), 14px);   /* 12 /  13 /  14 */
+  --text-md:   clamp(13px, calc(13px + (16 - 13)   * ((100vw - 375px) / (1600 - 375))), 16px);   /* 13 /  15 /  16 */
+  --text-lg:   clamp(14px, calc(14px + (18 - 14)   * ((100vw - 375px) / (1600 - 375))), 18px);   /* 14 /  16 /  18 */
+  --text-xl:   clamp(16px, calc(16px + (21 - 16)   * ((100vw - 375px) / (1600 - 375))), 21px);   /* 16 /  18 /  21 */
+  --text-2xl:  clamp(18px, calc(18px + (24 - 18)   * ((100vw - 375px) / (1600 - 375))), 24px);   /* 18 /  21 /  24 */
+  --text-3xl:  clamp(20px, calc(20px + (28 - 20)   * ((100vw - 375px) / (1600 - 375))), 28px);   /* 20 /  24 /  28 */
+  --text-4xl:  clamp(22px, calc(22px + (32 - 22)   * ((100vw - 375px) / (1600 - 375))), 32px);   /* 22 /  27 /  32 */
+  --text-5xl:  clamp(24px, calc(24px + (36 - 24)   * ((100vw - 375px) / (1600 - 375))), 36px);   /* 24 /  30 /  36 */
+  --text-6xl:  clamp(28px, calc(28px + (42 - 28)   * ((100vw - 375px) / (1600 - 375))), 42px);   /* 28 /  35 /  42 */
+  --text-7xl:  clamp(32px, calc(32px + (48 - 32)   * ((100vw - 375px) / (1600 - 375))), 48px);   /* 32 /  40 /  48 */
+  --text-8xl:  clamp(36px, calc(36px + (64 - 36)   * ((100vw - 375px) / (1600 - 375))), 64px);   /* 36 /  50 /  64 */
+  --text-9xl:  clamp(40px, calc(40px + (72 - 40)   * ((100vw - 375px) / (1600 - 375))), 72px);   /* 40 /  56 /  72 */
+  --text-10xl: clamp(44px, calc(44px + (96 - 44)   * ((100vw - 375px) / (1600 - 375))), 96px);   /* 44 /  70 /  96 */
+  --text-11xl: clamp(48px, calc(48px + (128 - 48)  * ((100vw - 375px) / (1600 - 375))), 128px);  /* 48 /  88 / 128 */
+  --text-12xl: clamp(54px, calc(54px + (160 - 54)  * ((100vw - 375px) / (1600 - 375))), 160px);  /* 54 / 107 / 160 */
+
+  /* Alias kept so existing `.size-base` / var(--text-base) markup keeps working. */
+  --text-base: var(--text-md);
+}
+
+html {font-size: var(--text-md);}
+
+/*
+================
+Size utilities
+================
+*/
+.size-2xs  {font-size: var(--text-2xs);}
+.size-xs   {font-size: var(--text-xs);}
+.size-sm   {font-size: var(--text-sm);}
+.size-md   {font-size: var(--text-md);}
+.size-base {font-size: var(--text-md);}
+.size-lg   {font-size: var(--text-lg);}
+.size-xl   {font-size: var(--text-xl);}
+.size-2xl  {font-size: var(--text-2xl);}
+.size-3xl  {font-size: var(--text-3xl);}
+.size-4xl  {font-size: var(--text-4xl);}
+.size-5xl  {font-size: var(--text-5xl);}
+.size-6xl  {font-size: var(--text-6xl);}
+.size-7xl  {font-size: var(--text-7xl);}
+.size-8xl  {font-size: var(--text-8xl);}
+.size-9xl  {font-size: var(--text-9xl);}
+.size-10xl {font-size: var(--text-10xl);}
+.size-11xl {font-size: var(--text-11xl);}
+.size-12xl {font-size: var(--text-12xl);}
+
+/*
+================
+Roles
+================
+*/
+.headline {
+  font-family: var(--font-headline);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-headline);
+  letter-spacing: var(--tracking-normal);
+  color: var(--color-slate-900);
+  text-wrap: balance;
+}
+/*
+Headline tracking tightens as the type grows, matching the Figma styles:
+2% up to 3xl, 1% across 4xl–6xl, 0% from 7xl up.
+*/
+.headline.size-4xl,
+.headline.size-5xl,
+.headline.size-6xl {letter-spacing: var(--tracking-tight);}
+
+.headline.size-7xl,
+.headline.size-8xl,
+.headline.size-9xl,
+.headline.size-10xl,
+.headline.size-11xl,
+.headline.size-12xl {letter-spacing: var(--tracking-none);}
+
+.text {
+  font-family: var(--font-text);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-text);
+  letter-spacing: var(--tracking-normal);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-text);
+  letter-spacing: var(--tracking-none);
+  color: var(--color-slate-900);
+}
+
+.overline {
+  font-family: var(--font-overline);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-headline);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-slate-900);
+}
+
+.blockquote {
+  font-family: var(--font-blockquote);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-headline);
+  letter-spacing: var(--tracking-blockquote);
+  hanging-punctuation: first last;
+  text-wrap: balance;
+}
+
+/*
+================
+Legacy aliases
+================
+The 2026 system drops `subheadline` and renames `detail` to `mono`. These keep
+pages that still use the old class names rendering correctly; remove them once
+the markup has been migrated.
+*/
+.subheadline {
+  font-family: var(--font-headline);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-headline);
+  letter-spacing: var(--tracking-normal);
+  text-wrap: balance;
+}
+.detail {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-text);
+  letter-spacing: var(--tracking-none);
+  color: var(--color-slate-900);
+}
+
+/*
+================
+XL type  (≥1600px — carries the desktop ramp up by 1.25× at 2000px)
+================
+*/
+@media (min-width: 1600px) {
+  :root {
+    --text-2xs:  clamp(10px,  calc(10px  + (12.5 - 10)   * ((100vw - 1600px) / (2000 - 1600))), 12.5px);
+    --text-xs:   clamp(12px,  calc(12px  + (15 - 12)     * ((100vw - 1600px) / (2000 - 1600))), 15px);
+    --text-sm:   clamp(14px,  calc(14px  + (17.5 - 14)   * ((100vw - 1600px) / (2000 - 1600))), 17.5px);
+    --text-md:   clamp(16px,  calc(16px  + (20 - 16)     * ((100vw - 1600px) / (2000 - 1600))), 20px);
+    --text-lg:   clamp(18px,  calc(18px  + (22.5 - 18)   * ((100vw - 1600px) / (2000 - 1600))), 22.5px);
+    --text-xl:   clamp(21px,  calc(21px  + (26.25 - 21)  * ((100vw - 1600px) / (2000 - 1600))), 26.25px);
+    --text-2xl:  clamp(24px,  calc(24px  + (30 - 24)     * ((100vw - 1600px) / (2000 - 1600))), 30px);
+    --text-3xl:  clamp(28px,  calc(28px  + (35 - 28)     * ((100vw - 1600px) / (2000 - 1600))), 35px);
+    --text-4xl:  clamp(32px,  calc(32px  + (40 - 32)     * ((100vw - 1600px) / (2000 - 1600))), 40px);
+    --text-5xl:  clamp(36px,  calc(36px  + (45 - 36)     * ((100vw - 1600px) / (2000 - 1600))), 45px);
+    --text-6xl:  clamp(42px,  calc(42px  + (52.5 - 42)   * ((100vw - 1600px) / (2000 - 1600))), 52.5px);
+    --text-7xl:  clamp(48px,  calc(48px  + (60 - 48)     * ((100vw - 1600px) / (2000 - 1600))), 60px);
+    --text-8xl:  clamp(64px,  calc(64px  + (80 - 64)     * ((100vw - 1600px) / (2000 - 1600))), 80px);
+    --text-9xl:  clamp(72px,  calc(72px  + (90 - 72)     * ((100vw - 1600px) / (2000 - 1600))), 90px);
+    --text-10xl: clamp(96px,  calc(96px  + (120 - 96)    * ((100vw - 1600px) / (2000 - 1600))), 120px);
+    --text-11xl: clamp(128px, calc(128px + (160 - 128)   * ((100vw - 1600px) / (2000 - 1600))), 160px);
+    --text-12xl: clamp(160px, calc(160px + (200 - 160)   * ((100vw - 1600px) / (2000 - 1600))), 200px);
+  }
+}

@@ -277,7 +277,7 @@ export default function InfoPage() {
                     >
                       <div
                         id="w-node-_2cfe37f0-1ed0-500f-a499-2b4208b1bdb7-08b1bdb5"
-                        className="detail size-sm"
+                        className="mono size-sm"
                       >
                         {item.years}
                       </div>
@@ -291,11 +291,11 @@ export default function InfoPage() {
                         >
                           {item.company}
                         </div>
-                        <div className="detail size-xs textcolor-slate-50">{item.role}</div>
+                        <div className="mono size-xs textcolor-slate-50">{item.role}</div>
                       </div>
                       <div
                         id="w-node-_2cfe37f0-1ed0-500f-a499-2b4208b1bdbe-08b1bdb5"
-                        className="detail size-xs textcolor-slate-50 align-right"
+                        className="mono size-xs textcolor-slate-50 align-right"
                       >
                         {item.location}
                       </div>
@@ -367,13 +367,13 @@ export default function InfoPage() {
                           id="w-node-_8a6480a6-8c70-648f-9134-0521ee1f7044-0844f627"
                           href={item.href}
                           target="_blank"
-                          className="detail size-sm info-press-link"
+                          className="mono size-sm info-press-link"
                         >
                           {item.label}
                         </a>
                         <div
                           id="w-node-e0c3cd4c-36ed-6b14-3501-2ad50844f62d-0844f627"
-                          className="detail size-sm info-press-link align-right"
+                          className="mono size-sm info-press-link align-right"
                         >
                           ↗
                         </div>
