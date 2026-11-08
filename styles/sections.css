@@ -1,0 +1,168 @@
+/*
+================================================================================
+Sections — the repeating rows the 2026 pages are assembled from
+================================================================================
+Two components so far: FeatureRow (2650:1745) and TextRow (2812:10099). Both
+are page-width rows that stack with a fixed rhythm below the hero.
+
+Measurements are the Figma variables, which already match the ramp in
+tokens.css: space-xs 16 = --space-xs, space-md 48 = --space-m,
+section-padding-open 208 = --space-2xl.
+
+Colour is semantic throughout, for the same reason as editorial.css: the 2026
+file draws cool neutrals and no dark mode, so building on tokens keeps both
+modes working and leaves the palette swap as a change in theme.css alone.
+================================================================================
+*/
+
+/*
+ * Row rhythm. Figma puts the whole 208 below the content rather than splitting
+ * it, so consecutive rows sit one gap apart and the first row sits tight under
+ * whatever precedes it.
+ */
+.feature-row,
+.text-row {
+  padding-bottom: var(--space-2xl);
+}
+
+/*
+================
+Feature row
+================
+*/
+.feature-row__heading {
+  margin: 0 0 var(--space-m);
+}
+
+/*
+ * The stagger. Every tile shares the row's baseline and differs in height, so
+ * they are bottom-anchored and carry their own ratio. Figma draws 312 / 624 /
+ * 468 / 468 at 468 wide; as ratios the skyline holds at any container width.
+ */
+.feature-row__images {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xs);
+  align-items: end;
+}
+
+.feature-row__tile {
+  aspect-ratio: var(--tile-ratio, 1);
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background-color: var(--surface-sunken);
+}
+
+.feature-row__tile:nth-child(1) { --tile-ratio: 3 / 2; }
+.feature-row__tile:nth-child(2) { --tile-ratio: 3 / 4; }
+.feature-row__tile:nth-child(3) { --tile-ratio: 1; }
+.feature-row__tile:nth-child(4) { --tile-ratio: 1; }
+
+.feature-row__tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The details band repeats the images' 4 columns, so each piece lines up with
+   the tile above it. */
+.feature-row__details {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xs);
+  align-items: start;
+  margin-top: var(--space-m);
+}
+
+.feature-row__tags {
+  grid-column: 1 / span 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feature-row__body {
+  grid-column: 3;
+  margin: 0;
+  color: var(--content-primary);
+}
+
+.feature-row__action {
+  grid-column: 4;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 991px) {
+  /* Two columns keeps the stagger legible; four at tablet width shrinks the
+     tiles past the point where the height difference reads. */
+  .feature-row__images {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .feature-row__details {
+    grid-template-columns: 1fr;
+    gap: var(--space-s);
+  }
+  .feature-row__tags,
+  .feature-row__body,
+  .feature-row__action {
+    grid-column: 1;
+  }
+  .feature-row__action {
+    justify-content: flex-start;
+  }
+}
+
+/*
+================
+Tag
+================
+*/
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25em 0.875em;
+  border-radius: var(--radius-pill);
+  background-color: var(--surface-sunken);
+  color: var(--content-secondary);
+  white-space: nowrap;
+}
+
+/*
+================
+Text row
+================
+*/
+.text-row__inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+
+.text-row__headline {
+  margin: 0;
+  /*
+   * The 2026 file sets Headline/8xl at line-height 1, where the site's
+   * .headline role is a single 112.5% for every step. Tightening the role
+   * globally would move every existing headline, so the display leading is
+   * local to this component for now — if the whole ramp should tighten at
+   * 8xl and up, that belongs in typography.css.
+   */
+  line-height: 1;
+}
+
+.text-row__action {
+  flex: none;
+}
+
+@media screen and (max-width: 767px) {
+  .text-row__inner {
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+}

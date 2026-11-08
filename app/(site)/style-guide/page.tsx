@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Button from "@/components/Button";
+import FeatureRow from "@/components/FeatureRow";
+import TextRow from "@/components/TextRow";
 
 export const metadata: Metadata = {
   title: "Style Guide",
@@ -230,6 +232,39 @@ export default function StyleGuidePage() {
         </div>
         <div className="spacer-xl"></div>
       </div>
+
+      {/* ---------------- Page sections ----------------
+          FeatureRow and TextRow render at full page width, so they sit
+          outside the typography container above to show their real geometry.
+          Images are stand-ins; what is being shown is the grid. */}
+      <div className="container-width w-container">
+        <div className="overline size-sm">Page sections</div>
+        <div className="spacer-xs"></div>
+        <p className="text size-lg" style={{ maxWidth: "60ch" }}>
+          The rows the 2026 home page stacks below its hero. Both are page-width
+          and carry their own rhythm, so a page is a list of them.
+        </p>
+        <div className="spacer-l"></div>
+      </div>
+
+      <TextRow>
+        The system is a flexible component library that enables adaptability while
+        personalizing every digital touchpoint
+      </TextRow>
+
+      <FeatureRow
+        heading="The latest"
+        images={[
+          { src: "/images/HelpScout-PrimaryVisual.webp" },
+          { src: "/images/ITW-Intro-07.webp" },
+          { src: "/images/hs-atg-brandboard.webp" },
+          { src: "/images/HelpScout-DelightLabs-Lobster.webp" },
+        ]}
+        tags={["Branding", "Design"]}
+        body="A staggered row of four tiles sharing a baseline, with the details band repeating the same four columns underneath."
+        action={{ label: "View", href: "/work" }}
+      />
+
       <div className="style-guide">
         <div className="style-guide-animation p-bottom-l">
           <div className="container-width w-container">
