@@ -5,8 +5,13 @@
   --space-m: clamp(30px, calc(30px + (48 - 30) * ((100vw - 375px) / (1600 - 375))), 48px);
   --space-l: clamp(50px, calc(50px + (80 - 50) * ((100vw - 375px) / (1600 - 375))), 80px);
   --space-xl: clamp(80px, calc(80px + (128 - 80) * ((100vw - 375px) / (1600 - 375))), 128px);
-  --space-2xl: clamp(130px, calc(130px + (208 - 130) * ((100vw - 375px) / (1600 - 375))), 208px);  
-/* color */  
+  --space-2xl: clamp(130px, calc(130px + (208 - 130) * ((100vw - 375px) / (1600 - 375))), 208px);
+/* radius — from the 2026 Figma variables (radius-md 8, radius-pill). The pill
+   is a shape, not a measurement: any value past half the height rounds the
+   ends, so 999px holds at every size instead of Figma's literal 80. */
+  --radius-md: 8px;
+  --radius-pill: 999px;
+/* color */
   --color-clay-50: #FCFBF9;
   --color-clay-100: #FAF8F6;
   --color-clay-200: #F6F3F1;

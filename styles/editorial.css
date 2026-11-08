@@ -1,0 +1,342 @@
+/*
+================================================================================
+Editorial — blog index and blog post
+================================================================================
+Built on the semantic layer, so both pages work in light and dark with no
+mode-specific rule of their own.
+
+A note on colour: the 2026 Figma file specifies cool neutrals (surface #ffffff,
+foreground #0b0c0d, border #d3d8db) where the site today is warm clay (#F6F3F1
+/ #132026), and it has no dark mode drawn. Rather than fork the palette here —
+which would strand these two pages outside the theme and undo the dark-mode
+work — every colour below is a semantic token. Swapping the palette later is
+then a change in theme.css that these pages inherit for free.
+
+Measurements come from the design's variables, which already match the ramp in
+tokens.css: space/space-md 48 = --space-m, space/space-lg 80 = --space-l,
+space/space-xl 128 = --space-xl, section-padding-open 208 = --space-2xl.
+================================================================================
+*/
+
+/*
+================
+Blog index
+================
+*/
+.blog-masthead {
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-xl);
+}
+
+/*
+ * Three columns: the lead card takes two, the stacked pair takes the third.
+ * The side column is its own flex track so the two small cards share the
+ * lead's height instead of being pinned to grid rows the lead does not fill.
+ */
+.blog-lead-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-m);
+  align-items: start;
+}
+
+.blog-lead-row__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl) var(--space-m);
+  margin-top: var(--space-xl);
+}
+
+@media screen and (max-width: 991px) {
+  .blog-lead-row {
+    grid-template-columns: 1fr;
+  }
+  /* Two across still reads at tablet width; one across wastes the row. */
+  .blog-lead-row__side,
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-l) var(--space-m);
+  }
+}
+
+@media screen and (max-width: 639px) {
+  .blog-lead-row__side,
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*
+================
+Post card
+================
+*/
+.postcard {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  /* The Webflow export underlines every <a> globally (a { border-bottom }).
+     A card is a link but not a text link, so the rule has to be undone here
+     or every card in the grid draws a rule under itself. */
+  border-bottom: 0;
+}
+
+.postcard__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background-color: var(--surface-sunken);
+}
+
+.postcard__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.postcard:hover .postcard__media img {
+  transform: scale(1.03);
+}
+
+/*
+ * The stand-in for a post with no art. The year is clipped by the tile, so it
+ * can be set large without pushing the card around.
+ */
+.postcard__media--empty {
+  display: grid;
+  place-items: center;
+}
+
+.postcard__media--empty .headline {
+  opacity: 0.22;
+  user-select: none;
+}
+
+.postcard__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  padding-top: var(--space-xs);
+}
+
+.postcard__meta time {
+  color: var(--content-secondary);
+}
+
+.postcard__title {
+  color: var(--content-primary);
+  transition: color 150ms ease;
+}
+
+.postcard:hover .postcard__title {
+  color: var(--accent);
+}
+
+.postcard__excerpt {
+  color: var(--content-secondary);
+  /* Two lines in the design; longer derived excerpts clamp rather than push
+     the cards in a row out of alignment. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .postcard__media img,
+  .postcard__title {
+    transition: none;
+  }
+  .postcard:hover .postcard__media img {
+    transform: none;
+  }
+}
+
+/*
+================
+Blog post
+================
+*/
+.blogpost__hero {
+  padding-top: var(--space-xl);
+}
+
+.blogpost__hero .container-width {
+  text-align: center;
+}
+
+/* "This post was originally shared on …" */
+.blogpost__origin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0 auto var(--space-m);
+  padding: 0.5em 1em;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  color: var(--content-secondary);
+}
+
+.blogpost__origin a {
+  color: inherit;
+}
+
+.blogpost__origin-icon {
+  flex: none;
+}
+
+.blogpost__title {
+  max-width: 18ch;
+  margin: 0 auto;
+  text-wrap: balance;
+}
+
+.blogpost__byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75em;
+  margin-top: var(--space-m);
+  color: var(--content-secondary);
+}
+
+.blogpost__avatar {
+  width: 1.75em;
+  height: 1.75em;
+  border-radius: 999px;
+  object-fit: cover;
+  background-color: var(--surface-sunken);
+}
+
+.blogpost__date::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  margin-right: 0.75em;
+  border-radius: 999px;
+  background-color: currentColor;
+  vertical-align: middle;
+}
+
+.blogpost__lead-panel {
+  margin-top: var(--space-l);
+  padding: var(--space-l) 0;
+  background-color: var(--surface-sunken);
+}
+
+.blogpost__lead-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+/*
+ * Body layout.
+ *
+ * The design sets body copy on a ~725px measure (about 70 characters at 21px)
+ * and lets images run wider. Named grid tracks give each its own width without
+ * any element having to know the page's padding: text sits in [text], figures
+ * span [wide], and the measure collapses to the gutter on small screens.
+ */
+.blogpost__body {
+  --measure: 725px;
+  --breakout: 200px;
+
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(var(--space-m), 1fr)
+    [wide-start] minmax(0, var(--breakout))
+    [text-start] min(var(--measure), 100% - var(--space-m) * 2) [text-end]
+    minmax(0, var(--breakout)) [wide-end]
+    minmax(var(--space-m), 1fr) [full-end];
+  padding-top: var(--space-xl);
+}
+
+.blogpost__body > * {
+  grid-column: text;
+}
+
+.blogpost__body > figure {
+  grid-column: wide;
+  margin: var(--space-l) 0;
+}
+
+.blogpost__body > figure img,
+.blogpost__body > figure iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+.blogpost__body > figure figcaption {
+  margin-top: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--content-secondary);
+}
+
+/* Rhythm. The design pairs a heading with the paragraph under it (16px) and
+   opens a new section above it (48px), so the gap is asymmetric by design. */
+.blogpost__body > p {
+  margin: 0 0 var(--space-xs);
+  color: var(--content-primary);
+}
+
+.blogpost__body > h2 {
+  margin: var(--space-m) 0 var(--space-xs);
+}
+
+.blogpost__body > h3,
+.blogpost__body > h4 {
+  margin: var(--space-s) 0 var(--space-xs);
+}
+
+.blogpost__body > :first-child {
+  margin-top: 0;
+}
+
+.blogpost__body > blockquote {
+  margin: var(--space-l) 0;
+  padding: 0;
+  border: 0;
+  color: var(--content-primary);
+}
+
+.blogpost__body > ul,
+.blogpost__body > ol {
+  margin: 0 0 var(--space-xs);
+  padding-left: 1.25em;
+}
+
+.blogpost__body > ul li,
+.blogpost__body > ol li {
+  margin-bottom: 0.5em;
+}
+
+.blogpost__body a {
+  color: var(--accent);
+}
+
+.blogpost__more {
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-l);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.blogpost__more .blog-grid {
+  margin-top: 0;
+}

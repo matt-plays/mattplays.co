@@ -11,11 +11,20 @@ export interface NavProps {
   navLinks?: NavLinkItem[] | null;
 }
 
-/** Fallback links mirror the live Webflow nav (Blog/Shop ship hidden). */
+/*
+ * Fallback links, used only when siteSettings has none. These now mirror the
+ * 2026 design — Work / Info / Blog / Shop, with Changelog moved to the
+ * footer's Explore column.
+ *
+ * NOTE: siteSettings DOES define navLinks today (Work / Info / Changelog), so
+ * this list does not render on the live site. Adding Blog to the nav is a
+ * content edit in the Studio, not a code change.
+ */
 const FALLBACK_LINKS: NavLinkItem[] = [
   { label: "Work", href: "/work" },
   { label: "Info", href: "/info" },
-  { label: "Changelog", href: "/changelog" },
+  { label: "Blog", href: "/blog" },
+  { label: "Shop", href: "/shop" },
 ];
 
 function normalizePath(path: string) {

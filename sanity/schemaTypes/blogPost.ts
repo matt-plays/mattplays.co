@@ -15,8 +15,32 @@ export const blogPost = defineType({
     }),
     defineField({ name: "date", type: "date" }),
     defineField({ name: "summary", type: "text", rows: 3 }),
-    defineField({ name: "featured", type: "boolean", initialValue: false }),
-    defineField({ name: "color", type: "string", title: "Accent color" }),
+    defineField({
+      name: "featured",
+      type: "boolean",
+      initialValue: false,
+      description: "Shows as the large lead card on /blog. Newest post is used when none is set.",
+    }),
+    defineField({
+      name: "color",
+      type: "string",
+      title: "Accent color",
+      description:
+        "Stands in for the card image on posts that have none — which is all 60 imported ones.",
+    }),
+    defineField({
+      name: "canonicalUrl",
+      type: "url",
+      title: "Originally published at",
+      description:
+        "Set when the post first appeared somewhere else. Drives the note above the title and the rel=canonical link.",
+    }),
+    defineField({
+      name: "canonicalLabel",
+      type: "string",
+      title: "Originally published — site name",
+      description: 'Shown in the note, e.g. "helpscout.com". Falls back to the URL host.',
+    }),
     defineField({
       name: "mainImage",
       type: "image",
