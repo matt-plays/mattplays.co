@@ -138,6 +138,122 @@ Disabled
 }
 
 /*
+================
+Icon button
+================
+The circular icon-only control from the 2026 library (Figma "Icon Button",
+2771:6343). It shares every token with .button above — the two controls are
+the same button in two shapes, so they must never drift apart in colour.
+
+Figma's styles are Primary / Secondary / Outlined; they are solid / secondary
+/ outline here to keep one vocabulary across the codebase.
+*/
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* A circular control must stay circular. Dropped into a flex row whose
+     align-items is the default stretch — the project card's details row, say
+     — it would otherwise be pulled into an ellipse by a taller sibling. The
+     2026 layouts centre it in every row it appears in. */
+  flex: none;
+  align-self: center;
+
+  /* 12px around a 20px icon is the 44px control the design draws, and the
+     smallest comfortable touch target. Fixed rather than fluid: this control
+     is sized by its icon, not by a text step. */
+  padding: 12px;
+
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background-color: transparent;
+  color: inherit;
+
+  text-decoration: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: background-color 150ms ease, border-color 150ms ease,
+              color 150ms ease;
+}
+
+/* The Webflow export underlines every <a> globally (a { border-bottom }), but
+   the `border` shorthand above already outranks it on every edge, so the link
+   form needs no extra rule — and must not get `border-bottom: 0`, which would
+   make it a pixel shorter than the button form. */
+
+.icon-button__icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.icon-button:focus-visible {
+  /* Same conditional as .button: the ring has to stay visible on a fixed
+     surface, where --ink-on-brand is set and the semantic token is not. */
+  outline: 2px solid var(--ink-on-brand, var(--focus-ring));
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-button { transition: none; }
+}
+
+.icon-button--solid {
+  background-color: var(--button-solid-bg);
+  border-color: var(--button-solid-bg);
+  color: var(--button-solid-fg);
+}
+.icon-button--solid:hover {
+  background-color: var(--button-solid-bg-hover);
+  border-color: var(--button-solid-bg-hover);
+}
+.icon-button--solid:active {
+  background-color: var(--button-solid-bg-active);
+  border-color: var(--button-solid-bg-active);
+}
+
+.icon-button--secondary {
+  background-color: var(--surface-sunken);
+  color: var(--content-primary);
+}
+.icon-button--secondary:hover {
+  background-color: var(--surface-inset);
+}
+.icon-button--secondary:active {
+  background-color: var(--border-subtle);
+}
+
+/* Drawn only in ink and border, so — like .button--outline — it is the one
+   variant that has to survive a surface which does not flip with the mode. */
+.icon-button--outline {
+  background-color: transparent;
+  color: var(--ink-on-brand, var(--button-outline-fg));
+  border-color: var(--ink-on-brand, var(--button-outline-border));
+}
+.icon-button--outline:hover {
+  background-color: var(--button-outline-bg-hover);
+  border-color: var(--ink-on-brand, var(--button-outline-border-hover));
+}
+.icon-button--outline:active {
+  background-color: var(--button-outline-bg-active);
+}
+
+.icon-button:disabled,
+.icon-button[aria-disabled="true"] {
+  background-color: var(--button-disabled-bg);
+  border-color: var(--button-disabled-bg);
+  color: var(--button-disabled-fg);
+  cursor: not-allowed;
+}
+.icon-button--outline:disabled,
+.icon-button--outline[aria-disabled="true"] {
+  background-color: transparent;
+  border-color: var(--border-subtle);
+}
+
+/*
 ----------------
 Trailing icon
 ----------------

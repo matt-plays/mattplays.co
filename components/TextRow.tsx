@@ -19,7 +19,7 @@ export default function TextRow({ children, action, as: Tag = "h2" }: TextRowPro
     <section className="text-row">
       <div className="container-width w-container">
         <div className="text-row__inner">
-          <Tag className="headline size-8xl text-row__headline">{children}</Tag>
+          <Tag className="headline size-8xl leading-display text-row__headline">{children}</Tag>
           {action ? (
             <div className="text-row__action">
               <Button href={action.href} arrow>

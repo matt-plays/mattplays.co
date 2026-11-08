@@ -218,6 +218,23 @@ Roles
 .headline.size-11xl,
 .headline.size-12xl {letter-spacing: var(--headline-tracking-display);}
 
+/*
+ * Display leading. The 2026 file draws its big headline steps (8xl and up —
+ * Headline/8xl, Headline/10xl) at line-height 1, where the .headline role
+ * above uses one --headline-leading of 112.5% at every step.
+ *
+ * Tightening the role globally at 8xl+ would move every existing headline on
+ * the site, so this stays opt-in and the places that need it say so. If the
+ * whole ramp should tighten, this class goes away and the rule moves into
+ * .headline against a size threshold.
+ *
+ * It must be declared after .headline, and carry the role in the selector, to
+ * win against the role's own line-height.
+ */
+.leading-display,
+.headline.leading-display,
+.text.leading-display {line-height: 1;}
+
 .text {
   font-family: var(--font-text);
   font-weight: var(--weight-regular);

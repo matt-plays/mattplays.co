@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import IconButton from "@/components/IconButton";
 import type { ProjectCard } from "@/components/blocks/types";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -35,8 +36,11 @@ const HOVER_CSS = `
   transform: scale3d(1.05, 1.05, 1);
   transition: opacity .5s cubic-bezier(.25, .46, .45, .94), transform 3s cubic-bezier(.25, .46, .45, .94);
 }
-.projectgrid-item .projectlist-item-button { color: var(--content-muted); border-color: var(--content-muted); background-color: transparent; }
-.projectgrid-item:hover .projectlist-item-button { color: var(--button-solid-fg); border-color: transparent; background-color: var(--button-solid-bg); }
+.projectgrid-item:hover .icon-button--outline {
+  color: var(--button-solid-fg);
+  border-color: var(--button-solid-bg);
+  background-color: var(--button-solid-bg);
+}
 `;
 
 export default async function WorkPage() {
@@ -51,7 +55,8 @@ export default async function WorkPage() {
       <div className="section-padding">
         <div className="container-width w-container">
           <div className="spacer-xl"></div>
-          <h1 className="size-5xl">Select Work</h1>
+          {/* 2026: "Selected work" at Headline/10xl, line-height 1. */}
+          <h1 className="headline size-10xl leading-display">Selected work</h1>
           <div className="spacer-2xl"></div>
         </div>
       </div>
@@ -112,9 +117,9 @@ export default async function WorkPage() {
                         <div className="headline size-2xl textcolor-headline">{project.title}</div>
                         <div className="mono size-xs">{project.roles}</div>
                       </div>
-                      <div className="projectlist-item-button">
-                        <div className="text size-xl">↗</div>
-                      </div>
+                      {/* Decorative: the card itself is the link, so this
+                          must not be a nested interactive element. */}
+                      <IconButton decorative variant="outline" />
                     </div>
                   </Link>
                 </div>

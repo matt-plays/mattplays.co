@@ -144,16 +144,10 @@ Text row
   gap: var(--space-m);
 }
 
+/* Display leading (Headline/8xl is drawn at line-height 1) comes from the
+   .leading-display class the component applies — see typography.css. */
 .text-row__headline {
   margin: 0;
-  /*
-   * The 2026 file sets Headline/8xl at line-height 1, where the site's
-   * .headline role is a single 112.5% for every step. Tightening the role
-   * globally would move every existing headline, so the display leading is
-   * local to this component for now — if the whole ramp should tighten at
-   * 8xl and up, that belongs in typography.css.
-   */
-  line-height: 1;
 }
 
 .text-row__action {

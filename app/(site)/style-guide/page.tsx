@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Button from "@/components/Button";
 import FeatureRow from "@/components/FeatureRow";
+import IconButton from "@/components/IconButton";
 import TextRow from "@/components/TextRow";
 
 export const metadata: Metadata = {
@@ -165,6 +166,33 @@ export default function StyleGuidePage() {
                 </div>
               </div>
             ))}
+          </section>
+
+          {/* ---------------- Icon buttons ---------------- */}
+          <section style={{ marginBottom: "var(--space-xl)" }}>
+            <div className="overline size-sm">Icon buttons</div>
+            <div className="spacer-xs"></div>
+            <p className="text size-lg" style={{ maxWidth: "60ch" }}>
+              The same button in a circular, icon-only shape — 12px around a 20px icon, which
+              makes a 44px control. It reads from the same <code>--button-*</code> tokens as the
+              pill above, so the two can never drift apart in colour. Being icon-only, every
+              interactive form requires a label.
+            </p>
+            <div className="spacer-s"></div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "var(--space-xs)",
+                alignItems: "center",
+              }}
+            >
+              <IconButton variant="solid" label="Solid icon button" />
+              <IconButton variant="secondary" label="Secondary icon button" />
+              <IconButton variant="outline" label="Outline icon button" />
+              <IconButton variant="outline" label="As a link" href="#icon-buttons" />
+              <IconButton variant="solid" label="Disabled icon button" disabled />
+            </div>
           </section>
 
           {/* ---------------- Semantic colour ---------------- */}
