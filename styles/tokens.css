@@ -33,6 +33,21 @@
   --color-slate-800: #1E292E;
   --color-slate-900: #132026;
 /*
+ * Accent. The first colours in the 2026 file outside the clay/slate neutrals:
+ * the hero's five dots, named here exactly as Figma names them
+ * (Saturated/Red/500, Muted/Warm Green/600, ...) so the two stay legible to
+ * each other.
+ *
+ * Palette only. Nothing semantic reads them yet, so they do not flip with the
+ * mode -- when a role needs one, it gets a --something token in theme.css
+ * with a value per mode, the way every other colour here is consumed.
+ */
+  --color-red-500:        #F6765C;
+  --color-orange-400:     #FA9974;
+  --color-yellow-300:     #F4BD68;
+  --color-warm-green-600: #8DA263;
+  --color-blue-500:       #669AFF;
+/*
 ================
 Grid
 ================

@@ -160,3 +160,179 @@ Text row
     gap: var(--space-s);
   }
 }
+
+/*
+================
+Home hero  (2699:3570)
+================
+Not a row — an art-directed collage. Every piece is placed against the others
+rather than flowed, so all of the geometry below is a percentage of one stage.
+
+Those percentages come from the 1920 x 1080 container the design draws, plus
+the 180px the photograph runs on past its bottom edge: hence a 1920 / 1260
+stage. Percentages rather than the file's pixels because the container here is
+1280–1600 wide, so only the relationships can be ported, not the measurements.
+
+Below 992px the composition cannot hold — the collage alone is 38% of the
+width, and the display words are set to span the full container. The stage
+becomes an ordinary column there. The 2026 file draws no mobile hero, so that
+stacking is this codebase's decision rather than the design's.
+
+Left out: the blockquote drawn behind "Brands" (Neutral/Clay/400 on
+Neutral/Clay/200, about 1.3:1). As live text it would fail 1.4.3 by a wide
+margin, and it collides with the headline, so it reads as still being placed.
+*/
+.home-hero {
+  /* The photograph bleeds about 17% past the container's right edge, exactly
+     as the design draws it. Clipping here is what keeps that bleed from
+     becoming horizontal page scroll. */
+  overflow: hidden;
+  padding-top: var(--space-l);
+  padding-bottom: var(--space-xl);
+}
+
+.home-hero__stage {
+  position: relative;
+  aspect-ratio: 1920 / 1260;
+}
+
+.home-hero__headline {
+  margin: 0;
+}
+
+/*
+ * Each display line spans the stage. On the top line that makes space-between
+ * the design's own measurement rather than a guess at it — "Design" sits
+ * flush left and "for" flush right, which is where the file puts them.
+ */
+.home-hero__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.home-hero__line--top    {top: 0;}
+.home-hero__line--bottom {top: 65%;}
+
+/* 740 x 613, centred on the container's middle (540 of 1260). */
+.home-hero__collage {
+  position: absolute;
+  left: 50%;
+  top: 42.86%;
+  transform: translate(-50%, -50%);
+  width: 38.54%;
+  aspect-ratio: 740 / 613;
+}
+
+.home-hero__collage-item {
+  position: absolute;
+}
+
+.home-hero__collage-item img,
+.home-hero__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*
+ * Five 40px dots on an 86px pitch. Expressed as a five-column grid 430 wide
+ * so the dots scale with everything else: a percentage gap on a flex row
+ * would resolve against the row's own auto width, which depends on the gap.
+ */
+.home-hero__dots {
+  position: absolute;
+  left: 77.5%;
+  top: 25.63%;
+  width: 22.4%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-hero__dot {
+  width: 46.5%;              /* the 40px dot within its 86px column */
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+/*
+ * Anchored from its baseline, not its top. The photograph below is a cut-out
+ * on a transparent sky, so the tagline is really sitting on the page — until
+ * it reaches the snow, which is opaque and nearly white, and which no single
+ * ink survives in both modes.
+ *
+ * The design sets this in two lines; the ramp here is fluid while the box is
+ * a percentage, so narrower viewports take three or four. Growing upward is
+ * what keeps every one of them clear of the snow. bottom: 39% is where the
+ * design's second line ends (768.5 of 1260).
+ */
+.home-hero__tagline {
+  position: absolute;
+  left: 84.06%;
+  bottom: 39%;
+  width: 21%;
+  margin: 0;
+}
+
+.home-hero__photo {
+  position: absolute;
+  left: 70.62%;
+  bottom: 0;
+  width: 45.99%;
+  aspect-ratio: 883 / 589;
+}
+
+/*
+----------------
+Stacked
+----------------
+*/
+@media screen and (max-width: 991px) {
+  .home-hero__stage {
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .home-hero__headline,
+  .home-hero__line,
+  .home-hero__dots,
+  .home-hero__tagline,
+  .home-hero__photo {
+    position: static;
+    inset: auto;
+    transform: none;
+    width: 100%;
+  }
+
+  /* Stays positioned: its three images are absolute against it, and making it
+     static would hand them the stage as a containing block instead. */
+  .home-hero__collage {
+    position: relative;
+    inset: auto;
+    transform: none;
+    width: 100%;
+  }
+
+  /* The words run together again as one headline. */
+  .home-hero__line {
+    display: block;
+  }
+
+  /* Last, so the photograph closes the stack instead of opening it — it is
+     only first in the markup to paint behind the tagline on desktop. */
+  .home-hero__photo {
+    order: 1;
+  }
+
+  .home-hero__dots {
+    width: 60%;
+    max-width: 260px;
+  }
+}
