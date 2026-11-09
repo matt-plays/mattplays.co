@@ -18,6 +18,16 @@
 @import "../styles/webflow/normalize.css";
 @import "../styles/webflow/webflow.css";
 @import "../styles/webflow/mattplays.webflow.css";
+
+/*
+ * MPDS — the design system this project treats as its north star. It ships
+ * primitives only, so it is imported ahead of tokens.css, which is where this
+ * site maps them onto semantic names. Only the metrics are consumed today
+ * (spacing, and the site layout lengths); the barrel at "@mattplays/mpds"
+ * adds colour, elevation and radius when those move over too.
+ */
+@import "@mattplays/mpds/css/mpds-metrics-fluid.css";
+
 @import "../styles/tokens.css";
 @import "../styles/typography.css";
 @import "../styles/theme.css";

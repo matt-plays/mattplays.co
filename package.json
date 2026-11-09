@@ -10,6 +10,7 @@
     "optimize": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
+    "@mattplays/mpds": "git+https://github.com/matt-plays/mpds.git",
     "@portabletext/react": "^6.2.0",
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^6.5.0",

@@ -1,11 +1,31 @@
 :root {
-/* fluid-spacer */
-  --space-xs: clamp(12px, calc(12px + (16 - 12) * ((100vw - 375px) / (1600 - 375))), 16px);
-  --space-s: clamp(20px, calc(20px + (32 - 20) * ((100vw - 375px) / (1600 - 375))), 32px);
-  --space-m: clamp(30px, calc(30px + (48 - 30) * ((100vw - 375px) / (1600 - 375))), 48px);
-  --space-l: clamp(50px, calc(50px + (80 - 50) * ((100vw - 375px) / (1600 - 375))), 80px);
-  --space-xl: clamp(80px, calc(80px + (128 - 80) * ((100vw - 375px) / (1600 - 375))), 128px);
-  --space-2xl: clamp(130px, calc(130px + (208 - 130) * ((100vw - 375px) / (1600 - 375))), 208px);
+/*
+================
+Spacing
+================
+Every measurement in this project comes from MPDS (@mattplays/mpds), the
+design system that is the north star for the whole thing. Nothing here
+declares a length of its own: the six steps below are this site's semantic
+ramp, and each one is an alias onto an MPDS primitive.
+
+That indirection is deliberate, and it is what MPDS itself asks for -- the
+package ships primitives only and leaves the semantic mapping to the
+consuming project. It also means the ~90 `var(--space-*)` callsites across
+this codebase never have to know which primitive they resolve to: when a step
+moves in Figma, it moves in MPDS, and it lands here without touching a rule.
+
+The ramp matches MPDS step for step at the top of its range -- 16 / 32 / 48 /
+80 / 128 / 208 -- because both this ramp and the design system were drawn
+from the same Figma spacing scale. The full numeric scale is available too
+(--mpds-space-24, --mpds-space-64, ...) for the places a named step is the
+wrong size; prefer a primitive over arithmetic on a step.
+*/
+  --space-xs:  var(--mpds-space-xs);
+  --space-s:   var(--mpds-space-sm);
+  --space-m:   var(--mpds-space-md);
+  --space-l:   var(--mpds-space-lg);
+  --space-xl:  var(--mpds-space-xl);
+  --space-2xl: var(--mpds-space-2xl);
 /* radius — from the 2026 Figma variables (radius-md 8, radius-pill). The pill
    is a shape, not a measurement: any value past half the height rounds the
    ends, so 999px holds at every size instead of Figma's literal 80. */
@@ -99,17 +119,20 @@ font-variant-numeric: lining-nums proportional-nums;
 .elevation-xl {box-shadow: 0px 8px 16px rgba(19, 32, 38, 0.02), 0px 16px 32px rgba(19, 32, 38, 0.04), 0px 24px 48px rgba(19, 32, 38, 0.06), 0px 32px 64px rgba(19, 32, 38, 0.08), 0px 40px 80px rgba(19, 32, 38, 0.1);}
 .elevation-xxl {box-shadow: 0px 8px 16px rgba(19, 32, 38, 0.02), 0px 16px 32px rgba(19, 32, 38, 0.04), 0px 24px 48px rgba(19, 32, 38, 0.06), 0px 32px 64px rgba(19, 32, 38, 0.08), 0px 40px 80px rgba(19, 32, 38, 0.1), 0px 48px 96px rgba(19, 32, 38, 0.12);}
 .elevation-inner {box-shadow: inset 1px 3px 6px rgba(13, 0, 38, 0.08);}
-/* XL Spacing */
+/*
+================
+Wide viewports
+================
+The container keeps growing past 1600px. The spacing ramp used to grow with
+it here (a second fluid-spacer block that carried --space-2xl to 260), but
+spacing is MPDS's call now and its fluid metrics settle at a 1440px viewport.
+So the steps hold at their design-system values above that width, and if the
+ramp should keep opening up on a very wide display that belongs in MPDS as a
+wide step -- not as a local override that would put this file back in the
+business of declaring lengths.
+*/
 @media (min-width: 1600px) {
 :root {
-/* grid */
---container-width: min(calc(1280px + (2400 - 1600) * (100vw - 1600px) / (2400 - 1600)), 1600px); 
-/* fluid-spacer */
---space-xs: clamp(16px, calc(16px + (20 - 16) * ((100vw - 1600px) / (2000 - 1600))), 20px);
---space-s: clamp(32px, calc(32px + (40 - 32) * ((100vw - 1600px) / (2000 - 1600))), 40px);
---space-m: clamp(48px, calc(48px + (60 - 48) * ((100vw - 1600px) / (2000 - 1600))), 60px);
---space-l: clamp(80px, calc(80px + (100 - 80) * ((100vw - 1600px) / (2000 - 1600))), 100px);
---space-xl: clamp(128px, calc(128px + (160 - 128) * ((100vw - 1600px) / (2000 - 1600))), 160px);
---space-2xl: clamp(208px, calc(208px + (260 - 208) * ((100vw - 1600px) / (2000 - 1600))), 260px);   
+--container-width: min(calc(1280px + (2400 - 1600) * (100vw - 1600px) / (2400 - 1600)), 1600px);
 }
 }
