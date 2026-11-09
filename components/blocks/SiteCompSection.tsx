@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { urlFor } from "@/sanity/lib/image";
 import type { SanityImageValue, SiteCompSectionBlock } from "./types";
 
@@ -106,6 +107,18 @@ function CompImage({
   );
 }
 
+/**
+ * The same guard the case study page puts on its brand colour. It mattered
+ * less when this value went straight into `background-color`; as a custom
+ * property it is substituted into another declaration, so it is worth keeping
+ * the value to something that can only be a colour.
+ */
+function sanitizeColor(color?: string | null) {
+  if (!color) return undefined;
+  const trimmed = color.trim();
+  return /^[#a-zA-Z0-9(),.%\s-]+$/.test(trimmed) ? trimmed : undefined;
+}
+
 export default function SiteCompSection({ block }: { block: SiteCompSectionBlock }) {
   const media = block.media ?? [];
   if (!media.length) return null;
@@ -134,10 +147,20 @@ export default function SiteCompSection({ block }: { block: SiteCompSectionBlock
     children.push(<CompImage key={`extra-${cursor}`} image={media[cursor++]} mask={null} />);
   }
 
+  /*
+   * The colour is published as --comp-surface rather than as a background, so
+   * an override from Sanity reaches the page the same way the variant classes
+   * do (styles/sections.css, components/CompSurface). data-comp-surface is
+   * what the observer looks for; it is on every comp section, including the
+   * unbranded one, which simply has no colour to offer.
+   */
+  const override = sanitizeColor(block.background);
+
   return (
     <div
       className={variant ? `sitecompsection-${variant}` : "sitecompsection-grid-section"}
-      style={block.background ? { backgroundColor: block.background } : undefined}
+      data-comp-surface=""
+      style={override ? ({ "--comp-surface": override } as CSSProperties) : undefined}
     >
       <div className="section-padding">
         <div className="container-width w-container">

@@ -773,3 +773,60 @@ Stacked
     height: auto;
   }
 }
+
+/*
+================================================================================
+Site comp sections
+================================================================================
+The per-project colour fields a case study is built from. The Webflow export
+paints each one as the section's own background-color; these rules restate the
+same colours as a custom property instead, which is what lets the page take
+them over (components/CompSurface, and the body rule in theme.css).
+
+Two reasons the colour moves into a property rather than staying a plain
+background. It gives the observer something to read, so the colours are
+declared once here instead of being duplicated in JavaScript. And it keeps the
+no-JavaScript rendering intact: `background-color` below still paints the
+section, so the page looks the way it always did until the observer takes over.
+
+The values are the export's own, unchanged. They are brand colours, not theme
+colours, so they do not flip with the mode -- the same treatment the case study
+heroes get.
+================================================================================
+*/
+.sitecompsection-itw         { --comp-surface: #e1d1c7; }
+.sitecompsection-hswd        { --comp-surface: #e3eaff; }
+.sitecompsection-bwd         { --comp-surface: #eeded1; }
+.sitecompsection-atg         { --comp-surface: #04172c; }
+.sitecompsection-csa         { --comp-surface: #d9dcfd; }
+.sitecompsection-hsp         { --comp-surface: #151f26; }
+.sitecompsection-epic        { --comp-surface: #003466; }
+.sitecompsection-icon        { --comp-surface: #e7d3a4; }
+.sitecompsection-iomw        { --comp-surface: #16003f; }
+.sitecompsection-hsbe        { --comp-surface: #ffbcad; }
+.sitecompsection-rockdove    { --comp-surface: #2f313d; }
+.sitecompsection-delightlabs { --comp-surface: #e5784d; }
+
+/*
+ * Painted from the property, so Sanity's per-section override -- which the
+ * component now sets as --comp-surface rather than as an inline background --
+ * reaches both this and the page.
+ *
+ * This file is imported after the Webflow layer and the selectors are the same
+ * single class, so these win on source order. `.sitecompsection-delightlabs`
+ * is also declared inside a media query there; a media query adds no
+ * specificity, so source order settles that one too.
+ */
+[data-comp-surface] {
+  background-color: var(--comp-surface, transparent);
+}
+
+/*
+ * Handed over. Once the observer is driving the page background, the sections
+ * stop painting their own: otherwise the colour would be boxed in at each
+ * section's edges and the 8rem gaps between them would still show page colour
+ * through, which is the seam this is meant to remove.
+ */
+html[data-comp-bg] [data-comp-surface] {
+  background-color: transparent;
+}

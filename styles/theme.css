@@ -220,8 +220,18 @@ they are brand constants, not theme colours.
 Page
 ================================================================================
 */
+/*
+ * The page's own background, with one conditional in front of it.
+ *
+ * On a case study, whichever site-comp section is being read lends the page
+ * its colour: components/CompSurface sets --page-surface-active on <html> and
+ * clears it again on the way out, so the colour belongs to the page rather
+ * than to a box inside it. The variable is unset everywhere else, which makes
+ * this exactly --surface-page on every other page -- the same conditional
+ * shape as --ink-on-brand below.
+ */
 body {
-  background-color: var(--surface-page);
+  background-color: var(--page-surface-active, var(--surface-page));
   color: var(--content-primary);
 }
 
@@ -233,6 +243,23 @@ Only animate the theme flip, and only for users who want motion. Without the
   html[data-theme-ready] body,
   html[data-theme-ready] body * {
     transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+  }
+
+  /*
+   * A comp section handing its colour to the page is a much bigger move than
+   * flipping the mode -- it sweeps the whole viewport -- so it gets its own
+   * duration. 200ms reads as a flicker at that size; this is slow enough to
+   * feel like one project giving way to the next.
+   *
+   * Only the body, not its descendants: the children are still flipping on
+   * the theme timing above, and they have no reason to follow this one.
+   *
+   * Both of these sit inside prefers-reduced-motion: no-preference, so a
+   * visitor who asked for less motion gets the colour change with no
+   * animation at all rather than a slower one.
+   */
+  html[data-comp-bg][data-theme-ready] body {
+    transition: background-color 600ms ease, border-color 200ms ease, color 200ms ease;
   }
 }
 
