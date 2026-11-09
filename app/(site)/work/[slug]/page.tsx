@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BlockRenderer from "@/components/blocks";
+import CaseStudyHero from "@/components/CaseStudyHero";
 import type { ProjectCard, ProjectDetail } from "@/components/blocks/types";
 import ProjectList from "@/components/ProjectList";
 import { client } from "@/sanity/lib/client";
@@ -66,10 +67,15 @@ export default async function CaseStudyPage({
   const color = safeColor(project.color);
   // The hero surface does not flip with the mode, so neither can its ink.
   const brandInk = inkOnBrandSurface(color);
-  // The hero paints as a CSS background capped at 1920px wide (56.25% tall),
-  // so 2000px covers it; the old 3200px request shipped ~2x the bytes.
-  const heroImage = project.heroVisual
-    ? urlFor(project.heroVisual).width(2000).auto("format").url()
+  /*
+   * The 2026 hero floats the project's primary thumbnail in the middle of the
+   * screen and opens it out to fill the viewport, so it is requested at a
+   * size that holds up full-screen rather than at the old 1920-wide cap.
+   * heroVisual is the fallback for projects that have no thumbnail set.
+   */
+  const heroSource = project.primaryThumbnail ?? project.heroVisual;
+  const heroImage = heroSource
+    ? urlFor(heroSource).width(2400).auto("format").url()
     : undefined;
 
   return (
@@ -79,92 +85,47 @@ export default async function CaseStudyPage({
       {heroImage ? (
         <link rel="preload" as="image" href={heroImage} fetchPriority="high" />
       ) : null}
-      {/* On the live site the nav sits inside a project-colored
-          .hero-casestudy--nav-background wrapper; here the nav is global
-          chrome, so this route-scoped style paints it instead.
+      {/*
+        The 2026 hero puts the nav inside the section, over the project's
+        colour, with no background of its own.
 
-          Setting --ink-on-brand here is what carries the nav's contents,
-          including the theme toggle, onto the brand colour: the readers in
-          components.css pick it up on their own. Only the two hover/press
-          tints have to be repeated, because theme.css can re-point them for
-          the fixed surfaces it knows by class, and the nav is not one of them
-          — .hero-casestudy--nav is on the nav site-wide and only painted on
-          this route.
+        Two things make that work, and both are route-scoped because the nav
+        is global chrome. It is taken out of the flow, so the hero starts at
+        the top of the screen instead of below the nav and its image can open
+        to a genuinely full viewport. And `top` is deliberately left alone:
+        an absolutely positioned box with `top: auto` stays at its static
+        position, which is wherever the nav would have been anyway -- below
+        the promo bar if that is ever switched back on. Pinning it to `top: 0`
+        would have assumed the nav starts at the top of the page.
 
-          The fallback on the descendant rule is not decoration: below 992px
-          the collapsed nav panel paints its own flipping surface and clears
-          --ink-on-brand, and these links sit inside it. */}
+        Setting --ink-on-brand here is what carries the nav's contents,
+        including the theme toggle, onto the brand colour: the readers in
+        components.css pick it up on their own. Only the two hover/press
+        tints have to be repeated, because theme.css can re-point them for
+        the fixed surfaces it knows by class, and the nav is not one of them
+        -- .hero-casestudy--nav is on the nav site-wide and only painted on
+        this route.
+
+        The fallback on the descendant rule is not decoration: below 992px
+        the collapsed nav panel paints its own flipping surface and clears
+        --ink-on-brand, and these links sit inside it.
+      */}
       {color ? (
         <style
           dangerouslySetInnerHTML={{
             __html:
-              `.navigation.hero-casestudy--nav {\n                 background-color: ${color};\n                 --ink-on-brand: ${brandInk};\n                 --button-outline-bg-hover: color-mix(in srgb, ${brandInk} 10%, transparent);\n                 --button-outline-bg-active: color-mix(in srgb, ${brandInk} 16%, transparent);\n                 color: var(--ink-on-brand);\n               }\n               .navigation.hero-casestudy--nav .nav-link,\n               .navigation.hero-casestudy--nav .mono,\n               .navigation.hero-casestudy--nav .text {\n                 color: var(--ink-on-brand, var(--content-primary));\n               }`,
+              `.navigation.hero-casestudy--nav {\n                 position: absolute;\n                 left: 0;\n                 right: 0;\n                 z-index: 5;\n                 background-color: transparent;\n                 --ink-on-brand: ${brandInk};\n                 --button-outline-bg-hover: color-mix(in srgb, ${brandInk} 10%, transparent);\n                 --button-outline-bg-active: color-mix(in srgb, ${brandInk} 16%, transparent);\n                 color: var(--ink-on-brand);\n               }\n               .navigation.hero-casestudy--nav .nav-link,\n               .navigation.hero-casestudy--nav .mono,\n               .navigation.hero-casestudy--nav .text {\n                 color: var(--ink-on-brand, var(--content-primary));\n               }`,
           }}
         />
       ) : null}
-      <div className="hero-casestudy--section">
-        <div className="w-dyn-list">
-          <div role="list" className="w-dyn-items">
-            <div role="listitem" className="w-dyn-item">
-              <div
-                className="hero-casestudy"
-                data-brand-surface={color ? "" : undefined}
-                style={
-                  color
-                    ? ({
-                        backgroundColor: color,
-                        "--ink-on-brand": brandInk,
-                      } as React.CSSProperties)
-                    : undefined
-                }
-              >
-                <div
-                  className="casestudy__hero-visual"
-                  style={heroImage ? { backgroundImage: `url("${heroImage}")` } : undefined}
-                ></div>
-                <div className="casestudy__hero-textsection">
-                  <div className="w-layout-grid casestudy__hero-textsection-grid">
-                    <p
-                      id="w-node-_6951c566-3ce0-8811-6609-a8743abc53e5-b2d8fe30"
-                      className="mono size-base"
-                    >
-                      Project
-                    </p>
-                    <h1
-                      id="w-node-_6951c566-3ce0-8811-6609-a8743abc53e7-b2d8fe30"
-                      className="size-8xl headline"
-                    >
-                      {project.title}
-                    </h1>
-                    <div
-                      id="w-node-_6951c566-3ce0-8811-6609-a8743abc53e8-b2d8fe30"
-                      className="hr"
-                    ></div>
-                    <div
-                      id="w-node-_6951c566-3ce0-8811-6609-a8743abc53e9-b2d8fe30"
-                      className="casestudy__hero-detailgrid"
-                    >
-                      <p
-                        id="w-node-_6951c566-3ce0-8811-6609-a8743abc53ea-b2d8fe30"
-                        className="text size-2xl"
-                      >
-                        {project.description}
-                      </p>
-                      <p
-                        id="w-node-_6951c566-3ce0-8811-6609-a8743abc53eb-b2d8fe30"
-                        className="mono size-xs align-right"
-                      >
-                        {project.roles}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="spacer-xl"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <CaseStudyHero
+        title={project.title ?? "Work"}
+        summary={project.description}
+        roles={project.roles}
+        color={color}
+        ink={brandInk}
+        image={heroImage ? { src: heroImage } : undefined}
+      />
       <BlockRenderer blocks={project.body} />
       <ProjectList projects={projects} currentSlug={slug} />
     </main>

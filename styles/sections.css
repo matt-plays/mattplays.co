@@ -830,3 +830,341 @@ heroes get.
 html[data-comp-bg] [data-comp-surface] {
   background-color: transparent;
 }
+
+/*
+================================================================================
+Case study hero (2812:9801)
+================================================================================
+One screen of the project's brand colour with the primary thumbnail floating in
+the middle of it, which then opens out to fill the viewport as you scroll
+before the sections below start moving.
+
+The opening is a scroll-driven animation, so it costs no JavaScript and no
+scroll handler. Everything about it lives in the @supports block at the bottom:
+the rules above describe the still composition, which is what a browser without
+scroll-driven animations -- or a visitor who asked for less motion -- gets.
+================================================================================
+*/
+.cs-hero {
+  /*
+   * The thumbnail is ten of the twenty-four columns. Solving 10 columns plus
+   * the 9 gutters between them, where a column is (W - 23g) / 24, gives
+   * (10W - 14g) / 24 -- which is 790 against the file's 1920 container and its
+   * 16 gutter, the width it actually draws. Stated as the formula rather than
+   * as a percentage so the grid stays legible, and so changing the gutter does
+   * the right thing.
+   */
+  --cs-hero-gutter: 16px;
+  --cs-hero-media-basis: calc(
+    (10 * var(--container-width) - 14 * var(--cs-hero-gutter)) / 24
+  );
+
+  /*
+   * One line of the overline / tag row, which is what sits between the top of
+   * the pin and the thumbnail. Only an approximation of the rendered row, and
+   * only used to keep the two apart -- see the cap below.
+   */
+  --cs-hero-row: 2.5rem;
+
+  /*
+   * Ten columns is a width, and on a short screen a width is not the whole
+   * story: the thumbnail is centred on the pin, so the room it has is twice
+   * the distance from the centre of the screen to the row above it -- the top
+   * padding plus that row. Past about 790px of viewport height at desktop
+   * widths, ten columns is taller than that and the thumbnail would run under
+   * the overline. So it is the smaller of the two, and --space-s is the
+   * clearance that survives: a laptop at 1440x830 gets a slightly smaller
+   * thumbnail rather than a broken composition, and the opening is unchanged
+   * either way.
+   *
+   * The max() is a floor for the pathological case -- a landscape phone, where
+   * the reserve is taller than the whole screen and the subtraction goes
+   * negative, which would make the width invalid rather than small. It is
+   * deliberately low: anything higher starts winning on screens that are
+   * merely short rather than impossible, and then it is the floor, not the
+   * geometry, that puts the thumbnail under the row.
+   */
+  --cs-hero-media-width: min(
+    var(--cs-hero-media-basis),
+    max(
+      12svh * 16 / 9,
+      (100svh - 2 * (var(--space-2xl) + var(--cs-hero-row) + var(--space-s)))
+        * 16 / 9
+    )
+  );
+  --cs-hero-media-height: calc(var(--cs-hero-media-width) * 9 / 16);
+
+  /* 468 of the file's 1920: the column the tags and the summary share. */
+  --cs-hero-aside: 24.375%;
+
+}
+
+.cs-hero__stage {
+  /* One screen when it cannot animate. The @supports block makes room for the
+     scrub. */
+  height: 100svh;
+}
+
+.cs-hero__pin {
+  position: sticky;
+  top: 0;
+  /* Exactly one screen, not a minimum: the thumbnail grows to 100% of this
+     box, so if the pin could outgrow the viewport the finished image would
+     too, and the bottom of it would never be on screen. */
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  /*
+   * The nav is lifted out of the flow on this route (see the route-scoped
+   * style on the case study page), so the section starts at the top of the
+   * screen and the nav floats over it. This padding is what keeps the top row
+   * clear of it.
+   *
+   * --space-2xl rather than a measured nav height: the nav is fluid, from
+   * about 158px wide-screen down to 116 on a phone, and this step is larger
+   * than it at every width (208 down to 139) while still being a value from
+   * the ramp rather than a constant that would quietly drift out of step.
+   */
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-l);
+}
+
+.cs-hero__frame {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-l);
+}
+
+/*
+----------------
+Top row
+----------------
+*/
+.cs-hero__meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+
+.cs-hero__tagrow {
+  flex: 0 1 var(--cs-hero-aside);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.cs-hero__rule {
+  flex: 1;
+  height: 1px;
+  background-color: currentColor;
+  opacity: 0.2;
+}
+
+.cs-hero__tags {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Slate/200 at 8% in the file; stated against the surface's own ink so it
+   holds on a dark brand colour as well as a light one. */
+.cs-hero__tag {
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background-color: color-mix(
+    in srgb,
+    var(--ink-on-brand, var(--content-primary)) 8%,
+    transparent
+  );
+  white-space: nowrap;
+}
+
+/*
+----------------
+Bottom row
+----------------
+*/
+.cs-hero__lede {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-xs);
+}
+
+.cs-hero__title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.cs-hero__summary {
+  flex: 0 0 var(--cs-hero-aside);
+  margin: 0;
+}
+
+/*
+----------------
+The thumbnail
+----------------
+Centred on the pin rather than placed in the rows above, so it can open to the
+full screen without moving any of the text around it.
+*/
+.cs-hero__media {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  z-index: 1;
+  margin: 0;
+  width: var(--cs-hero-media-width);
+  height: var(--cs-hero-media-height);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.cs-hero__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*
+----------------
+Opening
+----------------
+The stage gets a second screen of height, the pin sticks for exactly that
+distance, and the thumbnail is animated across it.
+
+The `contain` range is the window where the stage covers the viewport entirely
+-- from its top edge meeting the top of the screen to its bottom edge meeting
+the bottom. For a two-screen stage that is exactly the distance the sticky pin
+holds, which makes it the right clock to animate against.
+*/
+@keyframes cs-hero-open {
+  from {
+    width: var(--cs-hero-media-width);
+    height: var(--cs-hero-media-height);
+    border-radius: var(--radius-sm);
+  }
+  to {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .cs-hero__stage {
+      view-timeline-name: --cs-hero;
+      view-timeline-axis: block;
+      /* one screen pinned + one screen of scrub */
+      height: 200vh;
+      height: 200svh;
+    }
+
+    .cs-hero__media {
+      animation: cs-hero-open linear both;
+      animation-timeline: --cs-hero;
+      /*
+       * Finished at three quarters of the pin rather than all of it. Running
+       * it to 100% means the image lands full-bleed on the very frame the
+       * hero starts to leave, so it is never actually seen filling the
+       * screen. Ending early leaves the last quarter of the pin holding it
+       * there -- the image fills the viewport, rests, and only then does the
+       * page move on.
+       */
+      animation-range: contain 0% contain 75%;
+    }
+  }
+}
+
+/*
+----------------
+Stacked
+----------------
+*/
+@media screen and (max-width: 991px) {
+  .cs-hero__meta,
+  .cs-hero__lede {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-s);
+  }
+
+  .cs-hero__tagrow,
+  .cs-hero__summary {
+    flex: 0 0 auto;
+  }
+
+  /* The top row is two lines once it stacks, so the cap has more to reserve. */
+  .cs-hero {
+    --cs-hero-row: 5.5rem;
+  }
+}
+
+/*
+----------------
+Too short to choreograph
+----------------
+A landscape phone is about 390px tall, of which the nav takes 135 and the
+title and summary take most of the rest: the two rows alone are more than the
+screen, so there is no size of thumbnail that fits between them and no screen
+left to hold one still. Rather than compress the composition until it breaks,
+the hero stops being one -- the pin is released, the thumbnail drops back into
+the flow between the rows it was centred over, and the section is an ordinary
+stack that the page scrolls past. Everything the hero says is still said.
+*/
+@media screen and (max-height: 560px) {
+  .cs-hero__stage {
+    height: auto;
+    view-timeline-name: none;
+  }
+
+  .cs-hero__pin {
+    position: static;
+    height: auto;
+    padding-bottom: var(--space-xl);
+  }
+
+  .cs-hero__frame {
+    display: block;
+  }
+
+  .cs-hero__media {
+    position: static;
+    translate: none;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    margin: var(--space-m) 0;
+    animation: none;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  /*
+   * Ten of twenty-four columns is a postage stamp on a phone -- about 130px
+   * against a 375 viewport. The proportion is a desktop idea, so below this
+   * the thumbnail is simply most of the screen and still opens the same way.
+   *
+   * vw rather than a percentage, because the height below it is derived from
+   * this value: a percentage height resolves against the pin's HEIGHT, not
+   * its width, so `80%` quietly made the thumbnail 45% of a screen tall
+   * instead of sixteen-by-nine. A viewport unit resolves the same way in both
+   * axes, which is what the derivation assumes.
+   */
+  .cs-hero {
+    --cs-hero-media-basis: 80vw;
+  }
+
+
+}

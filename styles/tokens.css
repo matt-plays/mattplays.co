@@ -29,6 +29,7 @@ wrong size; prefer a primitive over arithmetic on a step.
 /* radius — from the 2026 Figma variables (radius-md 8, radius-pill). The pill
    is a shape, not a measurement: any value past half the height rounds the
    ends, so 999px holds at every size instead of Figma's literal 80. */
+  --radius-sm: 4px;
   --radius-md: 8px;
   --radius-pill: 999px;
 /* color */
