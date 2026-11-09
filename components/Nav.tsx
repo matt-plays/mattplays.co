@@ -4,17 +4,27 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import HoverTag from "@/components/HoverTag";
+import ThemeToggle from "@/components/ThemeToggle";
 import type { NavLinkItem } from "@/sanity/lib/types";
 
 export interface NavProps {
   navLinks?: NavLinkItem[] | null;
 }
 
-/** Fallback links mirror the live Webflow nav (Blog/Shop ship hidden). */
+/*
+ * Fallback links, used only when siteSettings has none. These now mirror the
+ * 2026 design — Work / Info / Blog / Shop, with Changelog moved to the
+ * footer's Explore column.
+ *
+ * NOTE: siteSettings DOES define navLinks today (Work / Info / Changelog), so
+ * this list does not render on the live site. Adding Blog to the nav is a
+ * content edit in the Studio, not a code change.
+ */
 const FALLBACK_LINKS: NavLinkItem[] = [
   { label: "Work", href: "/work" },
   { label: "Info", href: "/info" },
-  { label: "Changelog", href: "/changelog" },
+  { label: "Blog", href: "/blog" },
+  { label: "Shop", href: "/shop" },
 ];
 
 function normalizePath(path: string) {
@@ -96,6 +106,10 @@ export default function Nav({ navLinks }: NavProps) {
                   </Link>
                 );
               })}
+              {/* Last item in the menu, so it collapses into the mobile panel
+                  with the links rather than crowding the bar beside the
+                  hamburger. */}
+              <ThemeToggle className="nav-theme-toggle" />
             </nav>
             <button
               type="button"

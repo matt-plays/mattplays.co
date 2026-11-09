@@ -1,0 +1,422 @@
+/*
+================================================================================
+Theme — semantic colour, light and dark
+================================================================================
+Three layers, in order:
+
+  1. Palette      raw clay/slate ramps, in tokens.css. Mode-independent;
+                  never reference these directly from a component.
+  2. Semantic     this file. What a colour is FOR (surface, content, border),
+                  not what it looks like. These flip per mode.
+  3. Bridge       the Webflow export has its own --clay--* / --slate--*
+                  variables driving the existing site. Remapping those onto
+                  the semantic layer carries the whole legacy stylesheet into
+                  dark mode without touching its rules.
+
+Mode resolution:
+  - `:root` holds the light values, so light is the default everywhere.
+  - the system preference applies only when the user has not chosen, hence
+    `:root:not([data-theme="light"])` inside the media query.
+  - `[data-theme]` on <html> wins over the system preference either way.
+================================================================================
+*/
+
+:root {
+/*
+================
+Surfaces
+================
+*/
+  --surface-page: var(--color-clay-200);
+  --surface-raised: var(--color-clay-100);
+  --surface-sunken: var(--color-clay-300);
+  --surface-inset: var(--color-clay-400);
+  --surface-inverse: var(--color-slate-900);
+
+/*
+================
+Content
+================
+*/
+  --content-primary: var(--color-slate-900);
+  --content-secondary: var(--color-slate-600);
+  --content-muted: var(--color-slate-50);
+  --content-inverse: var(--color-clay-50);
+
+/*
+================
+Borders
+================
+*/
+  --border-subtle: var(--color-clay-400);
+  --border-strong: var(--color-clay-600);
+
+/*
+================
+Accent
+================
+*/
+  --accent: #9C5D2F;
+  --accent-hover: #7D4A25;
+  --accent-content: var(--color-clay-50);
+  --surface-accent: #B8D1D9;
+  --highlight: #FFDDCF;
+
+/*
+================
+Focus
+================
+*/
+  --focus-ring: var(--content-primary);
+  --focus-ring-offset: var(--surface-page);
+
+/*
+================
+Buttons
+================
+A solid button is the inverse of the page it sits on, so it stays correct in
+both modes without a second set of values.
+*/
+  --button-solid-bg: var(--content-primary);
+  --button-solid-bg-hover: var(--color-slate-700);
+  --button-solid-bg-active: var(--color-slate-600);
+  --button-solid-fg: var(--content-inverse);
+
+  --button-outline-fg: var(--content-primary);
+  /*
+   * An outline button's border IS the control's boundary, so WCAG 1.4.11 asks
+   * for 3:1 against what it sits on. --border-strong is tuned for rules and
+   * dividers and does not get there: it measured 1.54:1 in light and 2.31:1
+   * in dark, so the token is deliberately no longer shared with them.
+   *
+   * clay-900 is the one step on either ramp that clears 3:1 against every
+   * surface in BOTH modes — 3.66 on the light page, 4.56 on the dark one,
+   * 3.17 at worst — which is why this one does not flip. It is not an
+   * oversight and it does not want a dark override: a mode-specific value
+   * would have to be lighter in dark and darker in light, and would land
+   * back on this same grey. The only surface it misses is --surface-inset in
+   * dark (2.95), which is the disabled background, and 1.4.11 exempts
+   * inactive controls.
+   *
+   * On a fixed surface the border comes from --ink-on-brand instead (see
+   * components.css), which is far clearer still: 9.69 on the darkest brand
+   * colour in the CMS today.
+   */
+  --button-outline-border: var(--color-clay-900);
+  --button-outline-border-hover: var(--content-primary);
+  --button-outline-bg-hover: var(--surface-sunken);
+  --button-outline-bg-active: var(--surface-inset);
+
+  --button-disabled-bg: var(--surface-inset);
+  --button-disabled-fg: var(--color-clay-800);
+
+  color-scheme: light;
+}
+
+/*
+================================================================================
+Dark mode
+================================================================================
+The two selectors below carry the same declarations: one for "system says dark
+and the user hasn't overridden", one for an explicit choice. Keep them in sync.
+*/
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface-page: #0D1519;
+    --surface-raised: var(--color-slate-800);
+    --surface-sunken: #080E11;
+    --surface-inset: var(--color-slate-700);
+    --surface-inverse: var(--color-clay-100);
+
+    --content-primary: var(--color-clay-100);
+    --content-secondary: var(--color-clay-600);
+    --content-muted: var(--color-clay-800);
+    --content-inverse: #0D1519;
+
+    --border-subtle: var(--color-slate-700);
+    --border-strong: var(--color-slate-500);
+
+    --accent: #D89B63;
+    --accent-hover: #E8B183;
+    --accent-content: #0D1519;
+    --surface-accent: var(--color-slate-600);
+    --highlight: #7A3F28;
+
+    --button-solid-bg-hover: var(--color-clay-300);
+    --button-solid-bg-active: var(--color-clay-500);
+
+    --button-disabled-bg: var(--color-slate-700);
+    --button-disabled-fg: var(--color-slate-50);
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --surface-page: #0D1519;
+  --surface-raised: var(--color-slate-800);
+  --surface-sunken: #080E11;
+  --surface-inset: var(--color-slate-700);
+  --surface-inverse: var(--color-clay-100);
+
+  --content-primary: var(--color-clay-100);
+  --content-secondary: var(--color-clay-600);
+  --content-muted: var(--color-clay-800);
+  --content-inverse: #0D1519;
+
+  --border-subtle: var(--color-slate-700);
+  --border-strong: var(--color-slate-500);
+
+  --accent: #D89B63;
+  --accent-hover: #E8B183;
+  --accent-content: #0D1519;
+  --surface-accent: var(--color-slate-600);
+  --highlight: #7A3F28;
+
+  --button-solid-bg-hover: var(--color-clay-300);
+  --button-solid-bg-active: var(--color-clay-500);
+
+  --button-disabled-bg: var(--color-slate-700);
+  --button-disabled-fg: var(--color-slate-50);
+
+  color-scheme: dark;
+}
+
+/*
+================================================================================
+Webflow bridge
+================================================================================
+The ported Webflow stylesheet addresses colour through its own variables. They
+are redefined here in terms of the semantic layer — mapped by the ROLE each one
+plays in that stylesheet, not by the colour it used to be — so every legacy rule
+follows the active mode. Per-project brand colours are deliberately left alone;
+they are brand constants, not theme colours.
+*/
+:root {
+  --clay--200-body: var(--surface-page);
+  --clay--50: var(--surface-raised);
+  --clay--100: var(--surface-raised);
+  --clay--300: var(--surface-sunken);
+  --clay--400: var(--border-subtle);
+  --clay--500: var(--border-strong);
+  --clay--600: var(--border-strong);
+  --clay--700: var(--content-muted);
+  --clay--800: var(--content-muted);
+  --clay--900: var(--content-secondary);
+
+  --slate--900: var(--content-primary);
+  --slate--800: var(--content-primary);
+  --slate: var(--content-secondary);
+  --slate-2: var(--content-secondary);
+  --slate--200: var(--content-muted);
+  --slate--50: var(--content-muted);
+
+  --actionable--onlight: var(--accent);
+  --actionable: var(--surface-accent);
+}
+
+/*
+================================================================================
+Page
+================================================================================
+*/
+/*
+ * The page's own background, with one conditional in front of it.
+ *
+ * On a case study, whichever site-comp section is being read lends the page
+ * its colour: components/CompSurface sets --page-surface-active on <html> and
+ * clears it again on the way out, so the colour belongs to the page rather
+ * than to a box inside it. The variable is unset everywhere else, which makes
+ * this exactly --surface-page on every other page -- the same conditional
+ * shape as --ink-on-brand below.
+ */
+body {
+  background-color: var(--page-surface-active, var(--surface-page));
+  color: var(--content-primary);
+}
+
+/*
+Only animate the theme flip, and only for users who want motion. Without the
+`[data-theme-ready]` gate this transition also runs on first paint.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  html[data-theme-ready] body,
+  html[data-theme-ready] body * {
+    transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+  }
+
+  /*
+   * A comp section handing its colour to the page is a much bigger move than
+   * flipping the mode -- it sweeps the whole viewport -- so it gets its own
+   * duration. 200ms reads as a flicker at that size; this is slow enough to
+   * feel like one project giving way to the next.
+   *
+   * Only the body, not its descendants: the children are still flipping on
+   * the theme timing above, and they have no reason to follow this one.
+   *
+   * Both of these sit inside prefers-reduced-motion: no-preference, so a
+   * visitor who asked for less motion gets the colour change with no
+   * animation at all rather than a slower one.
+   */
+  html[data-comp-bg][data-theme-ready] body {
+    transition: background-color 600ms ease, border-color 200ms ease, color 200ms ease;
+  }
+}
+
+/*
+ * ---------------------------------------------------------------------------
+ * Fixed surfaces
+ * ---------------------------------------------------------------------------
+ * Two kinds of surface in this site do NOT flip with the mode:
+ *
+ *   1. Case study heroes, painted with the project's brand colour from Sanity
+ *      and marked [data-brand-surface].
+ *   2. Sections in the Webflow layer that hardcode a light background — the
+ *      Icon Snowskates landing page, the site-comparison panels, the
+ *      testimonial section and friends.
+ *
+ * Text on a fixed surface cannot use the semantic content tokens, because
+ * those flip while the surface underneath stays put. That mismatch is what
+ * put near-white type on a pale lavender hero (1.16:1) and on the cream
+ * Icon page (1.06:1).
+ *
+ * So each fixed surface declares its own ink and everything inside inherits
+ * it. For the brand heroes the ink is computed from the colour's luminance
+ * (lib/brandSurface.ts); for the hardcoded light sections it is simply the
+ * dark ink. The descendant selectors are needed because the role classes set
+ * their own colour: :is() here resolves to two class levels, which beats the
+ * single level in typography.css, while still losing to the three-level
+ * .headline.size-6xl.textcolor-* brand rules that are meant to win.
+ */
+:root {
+  /* A mode-independent accent, for links sitting on a fixed surface. */
+  --accent-fixed: #9c5d2f;
+}
+
+:is(
+  [data-brand-surface],
+  .icon-lp-body,
+  .casestudy-hero-textsection,
+  .case-study__hero-image,
+  .body-8,
+  .section-testimonial,
+  .avatar-large,
+  .sitecompsection-itw,
+  .sitecompsection-hswd,
+  .sitecompsection-bwd,
+  .sitecompsection-csa,
+  .sitecompsection-icon,
+  .sitecompsection-hsbe,
+  .style-guide
+) {
+  --ink-on-brand: var(--color-slate-900);
+  color: var(--ink-on-brand);
+
+  /*
+   * An outline button's fill on hover and press has to come from this
+   * surface's own ink: --surface-sunken / --surface-inset flip with the mode,
+   * so in dark mode they would paint a dark tint onto a light fixed surface.
+   * The ink and border are handled by the fallback conditional in
+   * components.css; a tint cannot be expressed that way, so it is re-pointed
+   * here instead.
+   */
+  --button-outline-bg-hover: color-mix(in srgb, var(--ink-on-brand) 10%, transparent);
+  --button-outline-bg-active: color-mix(in srgb, var(--ink-on-brand) 16%, transparent);
+}
+
+/* The brand heroes override --ink-on-brand inline with their computed value. */
+:is(
+  [data-brand-surface],
+  .icon-lp-body,
+  .casestudy-hero-textsection,
+  .case-study__hero-image,
+  .body-8,
+  .section-testimonial,
+  .avatar-large,
+  .sitecompsection-itw,
+  .sitecompsection-hswd,
+  .sitecompsection-bwd,
+  .sitecompsection-csa,
+  .sitecompsection-icon,
+  .sitecompsection-hsbe,
+  .style-guide
+)
+  :is(.headline, .text, .mono, .overline, .nav-link, p, h1, h2, h3, h4, li) {
+  color: var(--ink-on-brand, var(--content-primary));
+}
+
+/*
+ * Links keep an accent, but one that does not lighten in dark mode.
+ *
+ * Scoped to .icon-lp, the Icon page's content wrapper, NOT the .icon-lp-body
+ * class it puts on <body>: a body-level scope would also recolour the global
+ * footer's links, which flip correctly on their own.
+ */
+:is(
+  [data-brand-surface],
+  .icon-lp,
+  .casestudy-hero-textsection,
+  .section-testimonial,
+  .sitecompsection-itw,
+  .sitecompsection-hswd,
+  .sitecompsection-bwd,
+  .sitecompsection-csa,
+  .sitecompsection-icon,
+  .sitecompsection-hsbe
+)
+  a {
+  color: var(--accent-fixed);
+}
+
+/* The hero's rule sits on the same fixed surface, so it takes the ink too. */
+[data-brand-surface] .hr {
+  background-color: var(--ink-on-brand, var(--border-strong));
+  opacity: 0.25;
+}
+
+/*
+ * Global chrome owns a mode-flipping surface of its own, and the Icon
+ * landing page sets its fixed class on <body> — so the footer and promo bar
+ * end up inside a fixed surface while still flipping themselves. Re-point
+ * the ink variable at the semantic colour there; because it inherits, every
+ * descendant follows without needing its own rule.
+ */
+.footer,
+.promo-bar {
+  /*
+   * `initial` on a custom property is the guaranteed-invalid value, which
+   * makes every var(--ink-on-brand, <semantic token>) reader fall back — the
+   * text rules below and the button conditional in components.css alike. That
+   * is what "not on a fixed surface" means, so say it once here rather than
+   * naming a replacement colour the readers would have to agree on.
+   */
+  --ink-on-brand: initial;
+  /* The two tints are plain re-points, not fallback readers, so they need
+     putting back by hand. */
+  --button-outline-bg-hover: var(--surface-sunken);
+  --button-outline-bg-active: var(--surface-inset);
+  /* color inherits as a computed value, so re-pointing the variable alone
+     would leave unclassed descendants holding the fixed ink they inherited
+     from the surface above. */
+  color: var(--content-primary);
+}
+
+/*
+ * The collapsed nav menu is a third piece of chrome with a surface of its own.
+ *
+ * Below 992px Webflow turns .nav-menu into an absolutely positioned panel and
+ * paints it --clay--200-body, which flips with the mode. That makes it the
+ * footer's case twice over: on the Icon page the panel inherits the fixed ink
+ * from <body>, and on a case study it inherits the brand ink from the nav —
+ * either way dark ink on a dark panel (1.11:1 measured). Above 992px the panel
+ * has no background and the nav's own ink is the right one, so this escape is
+ * scoped to the width where the surface actually exists.
+ */
+@media screen and (max-width: 991px) {
+  .nav-menu {
+    --ink-on-brand: initial;
+    --button-outline-bg-hover: var(--surface-sunken);
+    --button-outline-bg-active: var(--surface-inset);
+    color: var(--content-primary);
+  }
+}

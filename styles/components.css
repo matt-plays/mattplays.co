@@ -1,0 +1,295 @@
+/*
+================================================================================
+Components
+================================================================================
+Built entirely on the semantic tokens in theme.css, so every component here
+works in both modes without a mode-specific rule of its own.
+================================================================================
+*/
+
+/*
+================
+Button
+================
+Pill-shaped, in a solid and an outline variant.
+
+Geometry is expressed in `em` so one set of rules covers every size — change
+the font-size (via a .button--* size class or the Button type scale) and the
+padding, gap, icon and radius all follow. The two knobs below are the ones
+worth tuning by eye.
+*/
+.button {
+  --button-padding-y: 0.75em;
+  --button-padding-x: 1.75em;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625em;
+
+  font-family: var(--font-button);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-md);
+  line-height: var(--button-leading);
+  letter-spacing: var(--button-tracking);
+
+  padding: var(--button-padding-y) var(--button-padding-x);
+  border: 1px solid transparent;
+  border-radius: 999px;            /* pill: any radius past half the height */
+
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: background-color 150ms ease, border-color 150ms ease,
+              color 150ms ease, transform 150ms ease;
+}
+
+.button:focus-visible {
+  /* Same conditional as the outline variant below: the ring has to be visible
+     against a fixed surface too, and --focus-ring flips with the mode. */
+  outline: 2px solid var(--ink-on-brand, var(--focus-ring));
+  outline-offset: 2px;
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button { transition: none; }
+  .button:active { transform: none; }
+}
+
+/*
+----------------
+Variants
+----------------
+*/
+.button--solid {
+  background-color: var(--button-solid-bg);
+  color: var(--button-solid-fg);
+  border-color: var(--button-solid-bg);
+}
+.button--solid:hover {
+  background-color: var(--button-solid-bg-hover);
+  border-color: var(--button-solid-bg-hover);
+}
+.button--solid:active {
+  background-color: var(--button-solid-bg-active);
+  border-color: var(--button-solid-bg-active);
+}
+
+/*
+ * An outline button is drawn only in ink and border, so it is the one variant
+ * that has to survive a surface which does not flip with the mode — the theme
+ * toggle now rides in the nav, and the nav sits on the brand-coloured case
+ * study heroes and on the fixed cream of the Icon page.
+ *
+ * --ink-on-brand is set only on those fixed surfaces (styles/theme.css), so
+ * reading it with the semantic token as the fallback is a conditional: on a
+ * fixed surface the button takes that surface's locked ink, and anywhere else
+ * the variable is unset and these resolve exactly as they did before.
+ */
+.button--outline {
+  background-color: transparent;
+  color: var(--ink-on-brand, var(--button-outline-fg));
+  border-color: var(--ink-on-brand, var(--button-outline-border));
+}
+.button--outline:hover {
+  background-color: var(--button-outline-bg-hover);
+  border-color: var(--ink-on-brand, var(--button-outline-border-hover));
+}
+.button--outline:active {
+  background-color: var(--button-outline-bg-active);
+}
+
+/*
+----------------
+Sizes
+----------------
+Mapped to the Button steps in the Figma library. Everything else is in `em`,
+so setting the font-size resizes the whole control.
+*/
+.button--sm  {font-size: var(--text-sm);}
+.button--md  {font-size: var(--text-md);}
+.button--lg  {font-size: var(--text-lg);}
+.button--xl  {font-size: var(--text-xl);}
+.button--2xl {font-size: var(--text-2xl);}
+
+/*
+----------------
+Disabled
+----------------
+*/
+.button:disabled,
+.button[aria-disabled="true"] {
+  background-color: var(--button-disabled-bg);
+  border-color: var(--button-disabled-bg);
+  color: var(--button-disabled-fg);
+  cursor: not-allowed;
+  transform: none;
+}
+.button--outline:disabled,
+.button--outline[aria-disabled="true"] {
+  background-color: transparent;
+  border-color: var(--border-subtle);
+}
+
+/*
+================
+Icon button
+================
+The circular icon-only control from the 2026 library (Figma "Icon Button",
+2771:6343). It shares every token with .button above — the two controls are
+the same button in two shapes, so they must never drift apart in colour.
+
+Figma's styles are Primary / Secondary / Outlined; they are solid / secondary
+/ outline here to keep one vocabulary across the codebase.
+*/
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* A circular control must stay circular. Dropped into a flex row whose
+     align-items is the default stretch — the project card's details row, say
+     — it would otherwise be pulled into an ellipse by a taller sibling. The
+     2026 layouts centre it in every row it appears in. */
+  flex: none;
+  align-self: center;
+
+  /* 12px around a 20px icon is the 44px control the design draws, and the
+     smallest comfortable touch target. Fixed rather than fluid: this control
+     is sized by its icon, not by a text step. */
+  padding: 12px;
+
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background-color: transparent;
+  color: inherit;
+
+  text-decoration: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: background-color 150ms ease, border-color 150ms ease,
+              color 150ms ease;
+}
+
+/* The Webflow export underlines every <a> globally (a { border-bottom }), but
+   the `border` shorthand above already outranks it on every edge, so the link
+   form needs no extra rule — and must not get `border-bottom: 0`, which would
+   make it a pixel shorter than the button form. */
+
+.icon-button__icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.icon-button:focus-visible {
+  /* Same conditional as .button: the ring has to stay visible on a fixed
+     surface, where --ink-on-brand is set and the semantic token is not. */
+  outline: 2px solid var(--ink-on-brand, var(--focus-ring));
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-button { transition: none; }
+}
+
+.icon-button--solid {
+  background-color: var(--button-solid-bg);
+  border-color: var(--button-solid-bg);
+  color: var(--button-solid-fg);
+}
+.icon-button--solid:hover {
+  background-color: var(--button-solid-bg-hover);
+  border-color: var(--button-solid-bg-hover);
+}
+.icon-button--solid:active {
+  background-color: var(--button-solid-bg-active);
+  border-color: var(--button-solid-bg-active);
+}
+
+.icon-button--secondary {
+  background-color: var(--surface-sunken);
+  color: var(--content-primary);
+}
+.icon-button--secondary:hover {
+  background-color: var(--surface-inset);
+}
+.icon-button--secondary:active {
+  background-color: var(--border-subtle);
+}
+
+/* Drawn only in ink and border, so — like .button--outline — it is the one
+   variant that has to survive a surface which does not flip with the mode. */
+.icon-button--outline {
+  background-color: transparent;
+  color: var(--ink-on-brand, var(--button-outline-fg));
+  border-color: var(--ink-on-brand, var(--button-outline-border));
+}
+.icon-button--outline:hover {
+  background-color: var(--button-outline-bg-hover);
+  border-color: var(--ink-on-brand, var(--button-outline-border-hover));
+}
+.icon-button--outline:active {
+  background-color: var(--button-outline-bg-active);
+}
+
+.icon-button:disabled,
+.icon-button[aria-disabled="true"] {
+  background-color: var(--button-disabled-bg);
+  border-color: var(--button-disabled-bg);
+  color: var(--button-disabled-fg);
+  cursor: not-allowed;
+}
+.icon-button--outline:disabled,
+.icon-button--outline[aria-disabled="true"] {
+  background-color: transparent;
+  border-color: var(--border-subtle);
+}
+
+/*
+----------------
+Trailing icon
+----------------
+The arrow nudges forward on hover. It is marked aria-hidden in the component,
+so it is decoration only.
+*/
+.button__icon {
+  display: inline-flex;
+  flex: none;
+  width: 1em;
+  height: 1em;
+  transition: transform 150ms ease;
+}
+.button:hover .button__icon {
+  transform: translateX(0.175em);
+}
+@media (prefers-reduced-motion: reduce) {
+  .button__icon,
+  .button:hover .button__icon { transition: none; transform: none; }
+}
+
+/*
+================
+Nav theme toggle
+================
+The mode switch is the last item inside .nav-menu, so on desktop it picks up
+that row's 3rem column gap and vertical centring for free.
+
+Below 992px Webflow collapses .nav-menu into an absolutely positioned panel
+(display:block, text-align:center) and gives .nav-link.size-sm its own 2rem
+block padding. The button is inline-flex, so the panel's text-align centres
+it; all it needs is matching breathing room.
+*/
+@media screen and (max-width: 991px) {
+  .nav-theme-toggle {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}

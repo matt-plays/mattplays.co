@@ -1,0 +1,1170 @@
+/*
+================================================================================
+Sections — the repeating rows the 2026 pages are assembled from
+================================================================================
+Two components so far: FeatureRow (2650:1745) and TextRow (2812:10099). Both
+are page-width rows that stack with a fixed rhythm below the hero.
+
+Measurements are the Figma variables, which already match the ramp in
+tokens.css: space-xs 16 = --space-xs, space-md 48 = --space-m,
+section-padding-open 208 = --space-2xl.
+
+Colour is semantic throughout, for the same reason as editorial.css: the 2026
+file draws cool neutrals and no dark mode, so building on tokens keeps both
+modes working and leaves the palette swap as a change in theme.css alone.
+================================================================================
+*/
+
+/*
+ * Row rhythm. Figma puts the whole 208 below the content rather than splitting
+ * it, so consecutive rows sit one gap apart and the first row sits tight under
+ * whatever precedes it.
+ */
+.feature-row,
+.text-row {
+  padding-bottom: var(--space-2xl);
+}
+
+/*
+================
+Feature row
+================
+*/
+.feature-row__heading {
+  margin: 0 0 var(--space-m);
+}
+
+/*
+ * The stagger. Every tile shares the row's baseline and differs in height, so
+ * they are bottom-anchored and carry their own ratio. Figma draws 312 / 624 /
+ * 468 / 468 at 468 wide; as ratios the skyline holds at any container width.
+ */
+.feature-row__images {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xs);
+  align-items: end;
+}
+
+.feature-row__tile {
+  aspect-ratio: var(--tile-ratio, 1);
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background-color: var(--surface-sunken);
+}
+
+.feature-row__tile:nth-child(1) { --tile-ratio: 3 / 2; }
+.feature-row__tile:nth-child(2) { --tile-ratio: 3 / 4; }
+.feature-row__tile:nth-child(3) { --tile-ratio: 1; }
+.feature-row__tile:nth-child(4) { --tile-ratio: 1; }
+
+.feature-row__tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The details band repeats the images' 4 columns, so each piece lines up with
+   the tile above it. */
+.feature-row__details {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xs);
+  align-items: start;
+  margin-top: var(--space-m);
+}
+
+.feature-row__tags {
+  grid-column: 1 / span 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feature-row__body {
+  grid-column: 3;
+  margin: 0;
+  color: var(--content-primary);
+}
+
+.feature-row__action {
+  grid-column: 4;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 991px) {
+  /* Two columns keeps the stagger legible; four at tablet width shrinks the
+     tiles past the point where the height difference reads. */
+  .feature-row__images {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .feature-row__details {
+    grid-template-columns: 1fr;
+    gap: var(--space-s);
+  }
+  .feature-row__tags,
+  .feature-row__body,
+  .feature-row__action {
+    grid-column: 1;
+  }
+  .feature-row__action {
+    justify-content: flex-start;
+  }
+}
+
+/*
+================
+Tag
+================
+*/
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25em 0.875em;
+  border-radius: var(--radius-pill);
+  background-color: var(--surface-sunken);
+  color: var(--content-secondary);
+  white-space: nowrap;
+}
+
+/*
+================
+Text row
+================
+*/
+.text-row__inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+
+/* Display leading (Headline/8xl is drawn at line-height 1) comes from the
+   .leading-display class the component applies — see typography.css. */
+.text-row__headline {
+  margin: 0;
+}
+
+.text-row__action {
+  flex: none;
+}
+
+@media screen and (max-width: 767px) {
+  .text-row__inner {
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+}
+
+/*
+================
+Home hero  (2699:3570)
+================
+Not a row — an art-directed collage. Every piece is placed against the others
+rather than flowed, so all of the geometry below is a percentage of one stage.
+
+Those percentages come from the 1920 x 1080 container the design draws, plus
+the 180px the photograph runs on past its bottom edge: hence a 1920 / 1260
+stage. Percentages rather than the file's pixels because the container here is
+1280–1600 wide, so only the relationships can be ported, not the measurements.
+
+Below 992px the composition cannot hold — the collage alone is 38% of the
+width, and the display words are set to span the full container. The stage
+becomes an ordinary column there. The 2026 file draws no mobile hero, so that
+stacking is this codebase's decision rather than the design's.
+
+Left out: the blockquote drawn behind "Brands" (Neutral/Clay/400 on
+Neutral/Clay/200, about 1.3:1). As live text it would fail 1.4.3 by a wide
+margin, and it collides with the headline, so it reads as still being placed.
+*/
+.home-hero {
+  /* The photograph bleeds about 17% past the container's right edge, exactly
+     as the design draws it. Clipping here is what keeps that bleed from
+     becoming horizontal page scroll. */
+  overflow: hidden;
+  padding-top: var(--space-l);
+  padding-bottom: var(--space-xl);
+}
+
+.home-hero__stage {
+  position: relative;
+  aspect-ratio: 1920 / 1260;
+}
+
+.home-hero__headline {
+  margin: 0;
+}
+
+/*
+ * Each display line spans the stage. On the top line that makes space-between
+ * the design's own measurement rather than a guess at it — "Design" sits
+ * flush left and "for" flush right, which is where the file puts them.
+ */
+.home-hero__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.home-hero__line--top    {top: 0;}
+.home-hero__line--bottom {top: 65%;}
+
+/* 740 x 613, centred on the container's middle (540 of 1260). */
+.home-hero__collage {
+  position: absolute;
+  left: 50%;
+  top: 42.86%;
+  transform: translate(-50%, -50%);
+  width: 38.54%;
+  aspect-ratio: 740 / 613;
+}
+
+.home-hero__collage-item {
+  position: absolute;
+}
+
+.home-hero__collage-item img,
+.home-hero__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*
+ * Five 40px dots on an 86px pitch. Expressed as a five-column grid 430 wide
+ * so the dots scale with everything else: a percentage gap on a flex row
+ * would resolve against the row's own auto width, which depends on the gap.
+ */
+.home-hero__dots {
+  position: absolute;
+  left: 77.5%;
+  top: 25.63%;
+  width: 22.4%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-hero__dot {
+  width: 46.5%;              /* the 40px dot within its 86px column */
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+/*
+ * Anchored from its baseline, not its top. The photograph below is a cut-out
+ * on a transparent sky, so the tagline is really sitting on the page — until
+ * it reaches the snow, which is opaque and nearly white, and which no single
+ * ink survives in both modes.
+ *
+ * The design sets this in two lines; the ramp here is fluid while the box is
+ * a percentage, so narrower viewports take three or four. Growing upward is
+ * what keeps every one of them clear of the snow. bottom: 39% is where the
+ * design's second line ends (768.5 of 1260).
+ */
+.home-hero__tagline {
+  position: absolute;
+  left: 84.06%;
+  bottom: 39%;
+  width: 21%;
+  margin: 0;
+}
+
+.home-hero__photo {
+  position: absolute;
+  left: 70.62%;
+  bottom: 0;
+  width: 45.99%;
+  aspect-ratio: 883 / 589;
+}
+
+
+/*
+----------------
+Stacked
+----------------
+*/
+@media screen and (max-width: 991px) {
+  .home-hero__stage {
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .home-hero__headline,
+  .home-hero__line,
+  .home-hero__dots,
+  .home-hero__tagline,
+  .home-hero__photo {
+    position: static;
+    inset: auto;
+    transform: none;
+    width: 100%;
+  }
+
+  /* Stays positioned: its three images are absolute against it, and making it
+     static would hand them the stage as a containing block instead. */
+  .home-hero__collage {
+    position: relative;
+    inset: auto;
+    transform: none;
+    width: 100%;
+  }
+
+  /* The words run together again as one headline. */
+  .home-hero__line {
+    display: block;
+  }
+
+  /* Last, so the photograph closes the stack instead of opening it — it is
+     only first in the markup to paint behind the tagline on desktop. */
+  .home-hero__photo {
+    order: 1;
+  }
+
+  .home-hero__dots {
+    width: 60%;
+    max-width: 260px;
+  }
+}
+
+/*
+================
+About page  (2661:5357)
+================
+The page alternates content sections with photography, and three of its five
+content sections are the same shell: an overline label in a fixed left column
+and rows in a wider right column. That shell is .list-section, and Values,
+Experience and Press are only its rows — the same relationship the file has,
+where one .ListSection-Item carries a type of Value, Experience or Press.
+
+Measurements are the file's, converted to ratios: it draws a 1920 container
+and this one is 1280, so the proportions port and the pixels do not. Where a
+ratio is written as `608fr 1264fr` the gap is subtracted first, exactly as the
+file's auto-layout does, so the fractions are the file's own numbers.
+*/
+
+/*
+----------------
+Bio
+----------------
+*/
+.about-bio {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-2xl);
+}
+
+.about-bio__eyebrow {
+  margin: 0 0 var(--space-m);
+}
+
+/* 1264 of 1920 — the headline stops short of the portrait's column. */
+.about-bio__headline {
+  width: 65.83%;
+  margin: 0 0 var(--space-m);
+}
+
+/* Bottom-aligned: the file sets the body and the portrait on one baseline
+   rather than one top edge, so the portrait grows upward from the body. */
+.about-bio__row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+
+.about-bio__body {
+  flex: 0 1 65.83%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-m);
+}
+
+.about-bio__column {
+  color: var(--content-muted);
+}
+
+.about-bio__column p {
+  margin: 0 0 1em;
+}
+.about-bio__column p:last-child {
+  margin-bottom: 0;
+}
+
+/* 444 of 1920, at the file's 2:3. The photograph is square, so it is cropped
+   to that shape rather than letterboxed into it. */
+.about-bio__portrait {
+  flex: 0 0 23.125%;
+  aspect-ratio: 444 / 666;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+/*
+----------------
+List section
+----------------
+*/
+.list-section {
+  padding-bottom: var(--space-2xl);
+}
+
+.list-section__grid {
+  display: grid;
+  grid-template-columns: 608fr 1264fr;
+  gap: var(--space-m);
+}
+
+.list-section__label {
+  margin: 0;
+}
+
+/* Rows measure themselves against this column, so it must not be allowed to
+   grow past its track on a long unbroken string. */
+.list-section__content {
+  min-width: 0;
+}
+
+/* Spans the whole container rather than the content column. */
+.list-section__footer {
+  margin-top: var(--space-xl);
+}
+
+/*
+----------------
+Values
+----------------
+Two 608 cards across the 1264 content column is exactly two columns and a
+gap, so this is a 2-up grid rather than a wrapping row — the cards keep their
+columns instead of depending on their own measured width.
+*/
+.value-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--space-m);
+  row-gap: var(--space-l);
+}
+
+.value {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.value__number,
+.value__title,
+.value__body {
+  margin: 0;
+}
+
+.value__body {
+  color: var(--content-muted);
+}
+
+/*
+----------------
+Rows
+----------------
+The lead column is 296 of the 1264 content column. Experience and Press share
+the shape and differ in their alignment, their padding and what the trailing
+column holds.
+*/
+.list-row {
+  display: grid;
+  gap: var(--space-m);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.list-row__lead,
+.list-row__trail,
+.list-row__meta,
+.list-row__body h3 {
+  margin: 0;
+}
+
+.list-row__body {
+  min-width: 0;
+}
+
+.list-row--experience {
+  grid-template-columns: 23.42% minmax(0, 1fr) auto;
+  align-items: start;
+  /* space-24 in the file; this ramp has 16 and 32, so it is stated against
+     the step below rather than rounded onto one of them. */
+  padding-block: calc(var(--space-xs) * 1.5);
+}
+
+.list-row--experience .list-row__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+/* .mono and .overline both set their own ink, so muting is stated here. This
+   file is imported after typography.css, so equal specificity is enough. */
+.list-row--experience .list-row__lead,
+.list-row--experience .list-row__trail,
+.list-row__meta {
+  color: var(--content-muted);
+}
+
+.list-row__trail {
+  white-space: nowrap;
+}
+
+/*
+ * The file draws a row ending in an arrow; here the row itself is the link,
+ * which makes the target the size of the row. The border shorthand outranks
+ * the Webflow export's global `a { border-bottom }`.
+ */
+.list-row--press {
+  grid-template-columns: 23.42% minmax(0, 1fr) 24px;
+  align-items: center;
+  padding-block: var(--space-xs);
+  text-decoration: none;
+  color: var(--content-primary);
+}
+
+.list-row__arrow {
+  display: block;
+  width: 24px;
+  height: 24px;
+  color: var(--content-muted);
+  transition: transform 150ms ease, color 150ms ease;
+}
+
+.list-row--press:hover .list-row__arrow {
+  color: var(--content-primary);
+  transform: translate(0.125em, -0.125em);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .list-row__arrow {
+    transition: none;
+  }
+  .list-row--press:hover .list-row__arrow {
+    transform: none;
+  }
+}
+
+/*
+----------------
+Brand logos
+----------------
+Drawn as a mask filled with currentColor rather than as an <img>: an <img> of
+an SVG cannot inherit ink, so these would stay near-black in dark mode. The
+mask keeps one file per mark and lets both modes work.
+*/
+.brand-logos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.brand-logos li {
+  flex: 0 1 252px;
+  min-width: 0;
+}
+
+.brand-logo {
+  display: block;
+  width: 100%;
+  background-color: var(--content-primary);
+  -webkit-mask: var(--logo) center / contain no-repeat;
+  mask: var(--logo) center / contain no-repeat;
+}
+
+/*
+----------------
+Image section
+----------------
+*/
+.image-section {
+  padding-bottom: var(--space-xl);
+}
+
+.image-section__frame,
+.image-section__item {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.image-section__frame img,
+.image-section__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Edge to edge, so it carries no container and no radius. */
+.image-section--bleed .image-section__frame {
+  border-radius: 0;
+}
+
+/* Hand-placed, so the geometry is percentages of one stage — the same
+   reasoning as the home hero. The boxes arrive as custom properties so the
+   stacked breakpoint below can drop them without !important. */
+.image-section--collage .image-section__stage {
+  position: relative;
+  aspect-ratio: 1920 / 1025.25;
+}
+
+.image-section--collage .image-section__item {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  height: var(--h);
+}
+
+/*
+ * The strip is 4244 wide inside the file's 1920 frame. Here it is a
+ * full-width centred flex row whose children overflow it equally on both
+ * sides — which is what lets InfoPhotoStrip measure that overflow and pan it.
+ * Widths and the 72 gap are therefore percentages of the container, and they
+ * add up to the 221% the file draws.
+ */
+.image-section--strip .image-section__strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3.75%;
+  width: 100%;
+}
+
+.image-section--strip .image-section__item {
+  flex: none;
+}
+
+/*
+----------------
+Colophon
+----------------
+A display headline in a narrower column than the list sections' label, so it
+is its own shape rather than a fourth list.
+*/
+.about-colophon {
+  padding-bottom: var(--space-2xl);
+}
+
+.about-colophon__grid {
+  display: grid;
+  grid-template-columns: 468fr 1436fr;
+  gap: var(--space-xs);
+}
+
+.about-colophon__headline {
+  margin: 0;
+}
+
+.about-colophon__body {
+  column-count: 2;
+  column-gap: var(--space-m);
+}
+
+.about-colophon__body p {
+  margin: 0 0 1em;
+}
+.about-colophon__body p:last-child {
+  margin-bottom: 0;
+}
+
+/*
+----------------
+Stacked
+----------------
+*/
+@media screen and (max-width: 991px) {
+  .list-section__grid,
+  .about-colophon__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-s);
+  }
+
+  .about-bio__headline {
+    width: 100%;
+  }
+
+  .about-bio__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .about-bio__body {
+    flex: initial;
+  }
+
+  /* Landscape once it spans the column: a 2:3 box the width of the page
+     would be taller than the viewport. */
+  .about-bio__portrait {
+    flex: initial;
+    aspect-ratio: 3 / 2;
+  }
+
+  .brand-logos {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: var(--space-m) var(--space-l);
+  }
+
+  .brand-logos li {
+    flex: 0 1 30%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .value-grid,
+  .about-bio__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about-colophon__body {
+    column-count: 1;
+  }
+
+  .list-row--experience {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-xs);
+  }
+
+  .list-row--experience .list-row__trail {
+    white-space: normal;
+  }
+
+  .list-row--press {
+    grid-template-columns: minmax(0, 1fr) 24px;
+    gap: var(--space-xs);
+  }
+
+  /* Most rows carry no source; the ones that do head their group across the
+     full width. An empty cell is removed so it costs no row. */
+  .list-row--press .list-row__lead {
+    grid-column: 1 / -1;
+  }
+  .list-row--press .list-row__lead:empty {
+    display: none;
+  }
+
+  .image-section--collage .image-section__stage {
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .image-section--collage .image-section__item {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+}
+
+/*
+================================================================================
+Site comp sections
+================================================================================
+The per-project colour fields a case study is built from. The Webflow export
+paints each one as the section's own background-color; these rules restate the
+same colours as a custom property instead, which is what lets the page take
+them over (components/CompSurface, and the body rule in theme.css).
+
+Two reasons the colour moves into a property rather than staying a plain
+background. It gives the observer something to read, so the colours are
+declared once here instead of being duplicated in JavaScript. And it keeps the
+no-JavaScript rendering intact: `background-color` below still paints the
+section, so the page looks the way it always did until the observer takes over.
+
+The values are the export's own, unchanged. They are brand colours, not theme
+colours, so they do not flip with the mode -- the same treatment the case study
+heroes get.
+================================================================================
+*/
+.sitecompsection-itw         { --comp-surface: #e1d1c7; }
+.sitecompsection-hswd        { --comp-surface: #e3eaff; }
+.sitecompsection-bwd         { --comp-surface: #eeded1; }
+.sitecompsection-atg         { --comp-surface: #04172c; }
+.sitecompsection-csa         { --comp-surface: #d9dcfd; }
+.sitecompsection-hsp         { --comp-surface: #151f26; }
+.sitecompsection-epic        { --comp-surface: #003466; }
+.sitecompsection-icon        { --comp-surface: #e7d3a4; }
+.sitecompsection-iomw        { --comp-surface: #16003f; }
+.sitecompsection-hsbe        { --comp-surface: #ffbcad; }
+.sitecompsection-rockdove    { --comp-surface: #2f313d; }
+.sitecompsection-delightlabs { --comp-surface: #e5784d; }
+
+/*
+ * Painted from the property, so Sanity's per-section override -- which the
+ * component now sets as --comp-surface rather than as an inline background --
+ * reaches both this and the page.
+ *
+ * This file is imported after the Webflow layer and the selectors are the same
+ * single class, so these win on source order. `.sitecompsection-delightlabs`
+ * is also declared inside a media query there; a media query adds no
+ * specificity, so source order settles that one too.
+ */
+[data-comp-surface] {
+  background-color: var(--comp-surface, transparent);
+}
+
+/*
+ * Handed over. Once the observer is driving the page background, the sections
+ * stop painting their own: otherwise the colour would be boxed in at each
+ * section's edges and the 8rem gaps between them would still show page colour
+ * through, which is the seam this is meant to remove.
+ */
+html[data-comp-bg] [data-comp-surface] {
+  background-color: transparent;
+}
+
+/*
+================================================================================
+Case study hero (2812:9801)
+================================================================================
+One screen of the project's brand colour with the primary thumbnail floating in
+the middle of it, which then opens out to fill the viewport as you scroll
+before the sections below start moving.
+
+The opening is a scroll-driven animation, so it costs no JavaScript and no
+scroll handler. Everything about it lives in the @supports block at the bottom:
+the rules above describe the still composition, which is what a browser without
+scroll-driven animations -- or a visitor who asked for less motion -- gets.
+================================================================================
+*/
+.cs-hero {
+  /*
+   * The thumbnail is ten of the twenty-four columns. Solving 10 columns plus
+   * the 9 gutters between them, where a column is (W - 23g) / 24, gives
+   * (10W - 14g) / 24 -- which is 790 against the file's 1920 container and its
+   * 16 gutter, the width it actually draws. Stated as the formula rather than
+   * as a percentage so the grid stays legible, and so changing the gutter does
+   * the right thing.
+   */
+  --cs-hero-gutter: 16px;
+  --cs-hero-media-basis: calc(
+    (10 * var(--container-width) - 14 * var(--cs-hero-gutter)) / 24
+  );
+
+  /*
+   * One line of the overline / tag row, which is what sits between the top of
+   * the pin and the thumbnail. Only an approximation of the rendered row, and
+   * only used to keep the two apart -- see the cap below.
+   */
+  --cs-hero-row: 2.5rem;
+
+  /*
+   * Ten columns is a width, and on a short screen a width is not the whole
+   * story: the thumbnail is centred on the pin, so the room it has is twice
+   * the distance from the centre of the screen to the row above it -- the top
+   * padding plus that row. Past about 790px of viewport height at desktop
+   * widths, ten columns is taller than that and the thumbnail would run under
+   * the overline. So it is the smaller of the two, and --space-s is the
+   * clearance that survives: a laptop at 1440x830 gets a slightly smaller
+   * thumbnail rather than a broken composition, and the opening is unchanged
+   * either way.
+   *
+   * The max() is a floor for the pathological case -- a landscape phone, where
+   * the reserve is taller than the whole screen and the subtraction goes
+   * negative, which would make the width invalid rather than small. It is
+   * deliberately low: anything higher starts winning on screens that are
+   * merely short rather than impossible, and then it is the floor, not the
+   * geometry, that puts the thumbnail under the row.
+   */
+  --cs-hero-media-width: min(
+    var(--cs-hero-media-basis),
+    max(
+      12svh * 16 / 9,
+      (100svh - 2 * (var(--space-2xl) + var(--cs-hero-row) + var(--space-s)))
+        * 16 / 9
+    )
+  );
+  --cs-hero-media-height: calc(var(--cs-hero-media-width) * 9 / 16);
+
+  /* 468 of the file's 1920: the column the tags and the summary share. */
+  --cs-hero-aside: 24.375%;
+
+}
+
+.cs-hero__stage {
+  /* One screen when it cannot animate. The @supports block makes room for the
+     scrub. */
+  height: 100svh;
+}
+
+.cs-hero__pin {
+  position: sticky;
+  top: 0;
+  /* Exactly one screen, not a minimum: the thumbnail grows to 100% of this
+     box, so if the pin could outgrow the viewport the finished image would
+     too, and the bottom of it would never be on screen. */
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  /*
+   * The nav is lifted out of the flow on this route (see the route-scoped
+   * style on the case study page), so the section starts at the top of the
+   * screen and the nav floats over it. This padding is what keeps the top row
+   * clear of it.
+   *
+   * --space-2xl rather than a measured nav height: the nav is fluid, from
+   * about 158px wide-screen down to 116 on a phone, and this step is larger
+   * than it at every width (208 down to 139) while still being a value from
+   * the ramp rather than a constant that would quietly drift out of step.
+   */
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-l);
+}
+
+.cs-hero__frame {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-l);
+}
+
+/*
+----------------
+Top row
+----------------
+*/
+.cs-hero__meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+
+.cs-hero__tagrow {
+  flex: 0 1 var(--cs-hero-aside);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.cs-hero__rule {
+  flex: 1;
+  height: 1px;
+  background-color: currentColor;
+  opacity: 0.2;
+}
+
+.cs-hero__tags {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Slate/200 at 8% in the file; stated against the surface's own ink so it
+   holds on a dark brand colour as well as a light one. */
+.cs-hero__tag {
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background-color: color-mix(
+    in srgb,
+    var(--ink-on-brand, var(--content-primary)) 8%,
+    transparent
+  );
+  white-space: nowrap;
+}
+
+/*
+----------------
+Bottom row
+----------------
+*/
+.cs-hero__lede {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-xs);
+}
+
+.cs-hero__title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.cs-hero__summary {
+  flex: 0 0 var(--cs-hero-aside);
+  margin: 0;
+}
+
+/*
+----------------
+The thumbnail
+----------------
+Centred on the pin rather than placed in the rows above, so it can open to the
+full screen without moving any of the text around it.
+*/
+.cs-hero__media {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  z-index: 1;
+  margin: 0;
+  width: var(--cs-hero-media-width);
+  height: var(--cs-hero-media-height);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.cs-hero__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*
+----------------
+Opening
+----------------
+The stage gets a second screen of height, the pin sticks for exactly that
+distance, and the thumbnail is animated across it.
+
+The `contain` range is the window where the stage covers the viewport entirely
+-- from its top edge meeting the top of the screen to its bottom edge meeting
+the bottom. For a two-screen stage that is exactly the distance the sticky pin
+holds, which makes it the right clock to animate against.
+*/
+@keyframes cs-hero-open {
+  from {
+    width: var(--cs-hero-media-width);
+    height: var(--cs-hero-media-height);
+    border-radius: var(--radius-sm);
+  }
+  to {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .cs-hero__stage {
+      view-timeline-name: --cs-hero;
+      view-timeline-axis: block;
+      /* one screen pinned + one screen of scrub */
+      height: 200vh;
+      height: 200svh;
+    }
+
+    .cs-hero__media {
+      animation: cs-hero-open linear both;
+      animation-timeline: --cs-hero;
+      /*
+       * Finished at three quarters of the pin rather than all of it. Running
+       * it to 100% means the image lands full-bleed on the very frame the
+       * hero starts to leave, so it is never actually seen filling the
+       * screen. Ending early leaves the last quarter of the pin holding it
+       * there -- the image fills the viewport, rests, and only then does the
+       * page move on.
+       */
+      animation-range: contain 0% contain 75%;
+    }
+  }
+}
+
+/*
+----------------
+Stacked
+----------------
+*/
+@media screen and (max-width: 991px) {
+  .cs-hero__meta,
+  .cs-hero__lede {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-s);
+  }
+
+  .cs-hero__tagrow,
+  .cs-hero__summary {
+    flex: 0 0 auto;
+  }
+
+  /* The top row is two lines once it stacks, so the cap has more to reserve. */
+  .cs-hero {
+    --cs-hero-row: 5.5rem;
+  }
+}
+
+/*
+----------------
+Too short to choreograph
+----------------
+A landscape phone is about 390px tall, of which the nav takes 135 and the
+title and summary take most of the rest: the two rows alone are more than the
+screen, so there is no size of thumbnail that fits between them and no screen
+left to hold one still. Rather than compress the composition until it breaks,
+the hero stops being one -- the pin is released, the thumbnail drops back into
+the flow between the rows it was centred over, and the section is an ordinary
+stack that the page scrolls past. Everything the hero says is still said.
+*/
+@media screen and (max-height: 560px) {
+  .cs-hero__stage {
+    height: auto;
+    view-timeline-name: none;
+  }
+
+  .cs-hero__pin {
+    position: static;
+    height: auto;
+    padding-bottom: var(--space-xl);
+  }
+
+  .cs-hero__frame {
+    display: block;
+  }
+
+  .cs-hero__media {
+    position: static;
+    translate: none;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    margin: var(--space-m) 0;
+    animation: none;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  /*
+   * Ten of twenty-four columns is a postage stamp on a phone -- about 130px
+   * against a 375 viewport. The proportion is a desktop idea, so below this
+   * the thumbnail is simply most of the screen and still opens the same way.
+   *
+   * vw rather than a percentage, because the height below it is derived from
+   * this value: a percentage height resolves against the pin's HEIGHT, not
+   * its width, so `80%` quietly made the thumbnail 45% of a screen tall
+   * instead of sixteen-by-nine. A viewport unit resolves the same way in both
+   * axes, which is what the derivation assumes.
+   */
+  .cs-hero {
+    --cs-hero-media-basis: 80vw;
+  }
+
+
+}

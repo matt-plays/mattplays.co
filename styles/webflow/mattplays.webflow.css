@@ -1335,7 +1335,7 @@ figure {
   color: var(--slate--50);
 }
 
-.subheadline.size-2xl {
+.text.size-2xl {
   flex-direction: row;
   max-width: 48ch;
   margin-bottom: 0;
@@ -1598,40 +1598,40 @@ figure {
   align-items: center;
 }
 
-.detail.size-xs.align-right {
+.mono.size-xs.align-right {
   text-align: right;
   margin-bottom: 0;
 }
 
-.detail.size-xs.info-press-link {
+.mono.size-xs.info-press-link {
   border: 1px #000;
 }
 
-.detail.size-xs.textcolor-slate-50 {
+.mono.size-xs.textcolor-slate-50 {
   color: var(--slate--50);
 }
 
-.detail.size-sm.info-press-link {
+.mono.size-sm.info-press-link {
   color: var(--slate--50);
   border: 1px #000;
   flex: 1;
 }
 
-.detail.size-sm.info-press-link:hover {
+.mono.size-sm.info-press-link:hover {
   color: var(--actionable--onlight);
 }
 
-.detail.size-sm.info-press-link.align-right {
+.mono.size-sm.info-press-link.align-right {
   text-align: right;
   flex: none;
 }
 
-.detail.size-sm.creditgrid-list {
+.mono.size-sm.creditgrid-list {
   color: var(--slate--50);
   line-height: 200%;
 }
 
-.detail.size-base {
+.mono.size-base {
   margin-bottom: 0;
 }
 
@@ -2749,7 +2749,7 @@ figure {
     color: var(--slate--900);
   }
 
-  .detail.size-xs.info-press-link:hover {
+  .mono.size-xs.info-press-link:hover {
     color: var(--actionable--onlight);
   }
 
@@ -2877,7 +2877,7 @@ figure {
     overflow: visible;
   }
 
-  .detail.size-xs.info-press-link, .detail.size-xs.textcolor-slate-50 {
+  .mono.size-xs.info-press-link, .mono.size-xs.textcolor-slate-50 {
     color: var(--slate--50);
   }
 
@@ -3176,11 +3176,11 @@ figure {
     align-items: center;
   }
 
-  .detail.size-xs {
+  .mono.size-xs {
     display: none;
   }
 
-  .detail.size-xs.align-right {
+  .mono.size-xs.align-right {
     text-align: left;
   }
 
@@ -3912,7 +3912,7 @@ figure {
     grid-column-gap: 1rem;
   }
 
-  .subheadline.size-3xl.info-introtext {
+  .text.size-3xl.info-introtext {
     font-size: 1.25rem;
   }
 
@@ -3938,7 +3938,7 @@ figure {
     grid-template-columns: 1fr 1fr 1fr;
   }
 
-  .detail.size-xs.textcolor-slate-50.align-right, .detail.size-sm.info-press-link.align-right {
+  .mono.size-xs.textcolor-slate-50.align-right, .mono.size-sm.info-press-link.align-right {
     display: none;
   }
 
