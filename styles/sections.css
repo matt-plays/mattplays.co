@@ -287,6 +287,7 @@ margin, and it collides with the headline, so it reads as still being placed.
   aspect-ratio: 883 / 589;
 }
 
+
 /*
 ----------------
 Stacked
@@ -334,5 +335,441 @@ Stacked
   .home-hero__dots {
     width: 60%;
     max-width: 260px;
+  }
+}
+
+/*
+================
+About page  (2661:5357)
+================
+The page alternates content sections with photography, and three of its five
+content sections are the same shell: an overline label in a fixed left column
+and rows in a wider right column. That shell is .list-section, and Values,
+Experience and Press are only its rows — the same relationship the file has,
+where one .ListSection-Item carries a type of Value, Experience or Press.
+
+Measurements are the file's, converted to ratios: it draws a 1920 container
+and this one is 1280, so the proportions port and the pixels do not. Where a
+ratio is written as `608fr 1264fr` the gap is subtracted first, exactly as the
+file's auto-layout does, so the fractions are the file's own numbers.
+*/
+
+/*
+----------------
+Bio
+----------------
+*/
+.about-bio {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-2xl);
+}
+
+.about-bio__eyebrow {
+  margin: 0 0 var(--space-m);
+}
+
+/* 1264 of 1920 — the headline stops short of the portrait's column. */
+.about-bio__headline {
+  width: 65.83%;
+  margin: 0 0 var(--space-m);
+}
+
+/* Bottom-aligned: the file sets the body and the portrait on one baseline
+   rather than one top edge, so the portrait grows upward from the body. */
+.about-bio__row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+
+.about-bio__body {
+  flex: 0 1 65.83%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-m);
+}
+
+.about-bio__column {
+  color: var(--content-muted);
+}
+
+.about-bio__column p {
+  margin: 0 0 1em;
+}
+.about-bio__column p:last-child {
+  margin-bottom: 0;
+}
+
+/* 444 of 1920, at the file's 2:3. The photograph is square, so it is cropped
+   to that shape rather than letterboxed into it. */
+.about-bio__portrait {
+  flex: 0 0 23.125%;
+  aspect-ratio: 444 / 666;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+/*
+----------------
+List section
+----------------
+*/
+.list-section {
+  padding-bottom: var(--space-2xl);
+}
+
+.list-section__grid {
+  display: grid;
+  grid-template-columns: 608fr 1264fr;
+  gap: var(--space-m);
+}
+
+.list-section__label {
+  margin: 0;
+}
+
+/* Rows measure themselves against this column, so it must not be allowed to
+   grow past its track on a long unbroken string. */
+.list-section__content {
+  min-width: 0;
+}
+
+/* Spans the whole container rather than the content column. */
+.list-section__footer {
+  margin-top: var(--space-xl);
+}
+
+/*
+----------------
+Values
+----------------
+Two 608 cards across the 1264 content column is exactly two columns and a
+gap, so this is a 2-up grid rather than a wrapping row — the cards keep their
+columns instead of depending on their own measured width.
+*/
+.value-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--space-m);
+  row-gap: var(--space-l);
+}
+
+.value {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.value__number,
+.value__title,
+.value__body {
+  margin: 0;
+}
+
+.value__body {
+  color: var(--content-muted);
+}
+
+/*
+----------------
+Rows
+----------------
+The lead column is 296 of the 1264 content column. Experience and Press share
+the shape and differ in their alignment, their padding and what the trailing
+column holds.
+*/
+.list-row {
+  display: grid;
+  gap: var(--space-m);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.list-row__lead,
+.list-row__trail,
+.list-row__meta,
+.list-row__body h3 {
+  margin: 0;
+}
+
+.list-row__body {
+  min-width: 0;
+}
+
+.list-row--experience {
+  grid-template-columns: 23.42% minmax(0, 1fr) auto;
+  align-items: start;
+  /* space-24 in the file; this ramp has 16 and 32, so it is stated against
+     the step below rather than rounded onto one of them. */
+  padding-block: calc(var(--space-xs) * 1.5);
+}
+
+.list-row--experience .list-row__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+/* .mono and .overline both set their own ink, so muting is stated here. This
+   file is imported after typography.css, so equal specificity is enough. */
+.list-row--experience .list-row__lead,
+.list-row--experience .list-row__trail,
+.list-row__meta {
+  color: var(--content-muted);
+}
+
+.list-row__trail {
+  white-space: nowrap;
+}
+
+/*
+ * The file draws a row ending in an arrow; here the row itself is the link,
+ * which makes the target the size of the row. The border shorthand outranks
+ * the Webflow export's global `a { border-bottom }`.
+ */
+.list-row--press {
+  grid-template-columns: 23.42% minmax(0, 1fr) 24px;
+  align-items: center;
+  padding-block: var(--space-xs);
+  text-decoration: none;
+  color: var(--content-primary);
+}
+
+.list-row__arrow {
+  display: block;
+  width: 24px;
+  height: 24px;
+  color: var(--content-muted);
+  transition: transform 150ms ease, color 150ms ease;
+}
+
+.list-row--press:hover .list-row__arrow {
+  color: var(--content-primary);
+  transform: translate(0.125em, -0.125em);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .list-row__arrow {
+    transition: none;
+  }
+  .list-row--press:hover .list-row__arrow {
+    transform: none;
+  }
+}
+
+/*
+----------------
+Brand logos
+----------------
+Drawn as a mask filled with currentColor rather than as an <img>: an <img> of
+an SVG cannot inherit ink, so these would stay near-black in dark mode. The
+mask keeps one file per mark and lets both modes work.
+*/
+.brand-logos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.brand-logos li {
+  flex: 0 1 252px;
+  min-width: 0;
+}
+
+.brand-logo {
+  display: block;
+  width: 100%;
+  background-color: var(--content-primary);
+  -webkit-mask: var(--logo) center / contain no-repeat;
+  mask: var(--logo) center / contain no-repeat;
+}
+
+/*
+----------------
+Image section
+----------------
+*/
+.image-section {
+  padding-bottom: var(--space-xl);
+}
+
+.image-section__frame,
+.image-section__item {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.image-section__frame img,
+.image-section__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Edge to edge, so it carries no container and no radius. */
+.image-section--bleed .image-section__frame {
+  border-radius: 0;
+}
+
+/* Hand-placed, so the geometry is percentages of one stage — the same
+   reasoning as the home hero. The boxes arrive as custom properties so the
+   stacked breakpoint below can drop them without !important. */
+.image-section--collage .image-section__stage {
+  position: relative;
+  aspect-ratio: 1920 / 1025.25;
+}
+
+.image-section--collage .image-section__item {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  height: var(--h);
+}
+
+/*
+ * The strip is 4244 wide inside the file's 1920 frame. Here it is a
+ * full-width centred flex row whose children overflow it equally on both
+ * sides — which is what lets InfoPhotoStrip measure that overflow and pan it.
+ * Widths and the 72 gap are therefore percentages of the container, and they
+ * add up to the 221% the file draws.
+ */
+.image-section--strip .image-section__strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3.75%;
+  width: 100%;
+}
+
+.image-section--strip .image-section__item {
+  flex: none;
+}
+
+/*
+----------------
+Colophon
+----------------
+A display headline in a narrower column than the list sections' label, so it
+is its own shape rather than a fourth list.
+*/
+.about-colophon {
+  padding-bottom: var(--space-2xl);
+}
+
+.about-colophon__grid {
+  display: grid;
+  grid-template-columns: 468fr 1436fr;
+  gap: var(--space-xs);
+}
+
+.about-colophon__headline {
+  margin: 0;
+}
+
+.about-colophon__body {
+  column-count: 2;
+  column-gap: var(--space-m);
+}
+
+.about-colophon__body p {
+  margin: 0 0 1em;
+}
+.about-colophon__body p:last-child {
+  margin-bottom: 0;
+}
+
+/*
+----------------
+Stacked
+----------------
+*/
+@media screen and (max-width: 991px) {
+  .list-section__grid,
+  .about-colophon__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-s);
+  }
+
+  .about-bio__headline {
+    width: 100%;
+  }
+
+  .about-bio__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .about-bio__body {
+    flex: initial;
+  }
+
+  /* Landscape once it spans the column: a 2:3 box the width of the page
+     would be taller than the viewport. */
+  .about-bio__portrait {
+    flex: initial;
+    aspect-ratio: 3 / 2;
+  }
+
+  .brand-logos {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: var(--space-m) var(--space-l);
+  }
+
+  .brand-logos li {
+    flex: 0 1 30%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .value-grid,
+  .about-bio__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about-colophon__body {
+    column-count: 1;
+  }
+
+  .list-row--experience {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-xs);
+  }
+
+  .list-row--experience .list-row__trail {
+    white-space: normal;
+  }
+
+  .list-row--press {
+    grid-template-columns: minmax(0, 1fr) 24px;
+    gap: var(--space-xs);
+  }
+
+  /* Most rows carry no source; the ones that do head their group across the
+     full width. An empty cell is removed so it costs no row. */
+  .list-row--press .list-row__lead {
+    grid-column: 1 / -1;
+  }
+  .list-row--press .list-row__lead:empty {
+    display: none;
+  }
+
+  .image-section--collage .image-section__stage {
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .image-section--collage .image-section__item {
+    position: static;
+    width: 100%;
+    height: auto;
   }
 }

@@ -5,10 +5,10 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
  * (the icon the Figma project card hands its Icon Button), drawn with
  * `currentColor` so it inherits the control's ink and flips with the mode.
  */
-export function ArrowUpRightIcon() {
+export function ArrowUpRightIcon({ className = "icon-button__icon" }: { className?: string } = {}) {
   return (
     <svg
-      className="icon-button__icon"
+      className={className}
       viewBox="0 0 20 20"
       fill="currentColor"
       aria-hidden="true"
