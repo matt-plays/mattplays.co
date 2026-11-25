@@ -17,7 +17,7 @@ export interface PromoBarProps {
  */
 const FALLBACK: PromoBarSettings = {
   enabled: true,
-  text: "This site is out of date. A new experience is coming soon",
+  text: "This site is out of date. A new one is coming soon",
   linkLabel: null,
   linkHref: null,
   overrides: [
