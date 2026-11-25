@@ -101,6 +101,7 @@ const values = [
 const press = [
   { source: "Help Scout", href: "https://insidemarketingdesign.co/at/help-scout", label: "Inside Marketing Design at Help Scout" },
   { href: "https://www.typewolf.com/site-of-the-day/in-the-works", label: "Typewolf Site of the Day" },
+  { href: "https://www.navbar.gallery/navbar/help-scout", label: "Navbar Gallery" },
   { href: "https://onepagelove.com/against-the-grain", label: "One Page Love" },
   { href: "https://youtu.be/MgM7Lad8TNw", label: "Figma Remote Design Critiques" },
   { source: "Type Hike", href: "http://typehike.com/exhibitions/", label: "Poler Portland & Laguna Exhibits" },
