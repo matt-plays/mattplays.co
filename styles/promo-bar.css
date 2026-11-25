@@ -40,18 +40,7 @@
   line-height: var(--leading-none);
   font-feature-settings: "ss02" on;
   text-align: center;
-}
-
-.promo-banner__link {
-  border-bottom: 1px solid #13202640;
-  color: inherit;
-  text-decoration: none;
-  transition: border-color 0.2s ease;
-}
-
-.promo-banner__link:hover,
-.promo-banner__link:focus-visible {
-  border-bottom-color: var(--color-slate-900);
+  text-wrap: balance;
 }
 
 /*
