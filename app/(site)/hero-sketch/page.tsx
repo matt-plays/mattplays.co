@@ -159,7 +159,7 @@ export default function HeroSketchPage() {
                   id="w-node-_66c135a1-4002-6b20-e532-9653a4c9f435-a4c9f42e"
                   className="spacer-xs"
                 ></div>
-                <div className="detail size-sm creditgrid-list">
+                <div className="mono size-sm creditgrid-list">
                   Erik Blad
                   <br />
                   Christine Chen
@@ -177,7 +177,7 @@ export default function HeroSketchPage() {
                   id="w-node-_66c135a1-4002-6b20-e532-9653a4c9f440-a4c9f42e"
                   className="spacer-xs"
                 ></div>
-                <div className="detail size-sm creditgrid-list">
+                <div className="mono size-sm creditgrid-list">
                   Mark Carter
                   <br />
                   Alex Haynes
@@ -194,7 +194,7 @@ export default function HeroSketchPage() {
                   id="w-node-_66c135a1-4002-6b20-e532-9653a4c9f44a-a4c9f42e"
                   className="spacer-xs"
                 ></div>
-                <div className="detail size-sm creditgrid-list">
+                <div className="mono size-sm creditgrid-list">
                   Hillary Noble
                   <br />
                   Kristen Bryant Smith
@@ -211,7 +211,7 @@ export default function HeroSketchPage() {
                   id="w-node-_66c135a1-4002-6b20-e532-9653a4c9f454-a4c9f42e"
                   className="spacer-xs"
                 ></div>
-                <div className="detail size-sm creditgrid-list">
+                <div className="mono size-sm creditgrid-list">
                   Erik Blad
                   <br />
                   Christine Chen

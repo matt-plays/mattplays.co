@@ -1,76 +1,116 @@
-"use client";
-
-import { useState } from "react";
-import type { CSSProperties } from "react";
+/* eslint-disable @next/next/no-img-element */
 
 /**
- * Homepage hero, ported from the Webflow export. The "Home Hero Hover"
- * interaction (Webflow IX2 `a-17`/`a-18`) scales both floating images from
- * 1 → 1.1 while hovering the headline: the art-direction image first, the
- * brands image 100ms behind, both 250ms with an out-quart ease. The images'
- * resting rotations (12deg / -8deg) ship as inline transforms in the export
- * and are preserved here.
+ * Home hero, from the 2026 design (2699:3570).
+ *
+ * An art-directed collage rather than a row: three display words, a stack of
+ * three overlapping images, a row of coloured dots, the tagline, and a
+ * photograph that bleeds off the right edge. Nothing here flows — every piece
+ * is placed against the others, so the geometry lives in sections.css as
+ * percentages of one stage.
+ *
+ * Two deliberate departures from the file, both noted at their callsite: the
+ * blockquote drawn behind "Brands" is left out, and there is no mobile
+ * composition to port.
  */
 
-const EASE_OUT_QUART = "cubic-bezier(0.25, 1, 0.5, 1)";
+/** Saturated/Red/500 → Saturated/Blue/500, left to right, as the file draws them. */
+const DOTS = [
+  "var(--color-red-500)",
+  "var(--color-orange-400)",
+  "var(--color-yellow-300)",
+  "var(--color-warm-green-600)",
+  "var(--color-blue-500)",
+];
 
-function visualStyle(rotateDeg: number, delayMs: number, hovered: boolean): CSSProperties {
-  const scale = hovered ? 1.1 : 1;
-  return {
-    transform: `translate3d(0, 0, 0) scale3d(${scale}, ${scale}, 1) rotateX(0) rotateY(0) rotateZ(${rotateDeg}deg) skew(0, 0)`,
-    transition: `transform 250ms ${EASE_OUT_QUART} ${delayMs}ms`,
-    transformStyle: "preserve-3d",
-  };
-}
+/**
+ * The three collage images, in paint order — the Rock Dove panel sits on top.
+ * Each carries its own box inside the collage, as a percentage of it, so the
+ * stack holds its arrangement at any width.
+ */
+const COLLAGE = [
+  {
+    src: "hero-collage-notecard",
+    width: 1200,
+    style: { left: "5.71%", top: "9.33%", width: "94.32%", height: "75.89%" },
+  },
+  {
+    src: "hero-collage-photo",
+    width: 1200,
+    style: { left: "0%", top: "17.92%", width: "94.43%", height: "64.12%" },
+  },
+  {
+    src: "hero-collage-rockdove",
+    width: 1200,
+    style: { left: "19.69%", top: "0%", width: "66.26%", height: "100%" },
+  },
+] as const;
 
 export default function HomeHero() {
-  const [hovered, setHovered] = useState(false);
-
   return (
-    <div className="homepage-hero">
+    <section className="home-hero">
       <div className="container-width w-container">
-        <div className="homepagehero-container">
-          <div className="heroheadlinesection-line">
-            <h1
-              className="headline size-8xl homepagehero-headline"
-              onMouseEnter={() => setHovered(true)}
-              onMouseLeave={() => setHovered(false)}
-            >
-              Design
-              <br />
-              for Brands
-            </h1>
-            <div className="homepagehero-brandsvisual">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/hero-brands-fpo.webp"
-                loading="eager"
-                fetchPriority="high"
-                width={105}
-                style={visualStyle(12, 100, hovered)}
-                alt=""
-                className="homepagehero-brandsimage"
-              />
-            </div>
-            <div
-              id="w-node-_5bc940d4-7a59-0a06-59f4-b54cc7e4cb78-119d1161"
-              className="homepagehero-designvisual"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/hero-ad-fpo.webp"
-                loading="eager"
-                fetchPriority="high"
-                width={105}
-                style={visualStyle(-8, 0, hovered)}
-                alt="Colorful dealer books for Burton Snowboards"
-                className="homepagehero-designimage"
-              />
-            </div>
+        <div className="home-hero__stage">
+          {/*
+            First in the DOM because it has to paint behind the tagline, which
+            crosses it — the same order the design uses. Decorative: the
+            headline below carries the meaning.
+          */}
+          <div className="home-hero__photo">
+            <img
+              src="/images/hero-huntington-ravine.webp"
+              srcSet="/images/hero-huntington-ravine-800.webp 800w, /images/hero-huntington-ravine.webp 1600w"
+              sizes="(max-width: 991px) 100vw, 46vw"
+              width={1600}
+              height={1067}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              alt=""
+            />
+          </div>
+
+          {/*
+            "Design" and "for" span the container, so space-between is the
+            design's own measurement rather than an approximation of it: "for"
+            lands flush right. The space before it is real, so the heading
+            still reads "Design for Brands".
+          */}
+          <h1 className="headline size-12xl home-hero__headline">
+            <span className="home-hero__line home-hero__line--top">
+              <span>Design</span> <span>for</span>
+            </span>
+            <span className="home-hero__line home-hero__line--bottom">Brands</span>
+          </h1>
+
+          <ul className="home-hero__dots" aria-hidden="true">
+            {DOTS.map((color) => (
+              <li key={color} className="home-hero__dot" style={{ backgroundColor: color }} />
+            ))}
+          </ul>
+
+          <p className="headline size-6xl home-hero__tagline">
+            System-minded work by Matt Plays
+          </p>
+
+          {/* Paints last, over both the headline and the photograph. */}
+          <div className="home-hero__collage">
+            {COLLAGE.map((image) => (
+              <div key={image.src} className="home-hero__collage-item" style={image.style}>
+                <img
+                  src={`/images/${image.src}.webp`}
+                  srcSet={`/images/${image.src}-800.webp 800w, /images/${image.src}.webp ${image.width}w`}
+                  sizes="(max-width: 991px) 100vw, 38vw"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  alt=""
+                />
+              </div>
+            ))}
           </div>
         </div>
-        <h6 className="hero-subheadline size-base">System-minded work by Matt Plays</h6>
       </div>
-    </div>
+    </section>
   );
 }

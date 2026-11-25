@@ -10,11 +10,18 @@ export interface FooterProps {
  * Fallbacks mirror the live Webflow footer. The newsletter form posts to the
  * same Kit (ConvertKit) endpoint the export uses.
  */
+/*
+ * These now mirror the 2026 footer (2739:5643) — Work / Info / Blog / Shop,
+ * with Changelog moved down into the Explore column, matching Nav.tsx.
+ *
+ * NOTE: siteSettings defines footerLinks today, so this list does not render
+ * on the live site. Adding Blog to the footer is a content edit in the Studio.
+ */
 const FALLBACK_NAV: NavLinkItem[] = [
   { label: "Work", href: "/work" },
   { label: "Info", href: "/info" },
-  // The live site styles this one .disabled (comingSoon) but keeps the link.
-  { label: "Changelog", href: "/changelog", comingSoon: true },
+  { label: "Blog", href: "/blog" },
+  { label: "Shop", href: "/shop" },
 ];
 
 const CONNECT_LINKS: NavLinkItem[] = [
@@ -23,10 +30,11 @@ const CONNECT_LINKS: NavLinkItem[] = [
   { label: "Email", href: "mailto:matt@mattplays.co" },
 ];
 
+/* 2026 Explore column: Changelog / Styleguide / Colophon. Press is gone. */
 const EXPLORE_LINKS: NavLinkItem[] = [
   { label: "Changelog", href: "/changelog" },
+  { label: "Styleguide", href: "/style-guide" },
   { label: "Colophon", href: "/info#colophon" },
-  { label: "Press", href: "/info#press-mentions", comingSoon: true },
 ];
 
 const FALLBACK_SOCIALS: SocialLink[] = [
@@ -112,7 +120,7 @@ export default function Footer({ footerLinks, socials }: FooterProps) {
             className="form-block-2 w-form"
           >
             <div className="text-block-2 size-xs">
-              Stay up to date with my newsletter, &ldquo;One Cool Thing&rdquo;
+              Stay up to date with my new monthly newsletter, &ldquo;One Cool Thing&rdquo;
             </div>
             <form
               id="email-form"
@@ -203,7 +211,7 @@ export default function Footer({ footerLinks, socials }: FooterProps) {
               id="w-node-_24f7c769-37d4-525a-632b-059b9fe1e30c-9fe1e305"
               className="footer-heading size-xs footer--tagline--text overline"
             >
-              made remotely in new england
+              made remotely in new england, usa
             </h6>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img

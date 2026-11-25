@@ -75,7 +75,7 @@ export default function CreditGrid({ block }: { block: CreditGridBlock }) {
                   <div key={credit._key} id={itemId} className="creditgrid-item">
                     <div className="overline size-xs">{credit.label}</div>
                     <div id={spacerId} className="spacer-xs"></div>
-                    <div className="detail size-sm creditgrid-list">
+                    <div className="mono size-sm creditgrid-list">
                       {credit.url ? (
                         <a href={credit.url} target="_blank" rel="noopener noreferrer">
                           <Lines value={credit.value ?? ""} />

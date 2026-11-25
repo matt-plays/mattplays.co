@@ -83,13 +83,53 @@ const plainComponents: PortableTextComponents = {
   },
 };
 
+/*
+ * `editorial` is the 2026 blog voice: the same Portable Text, carrying the
+ * type roles instead of inheriting Webflow's element styles. The steps are the
+ * ones the Figma blocks use — H2 is Headline/3xl, H3 is Headline/xl, body is
+ * Text/xl, a pull quote is Blockquote/7xl.
+ *
+ * H4 has no block in the design. It is set one step under H3 so an imported
+ * post that happens to use one still reads as a heading rather than as body.
+ *
+ * Figma asks for Tiempos Text at weight 300 on the quote; only the Regular
+ * cut (400) is in public/fonts, so .quote stays at 400 — a 300 here would
+ * just be synthesised. Adding TiemposTextWeb-Light makes this a one-line fix.
+ */
+const editorialComponents: PortableTextComponents = {
+  ...components,
+  block: {
+    normal: ({ children }) => <p className="text size-xl">{children}</p>,
+    h2: ({ children }) => <h2 className="headline size-3xl">{children}</h2>,
+    h3: ({ children }) => <h3 className="headline size-xl">{children}</h3>,
+    h4: ({ children }) => <h4 className="headline size-md">{children}</h4>,
+    blockquote: ({ children }) => (
+      <blockquote className="quote size-7xl">{children}</blockquote>
+    ),
+  },
+  list: {
+    bullet: ({ children }) => <ul className="text size-xl">{children}</ul>,
+    number: ({ children }) => <ol className="text size-xl">{children}</ol>,
+  },
+};
+
+const VARIANTS = {
+  default: components,
+  plain: plainComponents,
+  editorial: editorialComponents,
+} as const;
+
 export default function RichText({
   value,
   plain = false,
+  variant,
 }: {
   value: PortableTextBlock[];
+  /** @deprecated pass `variant="plain"` instead; kept for existing callers. */
   plain?: boolean;
+  variant?: keyof typeof VARIANTS;
 }) {
   if (!value?.length) return null;
-  return <PortableText value={value} components={plain ? plainComponents : components} />;
+  const resolved = variant ?? (plain ? "plain" : "default");
+  return <PortableText value={value} components={VARIANTS[resolved]} />;
 }

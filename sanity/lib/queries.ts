@@ -51,3 +51,43 @@ export const siteSettingsQuery = defineQuery(`
     promoBar, navLinks, footerLinks, socials
   }
 `);
+
+/*
+ * Blog.
+ *
+ * The 60 imported posts carry title/slug/date/body and nothing else — no
+ * summary, no mainImage, no thumbnail, and `featured` is false on every one.
+ * So the list query derives what the cards need rather than assuming it:
+ *
+ *   - `excerpt` is the first paragraph's text, pulled out in GROQ so the list
+ *     page never has to ship a whole body just to show two lines. `summary`
+ *     still wins when an editor writes one.
+ *   - `lead` is the newest post when nothing is flagged featured, which is
+ *     what the design's large card wants.
+ */
+export const allBlogPostsQuery = defineQuery(`
+  *[_type == "blogPost" && defined(slug.current)] | order(date desc) {
+    _id, title, "slug": slug.current, date, featured, color,
+    mainImage, thumbnail,
+    "excerpt": coalesce(
+      summary,
+      pt::text(body[_type == "block" && style == "normal"][0])
+    )
+  }
+`);
+
+export const blogPostSlugsQuery = defineQuery(`
+  *[_type == "blogPost" && defined(slug.current)].slug.current
+`);
+
+export const blogPostBySlugQuery = defineQuery(`
+  *[_type == "blogPost" && slug.current == $slug][0] {
+    _id, title, "slug": slug.current, date, summary, color,
+    canonicalUrl, canonicalLabel,
+    mainImage, thumbnail,
+    body[] {
+      ...,
+      _type == "image" => { asset-> }
+    }
+  }
+`);

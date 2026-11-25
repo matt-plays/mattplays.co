@@ -1,3 +1,4 @@
+import CompSurface from "@/components/CompSurface";
 import CreditGrid from "./CreditGrid";
 import MediaGrid from "./MediaGrid";
 import Quote from "./Quote";
@@ -39,11 +40,19 @@ function Block({ block, next }: { block: ProjectBodyBlock; next?: ProjectBodyBlo
 
 export default function BlockRenderer({ blocks }: { blocks?: ProjectBodyBlock[] | null }) {
   if (!blocks?.length) return null;
+  /*
+   * The comp sections lend the page their colour as they are read, which takes
+   * a scroll observer. It is mounted here, from the one place that knows
+   * whether this page has any comp sections at all, so a case study that is
+   * all text and media ships no client component for it.
+   */
+  const hasCompSections = blocks.some((block) => block._type === "siteCompSection");
   return (
     <>
       {blocks.map((block, i) => (
         <Block key={block._key} block={block} next={blocks[i + 1]} />
       ))}
+      {hasCompSections ? <CompSurface /> : null}
     </>
   );
 }
