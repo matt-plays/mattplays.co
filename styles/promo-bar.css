@@ -44,6 +44,26 @@
 }
 
 /*
+ * Two-tone treatment: once the message wraps, the lede drops back so the
+ * payoff clause carries the weight. One line, one colour. The alpha is the
+ * design's alpha/slate/800-(48) — same base as the loader dots.
+ */
+.promo-banner__lede {
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.promo-banner__text.is-wrapped .promo-banner__lede {
+  color: rgba(11, 12, 13, 0.48);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-banner__lede {
+    transition: none;
+  }
+}
+
+/*
  * Mobile (Figma node 3243:14353): the centred group becomes a single row with
  * the message ranged left and the loader pushed to the right edge of the page
  * gutter. 767px is where the one-line desktop layout stops fitting.
