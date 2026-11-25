@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import PromoBarLoader from "@/components/PromoBarLoader";
 import type { PromoBarSettings } from "@/sanity/lib/types";
 
 export interface PromoBarProps {
@@ -9,15 +10,16 @@ export interface PromoBarProps {
 }
 
 /**
- * Fallbacks mirror the live Webflow site: the text div ships with
- * `.displaynone` (hidden on the live site — only the link shows), and on
- * /changelog the changelog link is swapped for a "back home" link.
+ * Promo banner — Portfolio Core 2026 (Figma node 3243:9255).
+ *
+ * The design is message + loader; the optional link is kept because Sanity
+ * drives it, and /changelog still swaps in a "back home" link.
  */
 const FALLBACK: PromoBarSettings = {
   enabled: true,
-  text: "This site is being built out in the open",
-  linkLabel: "Check out the changelog",
-  linkHref: "/changelog",
+  text: "This site is out of date. A new experience is coming soon",
+  linkLabel: null,
+  linkHref: null,
   overrides: [
     { path: "/changelog", linkLabel: "Back to the homepage", linkHref: "/" },
   ],
@@ -43,27 +45,26 @@ export default function PromoBar({ settings }: PromoBarProps) {
   );
 
   const text = override?.text ?? base.text ?? FALLBACK.text;
-  const linkLabel = override?.linkLabel ?? base.linkLabel ?? FALLBACK.linkLabel;
-  const linkHref = override?.linkHref ?? base.linkHref ?? FALLBACK.linkHref;
-  const hideLink = override?.hideLink === true || !linkHref || !linkLabel;
+  const linkLabel = override?.linkLabel ?? base.linkLabel;
+  const linkHref = override?.linkHref ?? base.linkHref;
+  const showLink = override?.hideLink !== true && !!linkHref && !!linkLabel;
 
   return (
-    <div className="promo-bar">
-      <div className="container-width w-container">
-        <div className="promo-bar-content">
-          <div className="promo-bar-text size-xs displaynone">{text}</div>
-          {!hideLink &&
-            (isInternal(linkHref!) ? (
-              <Link href={linkHref!} className="promo-bar-text size-xs islink">
-                {linkLabel}
-              </Link>
-            ) : (
-              <a href={linkHref!} className="promo-bar-text size-xs islink">
-                {linkLabel}
-              </a>
-            ))}
-        </div>
+    <aside className="promo-banner">
+      <div className="promo-banner__inner">
+        {text && <p className="promo-banner__text">{text}</p>}
+        {showLink &&
+          (isInternal(linkHref!) ? (
+            <Link href={linkHref!} className="promo-banner__text promo-banner__link">
+              {linkLabel}
+            </Link>
+          ) : (
+            <a href={linkHref!} className="promo-banner__text promo-banner__link">
+              {linkLabel}
+            </a>
+          ))}
+        <PromoBarLoader />
       </div>
-    </div>
+    </aside>
   );
 }
