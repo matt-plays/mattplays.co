@@ -15,7 +15,10 @@
   align-items: center;
   justify-content: center;
   min-height: 72px;
-  padding: 0.75rem 10px;
+  /* No horizontal padding: .promo-banner__inner carries .container-width, so
+     the content lines up with the nav and page sections rather than the
+     design's own 10px / 24px gutters. */
+  padding: 0.75rem 0;
   background-color: var(--actionable);
 }
 
@@ -25,6 +28,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  width: 100%;
 }
 
 .promo-banner__text {
@@ -48,6 +52,27 @@
 .promo-banner__link:hover,
 .promo-banner__link:focus-visible {
   border-bottom-color: var(--color-slate-900);
+}
+
+/*
+ * Mobile (Figma node 3243:14353): the centred group becomes a single row with
+ * the message ranged left and the loader pushed to the right edge of the page
+ * gutter. 767px is where the one-line desktop layout stops fitting.
+ */
+@media screen and (max-width: 767px) {
+  .promo-banner__inner {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .promo-banner__text {
+    /* Wraps to two lines at this width, so it needs real leading. 1.5 is the
+       designed value; the token scale jumps 1.375 -> 1.625 either side of it. */
+    min-width: 0;
+    line-height: 1.5;
+    text-align: left;
+  }
 }
 
 /* 5 dots x 2px + 4 gaps x 3px + 2px padding = 24px. */

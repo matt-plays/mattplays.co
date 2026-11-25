@@ -51,7 +51,7 @@ export default function PromoBar({ settings }: PromoBarProps) {
 
   return (
     <aside className="promo-banner">
-      <div className="promo-banner__inner">
+      <div className="container-width promo-banner__inner">
         {text && <p className="promo-banner__text">{text}</p>}
         {showLink &&
           (isInternal(linkHref!) ? (
