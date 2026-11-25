@@ -1,0 +1,98 @@
+/*
+ * Promo banner — the strip above the nav.
+ *
+ * Ported from Portfolio Core 2026 (Figma node 3243:9255). Deliberately namespaced
+ * `.promo-banner` rather than reusing the Webflow export's `.promo-bar`, which is
+ * `display: none` and carries the old baseline-aligned layout.
+ *
+ * Dot styles and keyframes live in the generated promo-bar-loader.css.
+ */
+
+.promo-banner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 72px;
+  /* No horizontal padding: .promo-banner__inner carries .container-width, so
+     the content lines up with the nav and page sections rather than the
+     design's own 10px / 24px gutters. */
+  padding: 0.75rem 0;
+  background-color: var(--actionable);
+}
+
+.promo-banner__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.promo-banner__text {
+  margin: 0;
+  color: var(--color-slate-900);
+  font-family: var(--font-detail), monospace;
+  font-size: var(--text-sm);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-none);
+  font-feature-settings: "ss02" on;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/*
+ * Two-tone treatment: once the message wraps, the lede drops back so the
+ * payoff clause carries the weight. One line, one colour. The alpha is the
+ * design's alpha/slate/800-(48) — same base as the loader dots.
+ */
+.promo-banner__lede {
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.promo-banner__text.is-wrapped .promo-banner__lede {
+  color: rgba(11, 12, 13, 0.48);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-banner__lede {
+    transition: none;
+  }
+}
+
+/*
+ * Mobile (Figma node 3243:14353): the centred group becomes a single row with
+ * the message ranged left and the loader pushed to the right edge of the page
+ * gutter. 767px is where the one-line desktop layout stops fitting.
+ */
+@media screen and (max-width: 767px) {
+  .promo-banner__inner {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .promo-banner__text {
+    /* Wraps to two lines at this width, so it needs real leading. 1.5 is the
+       designed value; the token scale jumps 1.375 -> 1.625 either side of it. */
+    min-width: 0;
+    line-height: 1.5;
+    text-align: left;
+  }
+}
+
+/* 5 dots x 2px + 4 gaps x 3px + 2px padding = 24px. */
+.promo-banner__loader {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 3px;
+  width: 24px;
+  height: 24px;
+  padding: 1px;
+}
