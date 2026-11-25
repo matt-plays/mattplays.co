@@ -98,21 +98,32 @@ const values = [
   },
 ];
 
+/**
+ * Press and mentions, in the order and wording of the Figma list (2811:5880),
+ * which is the source of truth. `detail` is the row's secondary line in the
+ * file; PressRow does not draw it yet.
+ */
 const press = [
-  { source: "Help Scout", href: "https://insidemarketingdesign.co/at/help-scout", label: "Inside Marketing Design at Help Scout" },
-  { href: "https://www.typewolf.com/site-of-the-day/in-the-works", label: "Typewolf Site of the Day" },
-  { href: "https://www.navbar.gallery/navbar/help-scout", label: "Navbar Gallery" },
-  { href: "https://onepagelove.com/against-the-grain", label: "One Page Love" },
-  { href: "https://youtu.be/MgM7Lad8TNw", label: "Figma Remote Design Critiques" },
-  { source: "Type Hike", href: "http://typehike.com/exhibitions/", label: "Poler Portland & Laguna Exhibits" },
-  { href: "https://www.fastcodesign.com/3064964/60-designers-create-posters-for-their-favorite-national-parks", label: "Fast Company Design" },
-  { href: "http://gearpatrol.com/2016/10/27/type-hike-national-parks-posters/", label: "Gear Patrol" },
-  { href: "https://huckberry.com/store/type-hike", label: "Huckberry" },
-  { href: "http://www.typeroom.eu/article/type-hike-typography-service-great-wide-usa-nature", label: "Typeroom" },
-  { href: "http://typehike.com/exhibitions/2017/4/26/rei", label: "REI" },
-  { source: "Icon Snowskates", href: "#", label: "Honorable Mention on The Berrics" },
-  { href: "http://www.webdesign-inspiration.com/web-design/iconsnowskates-com-20500", label: "Webdesign Inspiration" },
-  { href: "https://ecomm.design/site/icon-snowskates/", label: "eComm Design" },
+  { source: "Personal", label: "A1 Gallery", detail: "Sarah & Matt wedding site", href: "https://www.a1.gallery/website/sarah-matt" },
+  { source: "Personal", label: "Workspaces Desk Setup", detail: "Hopkinton, MA office", href: "https://workspaces.xyz/p/503-matt-plays" },
+  { source: "Personal", label: "Noun Project’s The List", detail: "Best Designers of 2024", href: "https://thelist.thenounproject.com/thelist/matt-plays" },
+  { source: "Help Scout", label: "Typewolf Site of the Day", detail: "helpscout.com", href: "https://www.typewolf.com/site-of-the-day/help-scout-2023" },
+  { source: "Help Scout", label: "Navbar Gallery", detail: "helpscout.com navigation", href: "https://www.navbar.gallery/navbar/help-scout" },
+  { source: "Personal", label: "Killer Portfolio", detail: "mattplays.co", href: "https://www.killerportfolio.com/by/matt-plays" },
+  { source: "Help Scout", label: "Inside Marketing Design at Help Scout", detail: "Podcast", href: "https://insidemarketingdesign.co/at/help-scout" },
+  { source: "Help Scout", label: "Typewolf Site of the Day", detail: "In the Works blog", href: "https://www.typewolf.com/site-of-the-day/in-the-works" },
+  { source: "Help Scout", label: "One Page Love", detail: "Against the Grain series", href: "https://onepagelove.com/against-the-grain" },
+  { source: "Help Scout", label: "Figma Remote Design Critiques", detail: "Creative Director", href: "https://youtu.be/MgM7Lad8TNw" },
+  { source: "Type Hike", label: "Poler Portland & Laguna Exhibits", detail: "Creative Director", href: "http://typehike.com/exhibitions/" },
+  { source: "Type Hike", label: "Fast Company Design", detail: "Creative Director", href: "https://www.fastcodesign.com/3064964/60-designers-create-posters-for-their-favorite-national-parks" },
+  { source: "Type Hike", label: "Gear Patrol", detail: "Creative Director", href: "http://gearpatrol.com/2016/10/27/type-hike-national-parks-posters/" },
+  { source: "Type Hike", label: "Huckberry", detail: "Creative Director", href: "https://huckberry.com/store/type-hike" },
+  { source: "Type Hike", label: "Typeroom", detail: "Creative Director", href: "http://www.typeroom.eu/article/type-hike-typography-service-great-wide-usa-nature" },
+  { source: "Type Hike", label: "REI", detail: "Creative Director", href: "http://typehike.com/exhibitions/2017/4/26/rei" },
+  { source: "Icon Snowskates", label: "Honorable Mention on The Berrics", detail: "Creative Director", href: "#" },
+  { source: "Icon Snowskates", label: "Webdesign Inspiration", detail: "Creative Director", href: "http://www.webdesign-inspiration.com/web-design/iconsnowskates-com-20500" },
+  { source: "Icon Snowskates", label: "eComm Design", detail: "Creative Director", href: "https://ecomm.design/site/icon-snowskates/" },
+  { source: "Icon Snowskates", label: "The Chive", detail: "Creative Director", href: "#" },
 ];
 
 export default function InfoPage() {
@@ -230,8 +241,14 @@ export default function InfoPage() {
       />
 
       <ListSection label="Press & Mentions" id="press-mentions">
-        {press.map((item) => (
-          <PressRow key={item.label} source={item.source} href={item.href} label={item.label} />
+        {press.map((item, i) => (
+          <PressRow
+            key={`${item.label}-${item.detail}`}
+            // The row design leaves a repeated source blank.
+            source={item.source === press[i - 1]?.source ? undefined : item.source}
+            href={item.href}
+            label={item.label}
+          />
         ))}
       </ListSection>
 
