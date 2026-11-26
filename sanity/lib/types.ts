@@ -8,16 +8,11 @@ import type { PortableTextBlock } from "@portabletext/types";
 export interface PromoBarOverride {
   path?: string | null;
   text?: string | null;
-  linkLabel?: string | null;
-  linkHref?: string | null;
-  hideLink?: boolean | null;
 }
 
 export interface PromoBarSettings {
   enabled?: boolean | null;
   text?: string | null;
-  linkLabel?: string | null;
-  linkHref?: string | null;
   overrides?: PromoBarOverride[] | null;
 }
 
