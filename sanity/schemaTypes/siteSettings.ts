@@ -22,8 +22,6 @@ export const siteSettings = defineType({
       fields: [
         { name: "enabled", type: "boolean", initialValue: true },
         { name: "text", type: "string" },
-        { name: "linkLabel", type: "string" },
-        { name: "linkHref", type: "string" },
         {
           name: "overrides",
           title: "Per-page overrides",
@@ -35,9 +33,6 @@ export const siteSettings = defineType({
               fields: [
                 { name: "path", type: "string", description: "Page path this override applies to (e.g. /changelog)" },
                 { name: "text", type: "string" },
-                { name: "linkLabel", type: "string" },
-                { name: "linkHref", type: "string" },
-                { name: "hideLink", type: "boolean", initialValue: false },
               ],
               preview: { select: { title: "path", subtitle: "text" } },
             }),

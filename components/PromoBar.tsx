@@ -13,9 +13,10 @@ export interface PromoBarProps {
  * Promo banner — Portfolio Core 2026 (Figma nodes 3243:9255 / 3243:14353).
  *
  * Message plus loader, as drawn. No link: the design has none, and at mobile
- * widths it crowded the message and the loader onto one row. PromoBarSettings
- * and the Sanity schema still carry linkLabel / linkHref so no content is
- * orphaned — they are simply unused here. Per-path `text` overrides still apply.
+ * widths it crowded the message and the loader onto one row. The link fields
+ * are gone from the schema as well, so they stop riding along in the RSC
+ * payload for a component that never rendered them. Per-path `text` overrides
+ * still apply.
  */
 const FALLBACK: PromoBarSettings = {
   enabled: true,
